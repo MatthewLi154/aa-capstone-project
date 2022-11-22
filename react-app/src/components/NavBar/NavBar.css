@@ -3,4 +3,31 @@
     height: 5rem;
     display: flex;
     flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Familjen Grotesk', sans-serif;
+    font-size: 1.313rem;
+}
+
+.nav-button-container {
+    margin: 0rem 1rem;
+}
+
+.search-container input {
+    height: 3rem;
+    width: 50rem;
+    border-radius: 2rem;
+    outline: none;
+    border: 1px lightgray solid;
+}
+
+.navbar-profile-picture img {
+    height: 2rem;
+    width: 2rem;
+    border-radius: 50%;
+    padding: 0.75rem;
+}
+
+.navbar-profile-picture img:hover {
+    background-color: rgba(225, 225, 225, 0.497);
 }
