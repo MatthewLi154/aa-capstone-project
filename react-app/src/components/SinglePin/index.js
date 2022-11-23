@@ -38,7 +38,9 @@ const SinglePin = () => {
               </div>
             </div>
             <div className="single-pin-margin-left single-pin-destination-link">
-              {currentPin.destination_link}
+              <a href={currentPin.destination_link} style={{ color: "black" }}>
+                {currentPin.destination_link}
+              </a>
             </div>
             <div className="single-pin-margin-left single-pin-title">
               {currentPin.title}

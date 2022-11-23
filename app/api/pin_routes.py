@@ -43,3 +43,14 @@ def delete_pin(id):
     db.session.delete(pin)
     db.session.commit()
     return {"message": "Successfully deleted"}
+
+@pin_routes.route('/profile/<profile_id>/pins/created')
+def profile_pins(profile_id):
+    """
+    Query all pins created by user
+    """
+    pins = Pin.query.filter_by(profile_id=id).all()
+    pins_dict = {}
+    for pin in pins:
+        pins_dict[pin.id] = pin.to_dict()
+    return pins_dict

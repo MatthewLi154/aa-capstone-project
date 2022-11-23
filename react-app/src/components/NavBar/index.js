@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { NavLink } from "react-router-dom";
 import LogoutButton from "../auth/LogoutButton";
 import "./NavBar.css";
 
 const NavBar = () => {
   const [showMenu, setShowMenu] = useState(false);
-  const [profileDropDown, setProfileDropDown] = useState(false)
+  const [profileDropDown, setProfileDropDown] = useState(false);
+  const currentProfileId = useSelector((state) => state.session.user.id);
 
   const openMenu = () => {
     if (showMenu) return;
@@ -25,21 +27,21 @@ const NavBar = () => {
   }, [showMenu]);
 
   const openProfileDropDown = () => {
-    if (profileDropDown) return
-    setProfileDropDown(true)
-  }
+    if (profileDropDown) return;
+    setProfileDropDown(true);
+  };
 
   useEffect(() => {
-    if (!profileDropDown) return
+    if (!profileDropDown) return;
 
     const closeProfileDropDown = () => {
-      setProfileDropDown(false)
-    }
+      setProfileDropDown(false);
+    };
 
     document.addEventListener("click", closeProfileDropDown);
 
     return () => document.removeEventListener("click", closeProfileDropDown);
-  }, [profileDropDown])
+  }, [profileDropDown]);
 
   const loggedOut = (
     <nav>
@@ -124,7 +126,11 @@ const NavBar = () => {
     <nav>
       <div className="navbar-main-container">
         <div className="nav-button-container">
-          <NavLink to="/" exact={true} style={{ textDecoration: "none" }}>
+          <NavLink
+            to="/"
+            exact={true}
+            style={{ textDecoration: "none", color: "black" }}
+          >
             <span>N</span>
           </NavLink>
         </div>
@@ -132,7 +138,7 @@ const NavBar = () => {
           <NavLink
             to="/"
             exact={true}
-            style={{ textDecoration: "none" }}
+            style={{ textDecoration: "none", color: "black" }}
             activeClassName="active"
           >
             Home
@@ -142,7 +148,7 @@ const NavBar = () => {
           <NavLink
             to="/"
             exact={true}
-            style={{ textDecoration: "none" }}
+            style={{ textDecoration: "none", color: "black" }}
             activeClassName="active"
           >
             Today
@@ -152,7 +158,7 @@ const NavBar = () => {
           <NavLink
             to="/pin-builder"
             exact={true}
-            style={{ textDecoration: "none" }}
+            style={{ textDecoration: "none", color: "black" }}
             activeClassName="active"
           >
             Create
@@ -176,12 +182,15 @@ const NavBar = () => {
         </div>
         <div>
           <div className="navbar-profile-picture">
-            <img src="https://i.pinimg.com/564x/08/13/5c/08135cd812b33ad4788956ac2980898f.jpg"></img>
+            <NavLink to={`/profile/${currentProfileId}`}>
+              <img src="https://i.pinimg.com/564x/08/13/5c/08135cd812b33ad4788956ac2980898f.jpg"></img>
+            </NavLink>
           </div>
-          {profileDropDown &&
-          (<div className="profile-drop-down">
-            <div>username</div>
-          </div>)}
+          {profileDropDown && (
+            <div className="profile-drop-down">
+              <div>username</div>
+            </div>
+          )}
         </div>
         <div className="nav-button-container" onClick={openProfileDropDown}>
           <i class="fa-solid fa-angle-down"></i>

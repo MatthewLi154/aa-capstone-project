@@ -9,9 +9,11 @@ import UsersList from "./components/UsersList";
 import User from "./components/User";
 import PinBuilder from "./components/PinBuilder";
 import SinglePin from "./components/SinglePin";
+import CreatedPins from "./components/ProfilePage/CreatedPins";
 import { authenticate } from "./store/session";
 
 import Main from "./components/Main";
+import ProfilePage from "./components/ProfilePage";
 
 function App() {
   const [loaded, setLoaded] = useState(false);
@@ -44,7 +46,10 @@ function App() {
         <ProtectedRoute path="/users/:userId" exact={true}>
           <User />
         </ProtectedRoute>
-        <Route path="/pins/:pinId">
+        <Route path="/profile/:profileId">
+          <ProfilePage />
+        </Route>
+        <Route path="/pins/:pinId" exact={true}>
           <SinglePin />
         </Route>
         <Route path="/pin-builder" exact={true}>
@@ -53,6 +58,7 @@ function App() {
         <Route path="/" exact={true}>
           <Main />
         </Route>
+        <Route>Page not found</Route>
       </Switch>
     </BrowserRouter>
   );

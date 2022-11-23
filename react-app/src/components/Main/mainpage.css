@@ -11,7 +11,6 @@ body {
 .all-pins-main-container {
   margin: 1rem 0rem;
   padding: 0rem;
-
   display: grid;
   grid-template-columns: repeat(auto-fill, 14.75rem);
   grid-auto-rows: auto;

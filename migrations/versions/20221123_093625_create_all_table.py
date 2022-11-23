@@ -1,20 +1,16 @@
 """create all table
 
-Revision ID: 3e0c033fc080
-Revises:
-Create Date: 2022-11-23 00:36:41.664085
+Revision ID: b9990fb8ad7d
+Revises: 
+Create Date: 2022-11-23 09:36:25.126666
 
 """
 from alembic import op
 import sqlalchemy as sa
 
-import os
-environment = os.getenv("FLASK_ENV")
-SCHEMA = os.environ.get("SCHEMA")
-
 
 # revision identifiers, used by Alembic.
-revision = '3e0c033fc080'
+revision = 'b9990fb8ad7d'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -29,19 +25,21 @@ def upgrade():
     sa.Column('createdAt', sa.String(length=55), nullable=False),
     sa.PrimaryKeyConstraint('id')
     )
-    if environment == "production":
-        op.execute(f"ALTER TABLE boards SET SCHEMA {SCHEMA};")
     op.create_table('users',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('username', sa.String(length=40), nullable=False),
     sa.Column('email', sa.String(length=255), nullable=False),
     sa.Column('hashed_password', sa.String(length=255), nullable=False),
+    sa.Column('first_name', sa.String(length=55), nullable=True),
+    sa.Column('last_name', sa.String(length=55), nullable=True),
+    sa.Column('profile_img', sa.String(), nullable=True),
+    sa.Column('about', sa.String(), nullable=True),
+    sa.Column('website', sa.String(), nullable=True),
+    sa.Column('pronouns', sa.String(), nullable=True),
     sa.PrimaryKeyConstraint('id'),
     sa.UniqueConstraint('email'),
     sa.UniqueConstraint('username')
     )
-    if environment == "production":
-        op.execute(f"ALTER TABLE users SET SCHEMA {SCHEMA};")
     op.create_table('pins',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('profile_id', sa.Integer(), nullable=False),
@@ -54,16 +52,12 @@ def upgrade():
     sa.ForeignKeyConstraint(['profile_id'], ['users.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
-    if environment == "production":
-        op.execute(f"ALTER TABLE pins SET SCHEMA {SCHEMA};")
     op.create_table('board_pin',
     sa.Column('pins_id', sa.Integer(), nullable=True),
     sa.Column('boards_id', sa.Integer(), nullable=True),
     sa.ForeignKeyConstraint(['boards_id'], ['boards.id'], ),
     sa.ForeignKeyConstraint(['pins_id'], ['pins.id'], )
     )
-    if environment == "production":
-        op.execute(f"ALTER TABLE board_pin SET SCHEMA {SCHEMA};")
     # ### end Alembic commands ###
 
 

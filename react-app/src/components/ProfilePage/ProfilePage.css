@@ -1,0 +1,44 @@
+.main-profile-information-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: white;
+  height: auto;
+}
+
+.main-profile-information-sub-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 30.5rem;
+  height: 20.9rem;
+  margin-top: 2rem;
+}
+
+.main-profile-information-sub-container img {
+  width: 7.5rem;
+  height: 7.5rem;
+  border-radius: 50%;
+}
+
+.main-profile-name-container {
+  font-size: 36px;
+}
+
+.handle-and-pronouns-container {
+  font-size: 14px;
+  color: gray;
+}
+
+.main-profile-information-sub-container button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 7.5rem;
+  height: 3.25rem;
+  border-radius: 3rem;
+  border: 1px solid lightgray;
+  font-size: 18px;
+  margin-top: 1rem;
+  cursor: pointer;
+}
