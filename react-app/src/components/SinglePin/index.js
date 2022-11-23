@@ -21,6 +21,18 @@ const SinglePin = () => {
     setOpenOptions(true);
   };
 
+  useEffect(() => {
+    if (!openOptions) return;
+
+    const closeOptions = () => {
+      setOpenOptions(false);
+    };
+
+    document.addEventListener("click", closeOptions);
+
+    return () => document.removeEventListener("click", closeOptions);
+  }, [openOptions]);
+
   return (
     <>
       <div className="main-single-pin-page">
@@ -31,7 +43,17 @@ const SinglePin = () => {
           <div className="single-pin-right-container">
             <div className="single-pin-right-header">
               <div className="single-pin-header-left-icons">
-                <i class="fa-solid fa-ellipsis"></i>
+                <i class="fa-solid fa-ellipsis" onClick={onOpenOptions}></i>
+                {openOptions && (
+                  <div className="option-dropdown-container">
+                    <NavLink
+                      to={`/pins/${pinId}/edit`}
+                      style={{ textDecoration: "none" }}
+                    >
+                      <button>Edit Pin</button>
+                    </NavLink>
+                  </div>
+                )}
               </div>
               <div className="single-pin-header-save-button">
                 <button>Save</button>

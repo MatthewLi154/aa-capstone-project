@@ -9,7 +9,7 @@ import UsersList from "./components/UsersList";
 import User from "./components/User";
 import PinBuilder from "./components/PinBuilder";
 import SinglePin from "./components/SinglePin";
-import CreatedPins from "./components/ProfilePage/CreatedPins";
+import EditPin from "./components/EditPin";
 import { authenticate } from "./store/session";
 
 import Main from "./components/Main";
@@ -48,6 +48,9 @@ function App() {
         </ProtectedRoute>
         <Route path="/profile/:profileId">
           <ProfilePage />
+        </Route>
+        <Route path="/pins/:pinId/edit">
+          <EditPin />
         </Route>
         <Route path="/pins/:pinId" exact={true}>
           <SinglePin />
