@@ -1,8 +1,8 @@
 """create all table
 
-Revision ID: 6a27a77315b9
+Revision ID: 3e0c033fc080
 Revises:
-Create Date: 2022-11-22 21:54:43.862157
+Create Date: 2022-11-23 00:36:41.664085
 
 """
 from alembic import op
@@ -14,7 +14,7 @@ SCHEMA = os.environ.get("SCHEMA")
 
 
 # revision identifiers, used by Alembic.
-revision = '6a27a77315b9'
+revision = '3e0c033fc080'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -44,7 +44,7 @@ def upgrade():
         op.execute(f"ALTER TABLE users SET SCHEMA {SCHEMA};")
     op.create_table('pins',
     sa.Column('id', sa.Integer(), nullable=False),
-    sa.Column('profile_id', sa.String(length=20), nullable=False),
+    sa.Column('profile_id', sa.Integer(), nullable=False),
     sa.Column('destination_link', sa.String(length=255), nullable=False),
     sa.Column('title', sa.String(length=55), nullable=False),
     sa.Column('about', sa.String(length=255), nullable=False),
