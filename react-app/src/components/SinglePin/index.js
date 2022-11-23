@@ -9,12 +9,17 @@ const SinglePin = () => {
   const { pinId } = useParams();
   const currentPin = useSelector((state) => state.pins.singlePin);
 
-  console.log(currentPin);
+  const [openOptions, setOpenOptions] = useState(false);
 
   useEffect(() => {
     dispatch(fetchAllPins());
     dispatch(fetchSinglePin(pinId));
   }, []);
+
+  const onOpenOptions = async (e) => {
+    if (openOptions) return;
+    setOpenOptions(true);
+  };
 
   return (
     <>

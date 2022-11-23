@@ -2,8 +2,8 @@ from .db import db, environment, SCHEMA, add_prefix_for_prod
 
 board_pin = db.Table('board_pin',
     db.Model.metadata,
-    db.Column('pins_id', db.Integer, db.ForeignKey('pins.id')),
-    db.Column('boards_id', db.Integer, db.ForeignKey('boards.id'))
+    db.Column('pins_id', db.Integer, db.ForeignKey(add_prefix_for_prod('pins.id'))),
+    db.Column('boards_id', db.Integer, db.ForeignKey(add_prefix_for_prod('boards.id')))
 )
 
 class Board(db.Model):
