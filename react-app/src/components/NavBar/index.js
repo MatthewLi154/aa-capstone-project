@@ -5,6 +5,7 @@ import "./NavBar.css";
 
 const NavBar = () => {
   const [showMenu, setShowMenu] = useState(false);
+  const [profileDropDown, setProfileDropDown] = useState(false)
 
   const openMenu = () => {
     if (showMenu) return;
@@ -22,6 +23,23 @@ const NavBar = () => {
 
     return () => document.removeEventListener("click", closeMenu);
   }, [showMenu]);
+
+  const openProfileDropDown = () => {
+    if (profileDropDown) return
+    setProfileDropDown(true)
+  }
+
+  useEffect(() => {
+    if (!profileDropDown) return
+
+    const closeProfileDropDown = () => {
+      setProfileDropDown(false)
+    }
+
+    document.addEventListener("click", closeProfileDropDown);
+
+    return () => document.removeEventListener("click", closeProfileDropDown);
+  }, [profileDropDown])
 
   const loggedOut = (
     <nav>
@@ -160,8 +178,12 @@ const NavBar = () => {
           <div className="navbar-profile-picture">
             <img src="https://i.pinimg.com/564x/08/13/5c/08135cd812b33ad4788956ac2980898f.jpg"></img>
           </div>
+          {profileDropDown &&
+          (<div className="profile-drop-down">
+            <div>username</div>
+          </div>)}
         </div>
-        <div className="nav-button-container">
+        <div className="nav-button-container" onClick={openProfileDropDown}>
           <i class="fa-solid fa-angle-down"></i>
         </div>
         <div className="nav-button-container">
