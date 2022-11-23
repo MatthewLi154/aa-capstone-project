@@ -47,3 +47,38 @@
 .navbar-profile-picture img:hover {
   background-color: rgba(225, 225, 225, 0.497);
 }
+
+.create-pin-dropdown {
+  background-color: white;
+  /* border: black solid 1px; */
+  position: absolute;
+  left: -2rem;
+  top: 2rem;
+  height: 5.8rem;
+  width: 11.4rem;
+  border-radius: 1rem;
+  box-shadow: 2px 2px 2px lightgray;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.fa-angle-down {
+  cursor: pointer;
+  position: relative;
+}
+
+.create-angle-and-dropdown {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.create-angle-and-dropdown li {
+  list-style: none;
+}
+
+.create-angle-and-dropdown ul {
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+}

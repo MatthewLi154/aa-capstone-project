@@ -1,9 +1,28 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import LogoutButton from "../auth/LogoutButton";
 import "./NavBar.css";
 
 const NavBar = () => {
+  const [showMenu, setShowMenu] = useState(false);
+
+  const openMenu = () => {
+    if (showMenu) return;
+    setShowMenu(true);
+  };
+
+  useEffect(() => {
+    if (!showMenu) return;
+
+    const closeMenu = () => {
+      setShowMenu(false);
+    };
+
+    document.addEventListener("click", closeMenu);
+
+    return () => document.removeEventListener("click", closeMenu);
+  }, [showMenu]);
+
   const loggedOut = (
     <nav>
       <div className="navbar-main-container">
@@ -113,7 +132,7 @@ const NavBar = () => {
         </div>
         <div className="nav-button-container">
           <NavLink
-            to="/"
+            to="/pin-builder"
             exact={true}
             style={{ textDecoration: "none" }}
             activeClassName="active"
@@ -121,8 +140,20 @@ const NavBar = () => {
             Create
           </NavLink>
         </div>
+        <div className="create-angle-and-dropdown">
+          <div onClick={openMenu}>
+            <i className="fa-solid fa-angle-down"></i>
+          </div>
+          {showMenu && (
+            <div className="create-pin-dropdown">
+              <ul>
+                <li>Create Pin</li>
+              </ul>
+            </div>
+          )}
+        </div>
         <div className="nav-button-container search-container">
-          <i class="fa-solid fa-magnifying-glass"></i>
+          <i className="fa-solid fa-magnifying-glass"></i>
           <input placeholder="Search"></input>
         </div>
         <div>
