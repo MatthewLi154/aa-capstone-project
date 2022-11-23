@@ -6,6 +6,7 @@ board_pins = db.Table('board_pins',
 )
 if environment == "production":
     board_pins.schema = SCHEMA
+
 class Board(db.Model):
     __tablename__ = 'boards'
 
