@@ -139,7 +139,7 @@ const NavBar = () => {
         <div className="nav-button-container">
           <NavLink
             to="/login"
-            style={{ textDecoration: "none" }}
+            style={{ textDecoration: "none", color: "black" }}
             exact={true}
             activeClassName="active"
           >

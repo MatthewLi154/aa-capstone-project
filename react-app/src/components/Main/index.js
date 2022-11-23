@@ -1,15 +1,29 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { fetchAllPins } from "../../store/pin";
 import "./mainpage.css";
 
 const Main = () => {
+  const dispatch = useDispatch();
+  const allPins = useSelector((state) => Object.values(state.pins.allPins));
+
+  useEffect(() => {
+    dispatch(fetchAllPins());
+  }, []);
+
   return (
     <>
-      <h1>You are on the main page</h1>
-      <img
-        src="https://i.ibb.co/c8mk2g0/n-logo-2.png"
-        alt="n-logo-2"
-        border="0"
-      />
+      <div className="all-pins-main-container">
+        {allPins &&
+          allPins.map((pin) => (
+            <div className="pin-container">
+              <div>
+                <img src={pin.image}></img>
+              </div>
+              <div>{pin.title}</div>
+            </div>
+          ))}
+      </div>
     </>
   );
 };
