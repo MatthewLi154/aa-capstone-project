@@ -20,6 +20,7 @@ def get_single_pin(id):
     pin = Pin.query.get(id)
     return pin.to_dict()
 
+
 @pin_routes.route('', methods=['POST'])
 def add_pin():
     """
@@ -31,3 +32,14 @@ def add_pin():
     db.session.add(new_pin)
     db.session.commit()
     return new_pin.to_dict()
+
+
+@pin_routes.route('/<id>', methods=['DELETE'])
+def delete_pin(id):
+    """
+    This route will delete a pin by their pin id
+    """
+    pin = Pin.query.get(id)
+    db.session.delete(pin)
+    db.session.commit()
+    return {"message": "Successfully deleted"}

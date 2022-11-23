@@ -2,6 +2,7 @@
 const LOAD_ALL_PINS = "pins/loadAllPins";
 const ADD_PIN = "pins/addPin";
 const LOAD_PIN = "pins/loadPin";
+const DELETE_PIN = "pins/deletePin";
 
 // Actions
 export const getAllPins = (data) => {
@@ -22,6 +23,13 @@ export const getPin = (data) => {
   return {
     type: LOAD_PIN,
     pin: data,
+  };
+};
+
+export const removePin = (data) => {
+  return {
+    type: DELETE_PIN,
+    id: data,
   };
 };
 
@@ -60,6 +68,17 @@ export const addNewPin = (pinData) => async (dispatch) => {
   }
 };
 
+export const deletePin = (pinId) => async (dispatch) => {
+  const response = await fetch(`/api/pins/${pinId}`, {
+    method: "DELETE",
+  });
+
+  if (response.ok) {
+    const data = await response.json();
+    dispatch(removePin(pinId));
+  }
+};
+
 // Reducer
 
 const initialState = { allPins: {}, singlePin: {} };
@@ -76,6 +95,10 @@ const pinsReducer = (state = initialState, action) => {
       return pinsStateObj;
     case LOAD_PIN:
       pinsStateObj.singlePin = action.pin;
+      return pinsStateObj;
+    case DELETE_PIN:
+      delete pinsStateObj.allPins[action.id];
+      pinsStateObj.singlePin = {};
       return pinsStateObj;
     default:
       return state;

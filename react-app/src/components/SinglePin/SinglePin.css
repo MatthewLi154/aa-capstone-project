@@ -1,3 +1,104 @@
-.single-pin-main-container {
-  width: 57rem;
+.main-single-pin-page {
+  display: flex;
+  justify-content: center;
+}
+
+.main-single-pin-container {
+  margin: 2rem;
+  width: 63.5rem;
+  min-height: 40rem;
+  background-color: white;
+  border-radius: 2.5rem;
+  box-shadow: 5px 5px 5px 5px rgba(233, 231, 231, 0.4);
+  display: flex;
+  flex-direction: row;
+  z-index: 5;
+}
+
+.fa-ellipsis {
+  cursor: pointer;
+}
+
+.single-pin-left-container {
+  width: 31.75rem;
+}
+
+.single-pin-left-container img {
+  width: 31.75rem;
+  height: auto;
+  border-radius: 2.5rem;
+  cursor: pointer;
+}
+
+.single-pin-right-container {
+  width: 100%;
+  height: 100%;
+  border-radius: 2.5rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.single-pin-right-header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 1.5rem;
+  margin-left: 2rem;
+  margin-right: 2rem;
+}
+
+.single-pin-margin-left {
+  margin: 0rem 2rem;
+}
+
+.single-pin-header-save-button button {
+  background-color: red;
+  border: none;
+  width: 2rem;
+  height: 1.3rem;
+  padding: 1.4rem 1.75rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 3rem;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.single-pin-destination-link {
+  font-weight: none;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.single-pin-title {
+  margin-top: 1rem;
+  font-size: 36px;
+}
+
+.single-pin-creator-details {
+  margin-top: 0.75rem;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.main-creator-container {
+  justify-content: space-between;
+}
+
+.single-pin-creator-details button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.875rem;
+  height: 1.3rem;
+  background-color: #efefef;
+  border: none;
+  padding: 1.5rem 2rem;
+  border-radius: 2.25rem;
+  color: black;
+  font-weight: bold;
 }
