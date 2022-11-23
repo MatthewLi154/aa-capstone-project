@@ -1,10 +1,10 @@
-from flask import Blueprint
-from app.models import User, Pin
+from flask import Blueprint, request
+from app.models import User, Pin, db
 
 pin_routes = Blueprint('pins', __name__)
 
 
-@pin_routes.route('/')
+@pin_routes.route('')
 def pins():
     """
     Query for all pins and returns them in a list of pin dictionaries
@@ -14,3 +14,20 @@ def pins():
     for pin in pins:
         pins_dict[pin.id] = pin.to_dict()
     return pins_dict
+
+@pin_routes.route('/<id>')
+def get_single_pin(id):
+    pin = Pin.query.get(id)
+    return pin.to_dict()
+
+@pin_routes.route('', methods=['POST'])
+def add_pin():
+    """
+    This route will take in pin data from pin-builder and store it into the database,
+    then return json data of the pin
+    """
+    data = request.get_json()
+    new_pin = Pin(**data)
+    db.session.add(new_pin)
+    db.session.commit()
+    return new_pin.to_dict()

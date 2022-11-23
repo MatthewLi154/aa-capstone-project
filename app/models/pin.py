@@ -11,6 +11,8 @@ class Pin(db.Model):
     profile_id = db.Column(db.String(20), db.ForeignKey(add_prefix_for_prod('users.id')),nullable=False)
     destination_link = db.Column(db.String(255), nullable=False)
     title = db.Column(db.String(55), nullable=False)
+    about = db.Column(db.String(255), nullable=False)
+    alt_text = db.Column(db.String(255))
     note = db.Column(db.String(255))
     image = db.Column(db.String(255), nullable=False)
 
@@ -24,6 +26,12 @@ class Pin(db.Model):
             'profile_id': self.profile_id,
             'destination_link': self.destination_link,
             'title': self.title,
+            'about': self.about,
+            'alt_text': self.alt_text,
             'note': self.note,
             'image': self.image
         }
+
+    def __init__(self, **dictionary):
+        for k, v in dictionary.items():
+            setattr(self,k,v)

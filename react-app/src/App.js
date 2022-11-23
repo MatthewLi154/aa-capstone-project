@@ -8,6 +8,7 @@ import ProtectedRoute from "./components/auth/ProtectedRoute";
 import UsersList from "./components/UsersList";
 import User from "./components/User";
 import PinBuilder from "./components/PinBuilder";
+import SinglePin from "./components/SinglePin";
 import { authenticate } from "./store/session";
 
 import Main from "./components/Main";
@@ -43,6 +44,9 @@ function App() {
         <ProtectedRoute path="/users/:userId" exact={true}>
           <User />
         </ProtectedRoute>
+        <Route path="/pins/:pinId">
+          <SinglePin />
+        </Route>
         <Route path="/pin-builder" exact={true}>
           <PinBuilder />
         </Route>

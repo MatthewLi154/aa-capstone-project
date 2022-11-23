@@ -1,9 +1,51 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { fetchAllPins } from "../../store/pin";
+import { addNewPin, fetchAllPins } from "../../store/pin";
 import "./PinBuilder.css";
 
 const PinBuilder = () => {
+  const dispatch = useDispatch();
+  const currentProfileId = useSelector((state) => state.session.user.id);
+
+  const [destinationLink, setDestinationLink] = useState("");
+  const [title, setTitle] = useState("");
+  const [about, setAbout] = useState("");
+  const [altText, setAltText] = useState("");
+  const [image, setImage] = useState("");
+  const [errors, setErrors] = useState([]);
+
+  const [openAlt, setOpenAlt] = useState(false);
+
+  const openAltText = () => {
+    if (openAlt) return;
+    setOpenAlt(true);
+  };
+
+  useEffect(() => {
+    console.log(title);
+    console.log(image);
+    console.log(destinationLink);
+    console.log(altText);
+    console.log(about);
+  }, [title, image, destinationLink, altText, about]);
+
+  const onSubmit = async (e) => {
+    if (errors.length > 0) {
+      e.preventDefault();
+    }
+
+    const newPin = {
+      profile_id: currentProfileId,
+      destination_link: destinationLink,
+      title: title,
+      about: about,
+      image: image,
+      alt_text: altText,
+    };
+
+    await dispatch(addNewPin(newPin));
+  };
+
   return (
     <>
       <div className="main-pin-builder-page">
@@ -13,7 +55,7 @@ const PinBuilder = () => {
               <i class="fa-solid fa-ellipsis"></i>
             </div>
             <div className="save-to-board-dropdown-button">
-              <div className="save-button-container-header">
+              <div className="save-button-container-header" onClick={onSubmit}>
                 <div className="select-container-pin-builder">Select</div>
                 <div className="select-container-angle-down">
                   <i className="fa-solid fa-angle-down"></i>
@@ -27,7 +69,11 @@ const PinBuilder = () => {
           <div className="center-pin-builder-details">
             <div className="left-drag-and-drop-upload">
               <div className="drag-and-drop-upload-container">
-                <div>drag and drop or click to upload</div>
+                <input
+                  placeholder="image url"
+                  value={image}
+                  onChange={(e) => setImage(e.target.value)}
+                ></input>
               </div>
               <div className="save-from-site-button">
                 <button>Save from site</button>
@@ -35,7 +81,11 @@ const PinBuilder = () => {
             </div>
             <div className="right-pin-detail-fields">
               <div className="add-your-title-container">
-                <input placeholder="Add your title"></input>
+                <input
+                  placeholder="Add your title"
+                  value={title}
+                  onChange={(e) => setTitle(e.target.value)}
+                ></input>
               </div>
               <div className="profile-pic-username-container">
                 <div className="profile-pic-container-pin-builder">
@@ -46,13 +96,31 @@ const PinBuilder = () => {
                 </div>
               </div>
               <div className="pin-about-container-pin-builder">
-                <input placeholder="Tell everyone what your Pin is about"></input>
+                <input
+                  placeholder="Tell everyone what your Pin is about"
+                  value={about}
+                  onChange={(e) => setAbout(e.target.value)}
+                ></input>
               </div>
-              <div className="add-alt-text-button">
-                <button>Add alt text</button>
-              </div>
+              {openAlt ? (
+                <div className="pin-about-container-pin-builder">
+                  <input
+                    placeholder="Explain what people can see in the Pin"
+                    value={altText}
+                    onChange={(e) => setAltText(e.target.value)}
+                  ></input>
+                </div>
+              ) : (
+                <div className="add-alt-text-button">
+                  <button onClick={openAltText}>Add alt text</button>
+                </div>
+              )}
               <div className="add-destination-link-container">
-                <input placeholder="Add a destination link"></input>
+                <input
+                  placeholder="Add a destination link"
+                  value={destinationLink}
+                  onChange={(e) => setDestinationLink(e.target.value)}
+                ></input>
               </div>
             </div>
           </div>

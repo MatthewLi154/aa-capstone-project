@@ -1,11 +1,27 @@
 // Constants
 const LOAD_ALL_PINS = "pins/loadAllPins";
+const ADD_PIN = "pins/addPin";
+const LOAD_PIN = "pins/loadPin";
 
 // Actions
 export const getAllPins = (data) => {
   return {
     type: LOAD_ALL_PINS,
     pins: data,
+  };
+};
+
+export const addPin = (data) => {
+  return {
+    type: ADD_PIN,
+    pin: data,
+  };
+};
+
+export const getPin = (data) => {
+  return {
+    type: LOAD_PIN,
+    pin: data,
   };
 };
 
@@ -20,6 +36,30 @@ export const fetchAllPins = () => async (dispatch) => {
   }
 };
 
+export const fetchSinglePin = (pinId) => async (dispatch) => {
+  const response = await fetch(`/api/pins/${pinId}`);
+
+  if (response.ok) {
+    const data = await response.json();
+    dispatch(getPin(data));
+    return data;
+  }
+};
+
+export const addNewPin = (pinData) => async (dispatch) => {
+  const response = await fetch("/api/pins", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(pinData),
+  });
+
+  if (response.ok) {
+    const data = await response.json();
+    dispatch(addPin(data));
+    return data;
+  }
+};
+
 // Reducer
 
 const initialState = { allPins: {}, singlePin: {} };
@@ -29,6 +69,13 @@ const pinsReducer = (state = initialState, action) => {
   switch (action.type) {
     case LOAD_ALL_PINS:
       pinsStateObj.allPins = action.pins;
+      return pinsStateObj;
+    case ADD_PIN:
+      pinsStateObj.singlePin = action.pin;
+      pinsStateObj.allPins[action.pin.id] = action.pin;
+      return pinsStateObj;
+    case LOAD_PIN:
+      pinsStateObj.singlePin = action.pin;
       return pinsStateObj;
     default:
       return state;

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { NavLink } from "react-router-dom";
 import { fetchAllPins } from "../../store/pin";
 import "./mainpage.css";
 
@@ -12,23 +13,6 @@ const Main = () => {
     dispatch(fetchAllPins());
   }, []);
 
-  const openMenu = () => {
-    if (showMenu) return;
-    setShowMenu(true);
-  };
-
-  useEffect(() => {
-    if (!showMenu) return;
-
-    const closeMenu = () => {
-      setShowMenu(false);
-    };
-
-    document.addEventListener("click", closeMenu);
-
-    return () => document.removeEventListener("click", closeMenu);
-  }, [showMenu]);
-
   const randomHeight = () => {
     return 9 * Math.ceil(Math.random() * 3);
   };
@@ -39,13 +23,15 @@ const Main = () => {
         {allPins &&
           allPins.map((pin) => (
             <div className="pin-container">
-              <div>
-                <img
-                  src={pin.image}
-                  style={{ height: `${randomHeight()}rem` }}
-                ></img>
-              </div>
-              <div>{pin.title}</div>
+              <NavLink to={`/pins/${pin.id}`}>
+                <div>
+                  <img
+                    src={pin.image}
+                    style={{ height: `${randomHeight()}rem` }}
+                  ></img>
+                </div>
+                <div>{pin.title}</div>
+              </NavLink>
             </div>
           ))}
       </div>

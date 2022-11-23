@@ -1,7 +1,11 @@
-html {
-  background-color: antiquewhite;
+html,
+body {
+  /* background-color: antiquewhite; */
+  background-color: #efefef;
   margin: 0;
   padding: 0;
+  font-family: "Familjen Grotesk", sans-serif;
+  font-weight: bold;
 }
 
 .all-pins-main-container {

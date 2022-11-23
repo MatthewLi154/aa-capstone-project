@@ -7,6 +7,7 @@
   justify-content: center;
   font-family: "Familjen Grotesk", sans-serif;
   font-size: 1.313rem;
+  background-color: white;
 }
 
 .nav-button-container {
@@ -19,13 +20,13 @@
 .search-container i {
   border-top-left-radius: 2rem;
   border-bottom-left-radius: 2rem;
-  background-color: white;
   color: gray;
   height: 3rem;
   width: 2.5rem;
   display: flex;
   align-items: center;
   justify-content: center;
+  background-color: #efefef;
 }
 
 .search-container input {
@@ -35,6 +36,7 @@
   border: none;
   border-top-right-radius: 2rem;
   border-bottom-right-radius: 2rem;
+  background-color: #efefef;
 }
 
 .navbar-profile-picture img {
