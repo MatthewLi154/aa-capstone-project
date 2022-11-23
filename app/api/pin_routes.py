@@ -44,13 +44,18 @@ def delete_pin(id):
     db.session.commit()
     return {"message": "Successfully deleted"}
 
-@pin_routes.route('/profile/<profile_id>/pins/created')
-def profile_pins(profile_id):
+@pin_routes.route("<id>/edit", methods=['PUT'])
+def edit_pin(id):
     """
-    Query all pins created by user
+    This route will edit a pin by their pin id
     """
-    pins = Pin.query.filter_by(profile_id=id).all()
-    pins_dict = {}
-    for pin in pins:
-        pins_dict[pin.id] = pin.to_dict()
-    return pins_dict
+    pin = Pin.query.get(id)
+    data = request.get_json()
+    print(data)
+    pin.title = data['title']
+    pin.destination_link = data['destination_link']
+    pin.about = data['about']
+    pin.note = data['note']
+    pin.alt_text = data['alt_text']
+    db.session.commit()
+    return pin.to_dict()
