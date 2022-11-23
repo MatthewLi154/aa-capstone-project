@@ -4,7 +4,8 @@ board_pins = db.Table('board_pins',
     db.Column('pins_id', db.Integer, db.ForeignKey(add_prefix_for_prod('pins.id')), primary_key=True),
     db.Column('boards_id', db.Integer, db.ForeignKey(add_prefix_for_prod('boards.id')), primary_key=True)
 )
-
+if environment == "production":
+    board_pins.schema = SCHEMA
 class Board(db.Model):
     __tablename__ = 'boards'
 
