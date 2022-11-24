@@ -1,7 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { NavLink, useParams, useHistory } from "react-router-dom";
-import { editSinglePin, fetchAllPins, fetchSinglePin } from "../../store/pin";
+import {
+  editSinglePin,
+  fetchAllPins,
+  fetchSinglePin,
+  deletePin,
+} from "../../store/pin";
 import "./EditPin.css";
 
 const EditPin = () => {
@@ -9,17 +14,36 @@ const EditPin = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const pin = useSelector((state) => state.pins.singlePin);
+  const currentProfileId = useSelector((state) => state.session.user.id);
 
   const [title, setTitle] = useState("");
   const [about, setAbout] = useState("");
   const [destinationLink, setDestinationLink] = useState("");
   const [note, setNote] = useState("");
   const [altText, setAltText] = useState("");
+  const [openOptions, setOpenOptions] = useState(false);
   const [errors, setErrors] = useState([]);
 
   useEffect(() => {
     dispatch(fetchSinglePin(pinId));
   }, []);
+
+  const onOpenOptions = async (e) => {
+    if (openOptions) return;
+    setOpenOptions(true);
+  };
+
+  useEffect(() => {
+    if (!openOptions) return;
+
+    const closeOptions = () => {
+      setOpenOptions(false);
+    };
+
+    document.addEventListener("click", closeOptions);
+
+    return () => document.removeEventListener("click", closeOptions);
+  }, [openOptions]);
 
   const validate = () => {
     let errors = [];
@@ -86,6 +110,20 @@ const EditPin = () => {
     history.push(`/pins/${pinId}`);
   };
 
+  const onDelete = async (e) => {
+    e.preventDefault();
+    const response = window.confirm(
+      "Are you sure you want to delete this pin?"
+    );
+
+    if (response) {
+      await dispatch(deletePin(pinId));
+      await dispatch(fetchAllPins());
+    }
+
+    history.push(`/profile/${currentProfileId}`);
+  };
+
   return (
     <>
       <div className="edit-page-main-container">
@@ -97,8 +135,13 @@ const EditPin = () => {
         <div className="right-container-edit-details-container">
           <div className="edit-header-icons-container">
             <div className="edit-header-icons">
-              <div>
+              <div onClick={onOpenOptions}>
                 <i className="fa-solid fa-ellipsis"></i>
+                {openOptions && (
+                  <div className="option-dropdown-container" onClick={onDelete}>
+                    <button>Delete Pin</button>
+                  </div>
+                )}
               </div>
               <div className="single-pin-header-save-button" onClick={onSave}>
                 <button>Save</button>

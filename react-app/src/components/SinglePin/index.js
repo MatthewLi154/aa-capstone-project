@@ -46,12 +46,14 @@ const SinglePin = () => {
                 <i class="fa-solid fa-ellipsis" onClick={onOpenOptions}></i>
                 {openOptions && (
                   <div className="option-dropdown-container">
-                    <NavLink
-                      to={`/pins/${pinId}/edit`}
-                      style={{ textDecoration: "none" }}
-                    >
-                      <button>Edit Pin</button>
-                    </NavLink>
+                    <button>
+                      <NavLink
+                        to={`/pins/${pinId}/edit`}
+                        style={{ textDecoration: "none", color: "black" }}
+                      >
+                        Edit Pin
+                      </NavLink>
+                    </button>
                   </div>
                 )}
               </div>
