@@ -1,4 +1,5 @@
 from .db import db, environment, SCHEMA, add_prefix_for_prod
+from .pin import Pin
 
 board_pins = db.Table(
     'board_pins',
@@ -25,4 +26,4 @@ class Board(db.Model):
     profile_id = db.Column(db.Integer, nullable=False)
     createdAt = db.Column(db.String(55), nullable=False)
 
-    pins = db.relationship('Pin', secondary=board_pins, back_populates="boards")
+    pins = db.relationship('Pin', secondary=board_pins, lazy='subquery', backref=db.backref('boards', lazy=True))

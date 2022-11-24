@@ -1,5 +1,5 @@
 from .db import db, environment, SCHEMA, add_prefix_for_prod
-from .board import Board, board_pins
+# from .board import Board, board_pins
 
 class Pin(db.Model):
     __tablename__ = 'pins'
@@ -18,7 +18,7 @@ class Pin(db.Model):
 
     user = db.relationship("User", back_populates="user_pins")
 
-    boards = db.relationship("Board", secondary=board_pins, back_populates="pins")
+    # boards = db.relationship("Board", secondary=board_pins, back_populates="pins")
 
     def to_dict(self):
         return {
