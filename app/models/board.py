@@ -18,4 +18,4 @@ class Board(db.Model):
     profile_id = db.Column(db.Integer, nullable=False)
     createdAt = db.Column(db.String(55), nullable=False)
 
-    pins = db.relationship('Pin', secondary=board_pins, back_populates="boards")
+    pins = db.relationship('Pin', secondary=board_pins, foreign_keys=[board_pins.boards_id], back_populates="boards")
