@@ -1,21 +1,16 @@
 """create all table
 
-Revision ID: 06c375551ce3
-Revises:
-Create Date: 2022-11-24 00:54:40.789915
+Revision ID: 98abcd813766
+Revises: 
+Create Date: 2022-11-24 01:27:16.752273
 
 """
 from alembic import op
 import sqlalchemy as sa
 
 
-import os
-environment = os.getenv("FLASK_ENV")
-SCHEMA = os.environ.get("SCHEMA")
-
-
 # revision identifiers, used by Alembic.
-revision = '06c375551ce3'
+revision = '98abcd813766'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -30,8 +25,6 @@ def upgrade():
     sa.Column('createdAt', sa.String(length=55), nullable=False),
     sa.PrimaryKeyConstraint('id')
     )
-    if environment == "production":
-        op.execute(f"ALTER TABLE boards SET SCHEMA {SCHEMA};")
     op.create_table('users',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('username', sa.String(length=40), nullable=False),
@@ -47,8 +40,6 @@ def upgrade():
     sa.UniqueConstraint('email'),
     sa.UniqueConstraint('username')
     )
-    if environment == "production":
-        op.execute(f"ALTER TABLE users SET SCHEMA {SCHEMA};")
     op.create_table('pins',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('profile_id', sa.Integer(), nullable=False),
@@ -61,17 +52,14 @@ def upgrade():
     sa.ForeignKeyConstraint(['profile_id'], ['users.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
-    if environment == "production":
-        op.execute(f"ALTER TABLE pins SET SCHEMA {SCHEMA};")
     op.create_table('board_pins',
-    sa.Column('pins_id', sa.Integer(), nullable=False),
-    sa.Column('boards_id', sa.Integer(), nullable=False),
-    sa.ForeignKeyConstraint(['boards_id'], ['boards.id'], ),
-    sa.ForeignKeyConstraint(['pins_id'], ['pins.id'], ),
-    sa.PrimaryKeyConstraint('pins_id', 'boards_id')
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('pin_id', sa.Integer(), nullable=False),
+    sa.Column('board_id', sa.Integer(), nullable=False),
+    sa.ForeignKeyConstraint(['board_id'], ['boards.id'], ),
+    sa.ForeignKeyConstraint(['pin_id'], ['pins.id'], ),
+    sa.PrimaryKeyConstraint('id')
     )
-    if environment == "production":
-        op.execute(f"ALTER TABLE board_pins SET SCHEMA {SCHEMA};")
     # ### end Alembic commands ###
 
 

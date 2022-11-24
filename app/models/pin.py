@@ -1,5 +1,6 @@
 from .db import db, environment, SCHEMA, add_prefix_for_prod
 # from .board import Board, board_pins
+from .board_pins import BoardPin
 
 class Pin(db.Model):
     __tablename__ = 'pins'
@@ -17,6 +18,9 @@ class Pin(db.Model):
     image = db.Column(db.String(255), nullable=False)
 
     user = db.relationship("User", back_populates="user_pins")
+
+    pin_to_boardpin = db.relationship("BoardPin", foreign_keys=[BoardPin.pin_id], back_populates="board_join")
+
 
     # boards = db.relationship("Board", secondary=board_pins, back_populates="pins")
 

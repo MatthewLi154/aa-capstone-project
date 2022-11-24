@@ -1,19 +1,19 @@
 from .db import db, environment, SCHEMA, add_prefix_for_prod
-from .pin import Pin
+from .board_pins import BoardPin
 
-board_pins = db.Table(
-    'board_pins',
-    db.Column('pins_id',
-              db.Integer,
-              db.ForeignKey(add_prefix_for_prod('pins.id')),
-              primary_key=True),
-    db.Column('boards_id',
-              db.Integer,
-              db.ForeignKey(add_prefix_for_prod('boards.id')),
-              primary_key=True)
-)
-if environment == "production":
-    board_pins.schema = SCHEMA
+# board_pins = db.Table(
+#     'board_pins',
+#     db.Column('pins_id',
+#               db.Integer,
+#               db.ForeignKey(add_prefix_for_prod('pins.id')),
+#               primary_key=True),
+#     db.Column('boards_id',
+#               db.Integer,
+#               db.ForeignKey(add_prefix_for_prod('boards.id')),
+#               primary_key=True)
+# )
+# if environment == "production":
+#     board_pins.schema = SCHEMA
 
 class Board(db.Model):
     __tablename__ = 'boards'
@@ -26,4 +26,4 @@ class Board(db.Model):
     profile_id = db.Column(db.Integer, nullable=False)
     createdAt = db.Column(db.String(55), nullable=False)
 
-    pins = db.relationship('Pin', secondary=board_pins, lazy='subquery', backref=db.backref('boards', lazy=True))
+    board_to_boardpin = db.relationship("BoardPin", foreign_keys=[BoardPin.pin_id], back_populates="pin_join")
