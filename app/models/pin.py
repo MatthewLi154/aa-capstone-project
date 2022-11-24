@@ -8,7 +8,7 @@ class Pin(db.Model):
         __table_args_ = {'schema': SCHEMA}
 
     id = db.Column(db.Integer, primary_key=True)
-    profile_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('users.id')),nullable=False)
+    profile_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('users.id')), nullable=False)
     destination_link = db.Column(db.String(255), nullable=False)
     title = db.Column(db.String(55), nullable=False)
     about = db.Column(db.String(255), nullable=False)

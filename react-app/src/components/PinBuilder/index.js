@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { addNewPin, fetchAllPins } from "../../store/pin";
+import { useHistory } from "react-router-dom";
 import "./PinBuilder.css";
 
 const PinBuilder = () => {
   const dispatch = useDispatch();
+  const history = useHistory();
   const currentProfileId = useSelector((state) => state.session.user.id);
 
   const [destinationLink, setDestinationLink] = useState("");
@@ -29,9 +31,35 @@ const PinBuilder = () => {
     console.log(about);
   }, [title, image, destinationLink, altText, about]);
 
+  const validate = () => {
+    let errors = [];
+
+    // validate title
+    if (title.length === 0) {
+      errors.push("Please enter a title");
+    } else if (title.length > 100) {
+      errors.push("Title can not exceed 100 characters");
+    }
+
+    if (about.length === 0) {
+      errors.push("Please enter a description for this pin");
+    } else if (about.length > 255) {
+      errors.push("Description can not exceed 255 characters");
+    }
+
+    if (altText.length > 255) {
+      errors.push("Alt text can not exceed 255 characters");
+    }
+
+    return errors;
+  };
+
   const onSubmit = async (e) => {
+    e.preventDefault();
+
     if (errors.length > 0) {
       e.preventDefault();
+      return setErrors(errors);
     }
 
     const newPin = {
@@ -44,6 +72,9 @@ const PinBuilder = () => {
     };
 
     await dispatch(addNewPin(newPin));
+    await dispatch(fetchAllPins());
+
+    history.push(`/profile/${currentProfileId}`);
   };
 
   return (

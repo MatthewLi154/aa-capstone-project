@@ -144,7 +144,7 @@ const EditPin = () => {
                 )}
               </div>
               <div className="single-pin-header-save-button" onClick={onSave}>
-                <button>Save</button>
+                <button>Save Pin</button>
               </div>
             </div>
           </div>
