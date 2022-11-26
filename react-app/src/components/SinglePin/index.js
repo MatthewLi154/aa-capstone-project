@@ -9,7 +9,7 @@ const SinglePin = () => {
   const history = useHistory();
   const { pinId } = useParams();
   const currentPin = useSelector((state) => state.pins.singlePin);
-  const currentProfileId = useSelector((state) => state.session.user.id);
+  // const currentProfileId = useSelector((state) => state.session.user.id);
 
   const [openOptions, setOpenOptions] = useState(false);
 
@@ -46,7 +46,7 @@ const SinglePin = () => {
       await dispatch(fetchAllPins());
     }
 
-    history.push(`/profile/${currentProfileId}`);
+    // history.push(`/profile/${currentProfileId}`);
   };
 
   return (

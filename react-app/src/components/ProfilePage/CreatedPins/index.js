@@ -6,6 +6,8 @@ const CreatedPins = () => {
   const { profileId } = useParams();
 
   const [pins, setPins] = useState("");
+  const [onCreated, setOnCreated] = useState(true);
+  const [onSaved, setOnSaved] = useState(false);
 
   useEffect(async () => {
     await fetch(`/api/profile/${profileId}/pins/created`)
@@ -27,7 +29,6 @@ const CreatedPins = () => {
 
   return (
     <>
-      <h3>Created</h3>
       <div className="all-pins-main-container">
         {pins &&
           pins.map((pin) => (

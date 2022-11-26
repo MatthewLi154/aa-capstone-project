@@ -24,3 +24,11 @@ class Board(db.Model):
     name = db.Column(db.String(55), nullable=False)
     profile_id = db.Column(db.Integer, nullable=False)
     createdAt = db.Column(db.String(55), nullable=False)
+
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'name': self.name,
+            'profile_id': self.profile_id,
+            'createdAt': self.createdAt
+        }
