@@ -14,6 +14,9 @@ const ProfilePage = () => {
   const { profileId } = useParams();
   const currentProfileId = useSelector((state) => state.session.user.id);
   const currentProfile = useSelector((state) => state.profiles.singleProfile);
+  const userBoards = useSelector((state) =>
+    Object.values(state.boards.userBoards)
+  );
 
   const [onCreated, setOnCreated] = useState(false);
 
@@ -68,7 +71,7 @@ const ProfilePage = () => {
                 Saved
               </h3>
             </div>
-            <SavedPins />
+            <SavedPins props={userBoards} />
           </div>
         )}
       </div>

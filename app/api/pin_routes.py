@@ -1,5 +1,5 @@
 from flask import Blueprint, request
-from app.models import User, Pin, db
+from app.models import User, Pin, db, Board, board_pins
 
 pin_routes = Blueprint('pins', __name__)
 
@@ -59,3 +59,6 @@ def edit_pin(id):
     pin.alt_text = data['alt_text']
     db.session.commit()
     return pin.to_dict()
+
+
+@pin_routes("")

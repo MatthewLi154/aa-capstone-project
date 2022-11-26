@@ -36,10 +36,10 @@ const boardReducer = (state = initialState, action) => {
   let boardStateObj = { ...state };
   switch (action.type) {
     case LOAD_ALL_BOARDS:
-      boardStateObj.allBoards = action.data;
+      boardStateObj.allBoards = action.boards;
       return boardStateObj;
     case LOAD_USER_BOARDS:
-      boardStateObj.userBoards = action.data;
+      boardStateObj.userBoards = action.boards;
       return boardStateObj;
     default:
       return state;

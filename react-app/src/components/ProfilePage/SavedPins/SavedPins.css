@@ -1,0 +1,14 @@
+.user-board-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  width: 100%;
+}
+
+.board-container {
+  width: 13.75rem;
+  height: 9.8rem;
+  margin: 0rem 1rem;
+  background-color: red;
+  border-radius: 1rem;
+}
