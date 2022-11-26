@@ -1,4 +1,5 @@
 from .db import db, environment, SCHEMA, add_prefix_for_prod
+from pin import Pin
 
 board_pins = db.Table(
     'board_pins',
