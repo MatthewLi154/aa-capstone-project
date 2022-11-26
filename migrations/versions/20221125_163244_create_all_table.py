@@ -1,16 +1,20 @@
 """create all table
 
-Revision ID: ef06b17940e6
-Revises: 
-Create Date: 2022-11-24 23:00:42.936817
+Revision ID: b41244839cfa
+Revises:
+Create Date: 2022-11-25 16:32:44.956997
 
 """
 from alembic import op
 import sqlalchemy as sa
 
+import os
+environment = os.getenv("FLASK_ENV")
+SCHEMA = os.environ.get("SCHEMA")
+
 
 # revision identifiers, used by Alembic.
-revision = 'ef06b17940e6'
+revision = 'b41244839cfa'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -25,6 +29,8 @@ def upgrade():
     sa.Column('createdAt', sa.String(length=55), nullable=False),
     sa.PrimaryKeyConstraint('id')
     )
+    if environment == "production":
+        op.execute(f"ALTER TABLE boards SET SCHEMA {SCHEMA};")
     op.create_table('users',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('username', sa.String(length=40), nullable=False),
@@ -40,6 +46,8 @@ def upgrade():
     sa.UniqueConstraint('email'),
     sa.UniqueConstraint('username')
     )
+    if environment == "production":
+        op.execute(f"ALTER TABLE users SET SCHEMA {SCHEMA};")
     op.create_table('pins',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('profile_id', sa.Integer(), nullable=False),
@@ -52,13 +60,18 @@ def upgrade():
     sa.ForeignKeyConstraint(['profile_id'], ['users.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
+    if environment == "production":
+        op.execute(f"ALTER TABLE pins SET SCHEMA {SCHEMA};")
     op.create_table('board_pins',
-    sa.Column('pins_id', sa.Integer(), nullable=False),
-    sa.Column('boards_id', sa.Integer(), nullable=False),
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('pins_id', sa.Integer(), nullable=True),
+    sa.Column('boards_id', sa.Integer(), nullable=True),
     sa.ForeignKeyConstraint(['boards_id'], ['boards.id'], ),
     sa.ForeignKeyConstraint(['pins_id'], ['pins.id'], ),
-    sa.PrimaryKeyConstraint('pins_id', 'boards_id')
+    sa.PrimaryKeyConstraint('id')
     )
+    if environment == "production":
+        op.execute(f"ALTER TABLE board_pins SET SCHEMA {SCHEMA};")
     # ### end Alembic commands ###
 
 
