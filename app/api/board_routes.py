@@ -1,5 +1,5 @@
 from flask import Blueprint, request
-from app.models import Board, board_pins, Pin
+from app.models import Board, board_pins, Pin, db
 
 board_routes = Blueprint('boards', __name__)
 
@@ -32,3 +32,14 @@ def get_user_board_pins(profile_id):
             pins_dict[pin.id] = pin.to_dict()
         boards_dict[board.id] = pins_dict
     return boards_dict
+
+
+@board_routes.route('/<id>', methods=['DELETE'])
+def delete_board_by_id(id):
+    """
+    Delete a board by board id
+    """
+    board = Board.query.get(id)
+    db.session.delete(board)
+    db.session.commit()
+    return {"message": "Successfully deleted"}

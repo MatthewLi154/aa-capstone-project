@@ -1,10 +1,14 @@
 import React, { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { createNewBoard } from "../../store/board";
 
 const CreateBoard = ({ open, onClose }) => {
   if (!open) return null;
 
   const [name, setName] = useState("");
   const [errors, setErrors] = useState([]);
+  const currentProfileId = useSelector((state) => state.session.user.id);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     console.log(name);
@@ -24,13 +28,22 @@ const CreateBoard = ({ open, onClose }) => {
     return errors;
   };
 
-  const onCreateBoard = (e) => {
+  const onCreateBoard = async (e) => {
     let errors = validate();
 
     if (errors.length > 0) {
       e.preventDefault();
       return setErrors(errors);
     }
+
+    const data = {
+      name: name,
+      profile_id: currentProfileId,
+    };
+
+    await dispatch(createNewBoard(data, currentProfileId));
+
+    // history.push("/boards")
   };
 
   return (

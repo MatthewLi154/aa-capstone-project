@@ -11,6 +11,7 @@ import PinBuilder from "./components/PinBuilder";
 import SinglePin from "./components/SinglePin";
 import EditPin from "./components/EditPin";
 import SplashPage from "./components/SplashPage";
+import SingleBoard from "./components/SingleBoard";
 import { authenticate } from "./store/session";
 
 import Main from "./components/Main";
@@ -51,6 +52,9 @@ function App() {
         <>
           <NavBar />
           <Switch>
+            <ProtectedRoute exact path="/profile/:profileId/boards/:boardId">
+              <SingleBoard />
+            </ProtectedRoute>
             <ProtectedRoute path="/users" exact={true}>
               <UsersList />
             </ProtectedRoute>

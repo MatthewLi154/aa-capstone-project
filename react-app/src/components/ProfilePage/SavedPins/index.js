@@ -99,7 +99,14 @@ const SavedPins = (props) => {
         <div className="user-board-main-container">
           <div className="user-board-container">
             {pinsArrBoard.map((pin, index) => (
-              <div className="main-board-container">
+              <div
+                className="main-board-container"
+                onClick={() => {
+                  history.push(
+                    `/profile/${profileId}/boards/${userBoards[index].id}`
+                  );
+                }}
+              >
                 <div className="board-container">
                   <div className="left-images-board">
                     {pin[0] ? <img src={pin[0].image} /> : <div></div>}

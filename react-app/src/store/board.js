@@ -2,6 +2,8 @@
 const LOAD_ALL_BOARDS = "boards/loadAllBoards";
 const LOAD_USER_BOARDS = "boards/loadUserBoards";
 const LOAD_BOARD_PINS = "boards/loadBoardPins";
+const ADD_BOARD = "boards/addBoard";
+const DELETE_BOARD = "boards/deleteBoard";
 
 // Actions
 export const getAllBoards = (data, boardId) => {
@@ -26,6 +28,20 @@ export const getBoardPins = (data) => {
   };
 };
 
+export const addBoard = (data) => {
+  return {
+    type: ADD_BOARD,
+    board: data,
+  };
+};
+
+export const deleteBoard = (boardId) => {
+  return {
+    type: DELETE_BOARD,
+    id: boardId,
+  };
+};
+
 // Thunks
 
 export const fetchUserBoards = (profileId) => async (dispatch) => {
@@ -47,6 +63,31 @@ export const fetchUserBoardPins = (profileId) => async (dispatch) => {
     return data;
   }
 };
+
+export const createNewBoard = (data, profileId) => async (dispatch) => {
+  const response = await fetch(`/api/profile/${profileId}/boards`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data),
+  });
+
+  if (response.ok) {
+    const data = await response.json();
+    dispatch(addBoard(data));
+  }
+};
+
+export const deleteBoardById = (boardId) => async (dispatch) => {
+  const response = await fetch(`/api/boards/${boardId}`, {
+    method: "DELETE",
+  });
+
+  if (response.ok) {
+    const data = await response.json();
+    dispatch(deleteBoard(boardId));
+  }
+};
+
 // Reducer
 const initialState = {
   allBoards: {},
@@ -66,6 +107,10 @@ const boardReducer = (state = initialState, action) => {
       return boardStateObj;
     case LOAD_BOARD_PINS:
       boardStateObj.boardPins = action.pins;
+      return boardStateObj;
+    case ADD_BOARD:
+      boardStateObj.allBoards[action.board.id] = action.board;
+      boardStateObj.userBoards[action.board.id] = action.board;
       return boardStateObj;
     default:
       return state;

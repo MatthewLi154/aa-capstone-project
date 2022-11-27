@@ -33,48 +33,50 @@ const ProfilePage = () => {
 
   return (
     <>
-      <div className="main-profile-information-container">
-        <div className="main-profile-information-sub-container">
-          <img src={currentProfile.profile_img}></img>
-          <div className="main-profile-name-container">
-            {currentProfile.first_name} {currentProfile.last_name}
+      {currentProfile && (
+        <div className="main-profile-information-container">
+          <div className="main-profile-information-sub-container">
+            <img src={currentProfile.profile_img}></img>
+            <div className="main-profile-name-container">
+              {currentProfile.first_name} {currentProfile.last_name}
+            </div>
+            <div className="handle-and-pronouns-container">
+              @{currentProfile.username} · {currentProfile.pronouns}
+            </div>
+            <div>{currentProfile.website}</div>
+            <div>
+              <button>Edit Profile</button>
+            </div>
           </div>
-          <div className="handle-and-pronouns-container">
-            @{currentProfile.username} · {currentProfile.pronouns}
-          </div>
-          <div>{currentProfile.website}</div>
-          <div>
-            <button>Edit Profile</button>
-          </div>
+          {onCreated ? (
+            <div className="profile-created-saved-pins-container">
+              <div className="created-saved-toggle-container">
+                <h3
+                  style={{ borderBottom: "2px solid black" }}
+                  onClick={(e) => setOnCreated(true)}
+                >
+                  Created
+                </h3>
+                <h3 onClick={(e) => setOnCreated(false)}>Saved</h3>
+              </div>
+              <CreatedPins />
+            </div>
+          ) : (
+            <div>
+              <div className="created-saved-toggle-container">
+                <h3 onClick={(e) => setOnCreated(true)}>Created</h3>
+                <h3
+                  style={{ borderBottom: "2px solid black" }}
+                  onClick={(e) => setOnCreated(false)}
+                >
+                  Saved
+                </h3>
+              </div>
+              <SavedPins props={userBoards} />
+            </div>
+          )}
         </div>
-        {onCreated ? (
-          <div className="profile-created-saved-pins-container">
-            <div className="created-saved-toggle-container">
-              <h3
-                style={{ borderBottom: "2px solid black" }}
-                onClick={(e) => setOnCreated(true)}
-              >
-                Created
-              </h3>
-              <h3 onClick={(e) => setOnCreated(false)}>Saved</h3>
-            </div>
-            <CreatedPins />
-          </div>
-        ) : (
-          <div>
-            <div className="created-saved-toggle-container">
-              <h3 onClick={(e) => setOnCreated(true)}>Created</h3>
-              <h3
-                style={{ borderBottom: "2px solid black" }}
-                onClick={(e) => setOnCreated(false)}
-              >
-                Saved
-              </h3>
-            </div>
-            <SavedPins props={userBoards} />
-          </div>
-        )}
-      </div>
+      )}
     </>
   );
 };

@@ -1,5 +1,6 @@
 from flask import Blueprint, request
-from app.models import User, Pin, Board
+from app.models import User, Pin, Board, db
+from datetime import datetime
 
 profile_routes = Blueprint('profiles', __name__)
 
@@ -46,3 +47,17 @@ def profile_boards(id):
     for board in boards:
         boards_dict[board.id] = board.to_dict()
     return boards_dict
+
+
+@profile_routes.route('/<id>/boards', methods=['POST'])
+def create_board_for_profile(id):
+    """
+    Create a new board for user
+    """
+    data = request.get_json()
+    new_board = Board(name=data["name"],
+                      profile_id=data["profile_id"],
+                      createdAt=datetime.now())
+    db.session.add(new_board)
+    db.session.commit()
+    return new_board.to_dict()
