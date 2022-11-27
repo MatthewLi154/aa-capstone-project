@@ -44,14 +44,13 @@ def delete_pin(id):
     db.session.commit()
     return {"message": "Successfully deleted"}
 
-@pin_routes.route("<id>/edit", methods=['PUT'])
+@pin_routes.route("/<id>/edit", methods=['PUT'])
 def edit_pin(id):
     """
     This route will edit a pin by their pin id
     """
     pin = Pin.query.get(id)
     data = request.get_json()
-    print(data)
     pin.title = data['title']
     pin.destination_link = data['destination_link']
     pin.about = data['about']
@@ -59,6 +58,3 @@ def edit_pin(id):
     pin.alt_text = data['alt_text']
     db.session.commit()
     return pin.to_dict()
-
-
-@pin_routes("")

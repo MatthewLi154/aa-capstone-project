@@ -1,3 +1,9 @@
+.saved-pins-container {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+}
+
 .user-board-container {
   display: flex;
   flex-direction: row;
@@ -6,9 +12,45 @@
 }
 
 .board-container {
-  width: 13.75rem;
+  width: 14.75rem;
   height: 9.8rem;
-  margin: 0rem 1rem;
-  background-color: red;
+  /* margin: 0rem 1.5rem; */
+  background-color: #efefef;
   border-radius: 1rem;
+  display: flex;
+  flex-direction: row;
+  cursor: pointer;
+}
+
+.board-container img {
+  width: 4.9rem;
+  height: 4.9rem;
+  display: block;
+}
+
+.right-images-board img {
+  margin: 0px 0px;
+  padding: 0px;
+}
+
+.left-images-board img {
+  width: 9.8rem;
+  height: 9.8rem;
+  border-top-left-radius: 1rem;
+  border-bottom-left-radius: 1rem;
+}
+
+.top-right-img {
+  border-top-right-radius: 1rem;
+}
+
+.bottom-right-img {
+  border-bottom-right-radius: 1rem;
+}
+
+.main-board-container {
+  display: flex;
+  flex-direction: column;
+  margin: 1rem 1.5rem;
+  font-weight: lighter;
 }
