@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { useParams, NavLink } from "react-router-dom";
+import { useParams, NavLink, useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchUserBoards, fetchUserBoardPins } from "../../../store/board";
 import "./SavedPins.css";
+import CreateBoard from "../../CreateBoardModal";
 
 const SavedPins = (props) => {
+  const history = useHistory();
   const [pins, setPins] = useState("");
   const { profileId } = useParams();
   const dispatch = useDispatch();
@@ -12,6 +14,7 @@ const SavedPins = (props) => {
   const boardPins = useSelector((state) =>
     Object.values(state.boards.boardPins)
   );
+  const [showMenu, setShowMenu] = useState(false);
 
   let pinsArr = Object.values(boardPins);
 
@@ -31,36 +34,88 @@ const SavedPins = (props) => {
     dispatch(fetchUserBoardPins(profileId));
   }, []);
 
+  const openMenu = () => {
+    if (showMenu) return;
+    setShowMenu(true);
+  };
+
+  useEffect(() => {
+    if (!showMenu) return;
+
+    const closeMenu = () => {
+      setShowMenu(false);
+    };
+
+    document.addEventListener("click", closeMenu);
+
+    return () => document.removeEventListener("click", closeMenu);
+  }, [showMenu]);
+
+  // Modal for create board
+  const [openModal, setOpenModal] = useState(false);
+
   return (
     <>
+      {/* <div>
+        <button className="modalBtn" onClick={() => setOpenModal(true)}>
+          Modal
+        </button>
+        <CreateBoard open={openModal} onClose={() => setOpenModal(false)} />
+      </div> */}
       <div className="saved-pins-container">
+        <div className="create-pin-board-container-button">
+          <button onClick={openMenu}>
+            <i class="fa-solid fa-plus"></i>
+            {showMenu && (
+              <div className="create-pin-dropdown-saved-pins-container">
+                <ul>
+                  <li>Create</li>
+                  <li
+                    className="dropdown-list-button"
+                    onClick={(e) => {
+                      history.push("/pin-builder");
+                    }}
+                  >
+                    Pin
+                  </li>
+                  <li
+                    className="dropdown-list-button"
+                    onClick={(e) => {
+                      setOpenModal(true);
+                      e.stopPropagation();
+                    }}
+                  >
+                    Board
+                  </li>
+                  <CreateBoard
+                    open={openModal}
+                    onClose={() => setOpenModal(false)}
+                  />
+                </ul>
+              </div>
+            )}
+          </button>
+        </div>
         <div className="user-board-main-container">
           <div className="user-board-container">
             {pinsArrBoard.map((pin, index) => (
               <div className="main-board-container">
                 <div className="board-container">
                   <div className="left-images-board">
-                    <img src={pin[0].image}></img>
+                    {pin[0] ? <img src={pin[0].image} /> : <div></div>}
                   </div>
                   <div className="right-images-board">
-                    <img src={pin[1].image} className="top-right-img"></img>
+                    {pin[1] ? (
+                      <img src={pin[1].image} className="top-right-img" />
+                    ) : (
+                      <div></div>
+                    )}
                     {pin[2] ? (
-                      <img
-                        src={pin[2].image}
-                        className="bottom-right-img"
-                      ></img>
+                      <img src={pin[2].image} className="bottom-right-img" />
                     ) : (
                       <div></div>
                     )}
                   </div>
-                  {/* {pin.map((singlePin) => (
-                <div>
-                  <div>
-                    <img src={singlePin.image}></img>
-                  </div>
-                  <div></div>
-                </div>
-              ))} */}
                 </div>
                 <div>{userBoards[index].name}</div>
                 <div style={{ fontSize: "12px" }}>{pin.length} Pins</div>

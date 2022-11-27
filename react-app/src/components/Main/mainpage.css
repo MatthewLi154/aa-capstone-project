@@ -6,6 +6,7 @@ body {
   padding: 0;
   font-family: "Familjen Grotesk", sans-serif;
   font-weight: bold;
+  height: 100%;
 }
 
 .all-pins-main-container {
