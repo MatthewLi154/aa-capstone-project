@@ -37,8 +37,8 @@ def upgrade():
     sa.UniqueConstraint('email'),
     sa.UniqueConstraint('username')
     )
-    if environment == "production":
-        op.execute(f"ALTER TABLE users SET SCHEMA {SCHEMA};")
+    # if environment == "production":
+    #     op.execute(f"ALTER TABLE users SET SCHEMA {SCHEMA};")
     op.create_table('boards',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('name', sa.String(length=55), nullable=False),
@@ -48,8 +48,8 @@ def upgrade():
     sa.ForeignKeyConstraint(['profileId'], ['users.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
-    if environment == "production":
-        op.execute(f"ALTER TABLE boards SET SCHEMA {SCHEMA};")
+    # if environment == "production":
+    #     op.execute(f"ALTER TABLE boards SET SCHEMA {SCHEMA};")
     op.create_table('pins',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('profileId', sa.Integer(), nullable=False),
@@ -62,8 +62,8 @@ def upgrade():
     sa.ForeignKeyConstraint(['profileId'], ['users.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
-    if environment == "production":
-        op.execute(f"ALTER TABLE pins SET SCHEMA {SCHEMA};")
+    # if environment == "production":
+    #     op.execute(f"ALTER TABLE pins SET SCHEMA {SCHEMA};")
     op.create_table('boardPins',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('pinsId', sa.Integer(), nullable=True),
@@ -73,6 +73,9 @@ def upgrade():
     sa.PrimaryKeyConstraint('id')
     )
     if environment == "production":
+        op.execute(f"ALTER TABLE users SET SCHEMA {SCHEMA};")
+        op.execute(f"ALTER TABLE boards SET SCHEMA {SCHEMA};")
+        op.execute(f"ALTER TABLE pins SET SCHEMA {SCHEMA};")
         op.execute(f"ALTER TABLE boardPins SET SCHEMA {SCHEMA};")
     # ### end Alembic commands ###
 
