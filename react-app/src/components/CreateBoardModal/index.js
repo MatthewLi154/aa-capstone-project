@@ -64,6 +64,11 @@ const CreateBoard = ({ open, onClose }) => {
         }}
         className="modalContainer"
       >
+        <div className="header-edit-board-modal">
+          <span onClick={onClose}>
+            <i class="fa-solid fa-x"></i>
+          </span>
+        </div>
         <div className="create-board-modal-header">
           <span>Create Board</span>
         </div>

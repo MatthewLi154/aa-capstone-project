@@ -5,6 +5,7 @@ const LOAD_BOARD_PINS = "boards/loadBoardPins";
 const ADD_BOARD = "boards/addBoard";
 const DELETE_BOARD = "boards/deleteBoard";
 const EDIT_BOARD = "boards/editBoard";
+const ADD_PIN_TO_BOARD = "boards/addPinToBoard";
 
 // Actions
 export const getAllBoards = (data, boardId) => {
@@ -51,6 +52,12 @@ export const editBoard = (data, boardId) => {
   };
 };
 
+export const addPinToBoard = (data) => {
+  return {
+    type: ADD_PIN_TO_BOARD,
+    boardPin: data,
+  };
+};
 // Thunks
 
 export const fetchUserBoards = (profileId) => async (dispatch) => {
@@ -110,6 +117,14 @@ export const editBoardById = (data, boardId) => async (dispatch) => {
   }
 };
 
+export const addPinToBoardPins = (pinId, boardName) => async (dispatch) => {
+  const response = await fetch(`/api/boards/${boardName}/pins/${pinId}`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(pinId),
+  });
+};
+
 // Reducer
 const initialState = {
   allBoards: {},
@@ -133,6 +148,7 @@ const boardReducer = (state = initialState, action) => {
     case ADD_BOARD:
       boardStateObj.allBoards[action.board.id] = action.board;
       boardStateObj.userBoards[action.board.id] = action.board;
+      boardStateObj.boardPins[action.board.id] = {};
       return boardStateObj;
     case EDIT_BOARD:
       boardStateObj.allBoards[action.id] = action.board;

@@ -26,7 +26,7 @@ class Board(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(55), nullable=False)
     description = db.Column(db.String(255))
-    profile_id = db.Column(db.Integer, nullable=False)
+    profile_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('users.id')), nullable=False)
     createdAt = db.Column(db.DateTime(timezone=True), nullable=False, server_default=db.func.now())
 
     pins = db.relationship("Pin", secondary=board_pins, back_populates="boards")

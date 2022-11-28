@@ -29,14 +29,16 @@
 }
 
 .select-container-pin-builder {
-  width: 9rem;
+  width: 10rem;
   height: 2.5rem;
   background-color: #efefef;
   display: flex;
   align-items: center;
-  padding-left: 1.5rem;
+  padding-left: 1rem;
   border-top-left-radius: 0.5rem;
   border-bottom-left-radius: 0.5rem;
+  border: none;
+  outline: none;
 }
 
 .save-button-container-header {

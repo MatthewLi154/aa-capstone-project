@@ -46,7 +46,7 @@ const SinglePin = () => {
       await dispatch(fetchAllPins());
     }
 
-    // history.push(`/profile/${currentProfileId}`);
+    history.push(`/`);
   };
 
   return (

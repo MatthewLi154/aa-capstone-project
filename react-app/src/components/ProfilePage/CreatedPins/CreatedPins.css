@@ -1,4 +1,4 @@
-.all-pins-main-container {
+/* .all-pins-main-container {
   margin: 1rem 0rem;
   padding: 0rem;
   display: grid;
@@ -6,6 +6,15 @@
   grid-auto-rows: auto;
   justify-content: center;
   column-gap: 1rem;
+} */
+
+.created-pins-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  width: 100%;
+  gap: 1rem;
+  margin-bottom: 3rem;
 }
 
 .created-saved-toggle-container {

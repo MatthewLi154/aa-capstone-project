@@ -49,10 +49,10 @@ def seed_pins():
                 image="https://i.pinimg.com/564x/49/f4/0d/49f40d48ee9372e7e6ebcd312b2ce6c5.jpg")
     pin_7 = Pin(profile_id=3,
                 destination_link="google.com",
-                title="My Sevent Pin",
-                about="This is my Sevent pin!",
+                title="My Seventh Pin",
+                about="This is my Seventh pin!",
                 alt_text="My seventh alt text",
-                note="My sevent Note",
+                note="My seventh Note",
                 image="https://i.pinimg.com/736x/7f/a0/2c/7fa02c94e61d79356a3ef0a00bdd2c28.jpg")
     pin_8 = Pin(profile_id=3,
                 destination_link="google.com",

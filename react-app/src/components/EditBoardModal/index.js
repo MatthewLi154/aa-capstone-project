@@ -76,7 +76,10 @@ const EditBoard = ({ open, onClose, props }) => {
             <div>
               <input
                 value={name}
-                onChange={(e) => setName(e.target.value)}
+                onChange={(e) => {
+                  e.stopPropagation();
+                  setName(e.target.value);
+                }}
                 placeholder='Like "Places to go" or "Nature to see"'
               ></input>
             </div>

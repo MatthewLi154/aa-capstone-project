@@ -14,6 +14,7 @@ const SavedPins = (props) => {
   const boardPins = useSelector((state) =>
     Object.values(state.boards.boardPins)
   );
+
   const [showMenu, setShowMenu] = useState(false);
 
   let pinsArr = Object.values(boardPins);

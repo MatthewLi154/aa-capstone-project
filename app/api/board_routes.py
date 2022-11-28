@@ -59,3 +59,24 @@ def edit_board_by_id(id):
     db.session.commit()
 
     return board.to_dict()
+
+
+@board_routes.route('/<board_name>/pins/<pin_id>', methods=['POST'])
+def add_pin_to_board(board_name, pin_id):
+    """
+    Adds a pin to a board using both id's
+    """
+    board = Board.query.filter_by(name=board_name).first()
+    new_board_pin = board_pins.insert().values(pins_id=pin_id, boards_id=board.id)
+    db.session.execute(new_board_pin)
+    db.session.commit()
+    return {
+        "pins_id": pin_id,
+        "boards_id": board.id
+    }
+
+
+@board_routes.route('/<profile_id>/<board_name>')
+def get_board_by_name(board_name, profile_id):
+    board = Board.query.filter_by(name=board_name, profile_id=profile_id).first()
+    return board.to_dict()

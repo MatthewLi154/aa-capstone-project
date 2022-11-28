@@ -3,17 +3,27 @@ import { useSelector, useDispatch } from "react-redux";
 import { addNewPin, fetchAllPins } from "../../store/pin";
 import { useHistory } from "react-router-dom";
 import "./PinBuilder.css";
+import { fetchUserBoards } from "../../store/board";
 
 const PinBuilder = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const currentProfileId = useSelector((state) => state.session.user.id);
+  const userBoards = useSelector((state) =>
+    Object.values(state.boards.userBoards)
+  );
+
+  useEffect(() => {
+    dispatch(fetchUserBoards(currentProfileId));
+  }, []);
 
   const [destinationLink, setDestinationLink] = useState("");
   const [title, setTitle] = useState("");
   const [about, setAbout] = useState("");
   const [altText, setAltText] = useState("");
   const [image, setImage] = useState("");
+  const [board, setBoard] = useState("Profile");
+  const [boardExist, setBoardExist] = useState("");
   const [errors, setErrors] = useState([]);
 
   const [openAlt, setOpenAlt] = useState(false);
@@ -24,12 +34,8 @@ const PinBuilder = () => {
   };
 
   useEffect(() => {
-    console.log(title);
-    console.log(image);
-    console.log(destinationLink);
-    console.log(altText);
-    console.log(about);
-  }, [title, image, destinationLink, altText, about]);
+    console.log(board);
+  }, [title, image, destinationLink, altText, about, board]);
 
   const validate = () => {
     let errors = [];
@@ -71,10 +77,18 @@ const PinBuilder = () => {
       alt_text: altText,
     };
 
-    await dispatch(addNewPin(newPin));
+    const newPinRes = await dispatch(addNewPin(newPin));
+    if (board.length !== 0) {
+      if (board !== "Profile") {
+        await fetch(`/api/boards/${board}/pins/${newPinRes.id}`, {
+          method: "POST",
+        });
+      }
+    }
+
     await dispatch(fetchAllPins());
 
-    history.push(`/profile/${currentProfileId}`);
+    history.push(`/pins/${newPinRes.id}`);
   };
 
   return (
@@ -83,16 +97,27 @@ const PinBuilder = () => {
         <div className="main-pin-builder-container">
           <div className="pin-builder-upper-section-head">
             <div className="triple-dot-buttons">
-              <i class="fa-solid fa-ellipsis"></i>
+              {/* <i class="fa-solid fa-ellipsis"></i> */}
             </div>
             <div className="save-to-board-dropdown-button">
-              <div className="save-button-container-header" onClick={onSubmit}>
-                <div className="select-container-pin-builder">Select</div>
+              <div className="save-button-container-header">
+                {/* <div className="select-container-pin-builder">Select</div>
                 <div className="select-container-angle-down">
                   <i className="fa-solid fa-angle-down"></i>
+                </div> */}
+                <div>
+                  <select
+                    className="select-container-pin-builder"
+                    value={board}
+                    onChange={(e) => setBoard(e.target.value)}
+                  >
+                    <option>Profile</option>
+                    {userBoards &&
+                      userBoards.map((board) => <option>{board.name}</option>)}
+                  </select>
                 </div>
                 <div>
-                  <button>Save</button>
+                  <button onClick={onSubmit}>Save</button>
                 </div>
               </div>
             </div>

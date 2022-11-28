@@ -44,9 +44,9 @@ const ProfilePage = () => {
               @{currentProfile.username} · {currentProfile.pronouns}
             </div>
             <div>{currentProfile.website}</div>
-            <div>
+            {/* <div>
               <button>Edit Profile</button>
-            </div>
+            </div> */}
           </div>
           {onCreated ? (
             <div className="profile-created-saved-pins-container">

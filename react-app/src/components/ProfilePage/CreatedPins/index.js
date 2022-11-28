@@ -21,15 +21,13 @@ const CreatedPins = () => {
       });
   }, []);
 
-  console.log(pins);
-
   const randomHeight = () => {
     return 9 * Math.ceil(Math.random() * 3);
   };
 
   return (
     <>
-      <div className="all-pins-main-container">
+      <div className="created-pins-container">
         {pins &&
           pins.map((pin) => (
             <div className="pin-container">
