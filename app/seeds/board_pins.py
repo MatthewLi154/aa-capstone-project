@@ -25,8 +25,8 @@ def seed_boardPins():
 
 def undo_boardPins():
     if environment == "production":
-            db.session.execute(f"TRUNCATE table {SCHEMA}.boardPins RESTART IDENTITY CASCADE;")
+            db.session.execute(f"TRUNCATE table {SCHEMA}.board_pins RESTART IDENTITY CASCADE;")
     else:
-        db.session.execute("DELETE FROM boardPins")
+        db.session.execute("DELETE FROM board_pins")
 
     db.session.commit()
