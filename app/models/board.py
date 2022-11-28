@@ -2,7 +2,7 @@ from .db import db, environment, SCHEMA, add_prefix_for_prod
 from datetime import datetime
 
 boardPins = db.Table(
-    'boardPins',
+    'board_pins',
     db.metadata,
     db.Column('id',
               db.Integer,

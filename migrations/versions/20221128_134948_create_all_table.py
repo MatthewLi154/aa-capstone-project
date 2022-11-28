@@ -64,7 +64,7 @@ def upgrade():
     )
     # if environment == "production":
     #     op.execute(f"ALTER TABLE pins SET SCHEMA {SCHEMA};")
-    op.create_table('boardPins',
+    op.create_table('board_pins',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('pinsId', sa.Integer(), nullable=True),
     sa.Column('boardsId', sa.Integer(), nullable=True),
