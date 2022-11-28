@@ -160,8 +160,8 @@ const NavBar = () => {
                       style={{ textDecoration: "none", color: "black" }}
                       className="profile-detail-dropdown-container"
                     >
-                      <img src={currentProfile.profile_img}></img>
-                      {currentProfile.first_name}
+                      <img src={currentProfile.profileImg}></img>
+                      {currentProfile.firstName}
                     </NavLink>
                   </div>
                   <div className="logout-button-nav-container">

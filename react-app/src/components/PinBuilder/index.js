@@ -25,6 +25,10 @@ const PinBuilder = () => {
   const [board, setBoard] = useState("Profile");
   const [boardExist, setBoardExist] = useState("");
   const [errors, setErrors] = useState([]);
+  const [titleErrors, setTitleErrors] = useState([]);
+  const [aboutErrors, setAboutErrors] = useState([]);
+  const [altTextErrors, setAltTextErrors] = useState([]);
+  const [linkErrors, setLinkErrors] = useState([]);
 
   const [openAlt, setOpenAlt] = useState(false);
 
@@ -33,29 +37,50 @@ const PinBuilder = () => {
     setOpenAlt(true);
   };
 
-  useEffect(() => {
-    console.log(board);
-  }, [title, image, destinationLink, altText, about, board]);
+  // useEffect(() => {
+  //   console.log(board);
+  //   console.log(linkErrors);
+  //   console.log(titleErrors);
+  // }, [title, image, destinationLink, altText, about, board, linkErrors]);
 
   const validate = () => {
     let errors = [];
+    let titleErrors = [];
+    let aboutErrors = [];
+    let altTextErrors = [];
+    let linkErrors = [];
 
     // validate title
     if (title.length === 0) {
+      titleErrors.push("Please enter a title");
       errors.push("Please enter a title");
     } else if (title.length > 100) {
+      titleErrors.push("Title can not exceed 100 characters");
       errors.push("Title can not exceed 100 characters");
     }
 
     if (about.length === 0) {
+      aboutErrors.push("Please enter a description for this pin");
       errors.push("Please enter a description for this pin");
     } else if (about.length > 255) {
+      aboutErrors.push("Description can not exceed 255 characters");
       errors.push("Description can not exceed 255 characters");
     }
 
     if (altText.length > 255) {
+      altTextErrors.push("Alt text can not exceed 255 characters");
       errors.push("Alt text can not exceed 255 characters");
     }
+
+    if (destinationLink.length > 255) {
+      linkErrors.push("Link can not exceed 255 characters");
+      errors.push("Link can not exceed 255 characters");
+    }
+
+    setTitleErrors(titleErrors);
+    setAboutErrors(aboutErrors);
+    setAltText(altTextErrors);
+    setLinkErrors(linkErrors);
 
     return errors;
   };
@@ -63,21 +88,24 @@ const PinBuilder = () => {
   const onSubmit = async (e) => {
     e.preventDefault();
 
+    let errors = validate();
+
     if (errors.length > 0) {
       e.preventDefault();
       return setErrors(errors);
     }
 
     const newPin = {
-      profile_id: currentProfileId,
-      destination_link: destinationLink,
+      profileId: currentProfileId,
+      destinationLink: destinationLink,
       title: title,
       about: about,
       image: image,
-      alt_text: altText,
+      altText: altText,
     };
 
     const newPinRes = await dispatch(addNewPin(newPin));
+    console.log(newPinRes);
     if (board.length !== 0) {
       if (board !== "Profile") {
         await fetch(`/api/boards/${board}/pins/${newPinRes.id}`, {
@@ -88,6 +116,7 @@ const PinBuilder = () => {
 
     await dispatch(fetchAllPins());
 
+    console.log("hello");
     history.push(`/pins/${newPinRes.id}`);
   };
 
@@ -143,6 +172,10 @@ const PinBuilder = () => {
                   onChange={(e) => setTitle(e.target.value)}
                 ></input>
               </div>
+              {titleErrors.length > 0 &&
+                titleErrors.map((error) => (
+                  <div style={{ color: "red" }}>{error}</div>
+                ))}
               <div className="profile-pic-username-container">
                 <div className="profile-pic-container-pin-builder">
                   <img src="https://i.pinimg.com/564x/49/40/6b/49406b58f4a68552f26d0c6e4a14c0d2.jpg"></img>
@@ -158,14 +191,24 @@ const PinBuilder = () => {
                   onChange={(e) => setAbout(e.target.value)}
                 ></input>
               </div>
+              {aboutErrors.length > 0 &&
+                aboutErrors.map((error) => (
+                  <div style={{ color: "red" }}>{error}</div>
+                ))}
               {openAlt ? (
-                <div className="pin-about-container-pin-builder">
-                  <input
-                    placeholder="Explain what people can see in the Pin"
-                    value={altText}
-                    onChange={(e) => setAltText(e.target.value)}
-                  ></input>
-                </div>
+                <>
+                  <div className="pin-about-container-pin-builder alt-text-input">
+                    <input
+                      placeholder="Explain what people can see in the Pin (optional)"
+                      value={altText}
+                      onChange={(e) => setAltText(e.target.value)}
+                    ></input>
+                  </div>
+                  {altTextErrors.length > 0 &&
+                    altTextErrors.map((error) => (
+                      <div style={{ color: "red" }}>{error}</div>
+                    ))}
+                </>
               ) : (
                 <div className="add-alt-text-button">
                   <button onClick={openAltText}>Add alt text</button>
@@ -173,11 +216,15 @@ const PinBuilder = () => {
               )}
               <div className="add-destination-link-container">
                 <input
-                  placeholder="Add a destination link"
+                  placeholder="Add a destination link (optional)"
                   value={destinationLink}
                   onChange={(e) => setDestinationLink(e.target.value)}
                 ></input>
               </div>
+              {linkErrors.length > 0 &&
+                linkErrors.map((error) => (
+                  <div style={{ color: "red" }}>{error}</div>
+                ))}
             </div>
           </div>
         </div>

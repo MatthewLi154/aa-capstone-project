@@ -123,6 +123,10 @@
   font-weight: bold;
 }
 
+.add-your-title-container input:focus {
+  border-bottom: 3px solid rgb(16, 155, 186);
+}
+
 .profile-pic-username-container {
   margin: 2.5rem 0rem;
   display: flex;
@@ -148,11 +152,19 @@
   font-size: 16px;
   padding-bottom: 1rem;
   outline: none;
-  margin-bottom: 1rem;
+  margin-bottom: 0rem;
+}
+
+.alt-text-input {
+  margin-top: 1rem;
+}
+
+.pin-about-container-pin-builder input:focus {
+  border-bottom: 3px solid rgb(16, 155, 186);
 }
 
 .add-alt-text-button button {
-  margin: 0rem 0rem;
+  margin: 1rem 0rem;
   width: 7.375rem;
   height: 3rem;
   border: none;
@@ -167,8 +179,12 @@
   width: 100%;
   border-bottom: 1px solid lightgray;
   font-size: 20px;
-  color: lightgray;
+  color: gray;
   padding-bottom: 0.75rem;
   margin-top: 8rem;
   outline: none;
+}
+
+.add-destination-link-container input:focus {
+  border-bottom: 3px solid rgb(16, 155, 186);
 }

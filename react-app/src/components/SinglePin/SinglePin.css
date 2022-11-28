@@ -52,19 +52,30 @@
   margin: 0rem 2rem;
 }
 
+.single-pin-header-save-button {
+  width: 2.5rem;
+}
+
 .single-pin-header-save-button button {
-  background-color: red;
+  background-color: black;
   border: none;
   width: 2rem;
   height: 1.3rem;
-  padding: 1.4rem 1.75rem;
+  padding: 1.4rem 2.3rem;
   display: flex;
   justify-content: center;
   align-items: center;
   border-radius: 3rem;
   color: white;
-  font-weight: bold;
+  font-weight: light;
   cursor: pointer;
+}
+
+.single-pin-saved-button {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-right: 2rem;
 }
 
 .single-pin-destination-link {

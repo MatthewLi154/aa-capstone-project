@@ -36,9 +36,9 @@ const ProfilePage = () => {
       {currentProfile && (
         <div className="main-profile-information-container">
           <div className="main-profile-information-sub-container">
-            <img src={currentProfile.profile_img}></img>
+            <img src={currentProfile.profileImg}></img>
             <div className="main-profile-name-container">
-              {currentProfile.first_name} {currentProfile.last_name}
+              {currentProfile.firstName} {currentProfile.lastName}
             </div>
             <div className="handle-and-pronouns-container">
               @{currentProfile.username} · {currentProfile.pronouns}

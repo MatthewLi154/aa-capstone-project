@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { NavLink, useParams, useHistory } from "react-router-dom";
 import { fetchAllPins, fetchSinglePin, deletePin } from "../../store/pin";
+import { fetchUserBoardPins, fetchUserBoards } from "../../store/board";
 import "./SinglePin.css";
 
 const SinglePin = () => {
@@ -9,13 +10,20 @@ const SinglePin = () => {
   const history = useHistory();
   const { pinId } = useParams();
   const currentPin = useSelector((state) => state.pins.singlePin);
-  // const currentProfileId = useSelector((state) => state.session.user.id);
+  const currentProfileId = useSelector((state) => state.session.user.id);
+  const userBoards = useSelector((state) =>
+    Object.values(state.boards.userBoards)
+  );
 
+  const [board, setBoard] = useState("Profile");
   const [openOptions, setOpenOptions] = useState(false);
+  const [saved, setSaved] = useState(false);
 
   useEffect(() => {
     dispatch(fetchAllPins());
     dispatch(fetchSinglePin(pinId));
+    dispatch(fetchUserBoards(currentProfileId));
+    dispatch(fetchUserBoardPins(currentProfileId));
   }, []);
 
   const onOpenOptions = async (e) => {
@@ -49,6 +57,16 @@ const SinglePin = () => {
     history.push(`/`);
   };
 
+  const onSave = async (e) => {
+    e.preventDefault();
+
+    await fetch(`/api/boards/${board}/pins/${pinId}`, {
+      method: "POST",
+    });
+
+    setSaved(true);
+  };
+
   return (
     <>
       <div className="main-single-pin-page">
@@ -76,13 +94,55 @@ const SinglePin = () => {
                   </div>
                 )}
               </div>
-              <div className="single-pin-header-save-button">
+              {/* <div className="single-pin-header-save-button">
                 <button>Save</button>
+              </div> */}
+              <div className="save-to-board-dropdown-button">
+                <div className="save-button-container-header">
+                  {/* <div className="select-container-pin-builder">Select</div>
+                <div className="select-container-angle-down">
+                  <i className="fa-solid fa-angle-down"></i>
+                </div> */}
+                  {!saved ? (
+                    <>
+                      {" "}
+                      <div>
+                        <select
+                          className="select-container-pin-builder"
+                          value={board}
+                          onChange={(e) => setBoard(e.target.value)}
+                        >
+                          <option>Profile</option>
+                          {userBoards &&
+                            userBoards.map((board) => (
+                              <option>{board.name}</option>
+                            ))}
+                        </select>
+                      </div>
+                      <div>
+                        <button
+                          onClick={(e) => {
+                            onSave(e);
+                          }}
+                        >
+                          Save
+                        </button>
+                      </div>
+                    </>
+                  ) : (
+                    <div className="single-pin-saved-button">
+                      <div>{board}</div>
+                      <div className="single-pin-header-save-button">
+                        <button>Saved</button>
+                      </div>
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
             <div className="single-pin-margin-left single-pin-destination-link">
-              <a href={currentPin.destination_link} style={{ color: "black" }}>
-                {currentPin.destination_link}
+              <a href={currentPin.destinationLink} style={{ color: "black" }}>
+                {currentPin.destinationLink}
               </a>
             </div>
             <div className="single-pin-margin-left single-pin-title">

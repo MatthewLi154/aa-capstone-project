@@ -22,7 +22,7 @@ def profile_pins(id):
     """
     Query all pins created by user
     """
-    pins = Pin.query.filter_by(profile_id=id).all()
+    pins = Pin.query.filter_by(profileId=id).all()
     pins_dict = {}
     for pin in pins:
         pins_dict[pin.id] = pin.to_dict()
@@ -42,7 +42,7 @@ def profile_boards(id):
     """
     Query for boards created by user and returns them in a list of board dictionaries
     """
-    boards = Board.query.filter_by(profile_id=id).all()
+    boards = Board.query.filter_by(profileId=id).all()
     boards_dict = {}
     for board in boards:
         boards_dict[board.id] = board.to_dict()
@@ -56,7 +56,7 @@ def create_board_for_profile(id):
     """
     data = request.get_json()
     new_board = Board(name=data["name"],
-                      profile_id=data["profile_id"],
+                      profileId=data["profile_id"],
                       description=data["description"],
                       createdAt=datetime.now())
     db.session.add(new_board)

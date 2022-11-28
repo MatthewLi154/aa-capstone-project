@@ -47,7 +47,7 @@ const CreateBoard = ({ open, onClose }) => {
     const data = {
       name: name,
       description: description,
-      profile_id: currentProfileId,
+      profileId: currentProfileId,
     };
 
     await dispatch(createNewBoard(data, currentProfileId));

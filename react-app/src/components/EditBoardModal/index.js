@@ -47,7 +47,7 @@ const EditBoard = ({ open, onClose, props }) => {
     const data = {
       name: name,
       description: description,
-      profile_id: currentProfileId,
+      profileId: currentProfileId,
     };
 
     await dispatch(editBoardById(data, boardId));

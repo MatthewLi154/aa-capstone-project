@@ -12,6 +12,7 @@ import SinglePin from "./components/SinglePin";
 import EditPin from "./components/EditPin";
 import SplashPage from "./components/SplashPage";
 import SingleBoard from "./components/SingleBoard";
+import DeletePinsFromBoard from "./components/DeletePinsFromBoard";
 import { authenticate } from "./store/session";
 
 import Main from "./components/Main";
@@ -52,6 +53,9 @@ function App() {
         <>
           <NavBar />
           <Switch>
+            <Route exact path="/profile/:profileId/board/:boardId/organize">
+              <DeletePinsFromBoard />
+            </Route>
             <ProtectedRoute exact path="/profile/:profileId/boards/:boardId">
               <SingleBoard />
             </ProtectedRoute>

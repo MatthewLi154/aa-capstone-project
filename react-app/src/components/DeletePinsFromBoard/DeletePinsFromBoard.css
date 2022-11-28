@@ -1,0 +1,6 @@
+.delete-pins-from-board-main-container {
+  display: flex;
+  justify-content: center;
+  background-color: white;
+  padding: 2rem 0rem;
+}

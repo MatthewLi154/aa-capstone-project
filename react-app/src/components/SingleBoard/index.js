@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useParams, NavLink } from "react-router-dom";
+import { useParams, NavLink, useHistory } from "react-router-dom";
 import { fetchUserBoardPins, fetchUserBoards } from "../../store/board";
 import EditBoard from "../EditBoardModal";
 import "./SingleBoard.css";
 
 const SingleBoard = () => {
   const { profileId, boardId } = useParams();
+  const history = useHistory();
   const dispatch = useDispatch();
 
   const pins = useSelector((state) => state.boards.boardPins[boardId]);
@@ -85,9 +86,22 @@ const SingleBoard = () => {
                 )}
               </div>
               <div>
-                <img src={user.profile_img} />
+                <img src={user.profileImg} />
               </div>
               <div>{boards.description}</div>
+              <div
+                className="organize-container-main"
+                onClick={(e) => {
+                  history.push(
+                    `/profile/${profileId}/board/${boardId}/organize`
+                  );
+                }}
+              >
+                <div className="organize-container">
+                  <i class="fa-solid fa-cube"></i>
+                </div>
+                <span>Organize</span>
+              </div>
             </div>
           )}
         </div>

@@ -71,3 +71,12 @@
   margin-bottom: 0.75rem;
   outline: none;
 }
+
+.single-pin-header-edit-save {
+  margin-right: 2rem;
+}
+
+.single-pin-header-edit-save button {
+  background-color: red;
+  font-weight: bold;
+}

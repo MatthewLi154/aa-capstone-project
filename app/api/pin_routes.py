@@ -1,5 +1,5 @@
 from flask import Blueprint, request
-from app.models import User, Pin, db, Board, board_pins
+from app.models import User, Pin, db, Board, boardPins
 
 pin_routes = Blueprint('pins', __name__)
 
@@ -54,9 +54,9 @@ def edit_pin(id):
     pin = Pin.query.get(id)
     data = request.get_json()
     pin.title = data['title']
-    pin.destination_link = data['destination_link']
+    pin.destinationLink = data['destinationLink']
     pin.about = data['about']
     pin.note = data['note']
-    pin.alt_text = data['alt_text']
+    pin.altText = data['altText']
     db.session.commit()
     return pin.to_dict()

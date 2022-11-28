@@ -99,9 +99,9 @@ const EditPin = () => {
     const data = {
       title: title,
       about: about,
-      destination_link: destinationLink,
+      destinationLink: destinationLink,
       note: note,
-      alt_text: altText,
+      altText: altText,
     };
 
     await dispatch(editSinglePin(pinId, data));
@@ -143,7 +143,10 @@ const EditPin = () => {
                   </div>
                 )}
               </div>
-              <div className="single-pin-header-save-button" onClick={onSave}>
+              <div
+                className="single-pin-header-save-button single-pin-header-edit-save"
+                onClick={onSave}
+              >
                 <button>Save Pin</button>
               </div>
             </div>
