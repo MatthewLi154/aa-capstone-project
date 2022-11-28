@@ -36,6 +36,6 @@ def seed():
 def undo():
     undo_boardPins()
     undo_boards()
-    undoPins()
+    undo_pins()
     undo_users()
     # Add other undo functions here

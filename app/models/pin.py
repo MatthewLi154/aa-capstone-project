@@ -1,4 +1,4 @@
-from .db import db, environment, SCHEMA, add_prefix_for_prod
+from .db import db, environment, SCHEMA, addPrefix_forProd
 from .board import boardPins
 
 class Pin(db.Model):
@@ -8,7 +8,7 @@ class Pin(db.Model):
         __table_args_ = {'schema': SCHEMA}
 
     id = db.Column(db.Integer, primary_key=True)
-    profileId = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('users.id')), nullable=False)
+    profileId = db.Column(db.Integer, db.ForeignKey(addPrefix_forProd('users.id')), nullable=False)
     destinationLink = db.Column(db.String(255), nullable=False)
     title = db.Column(db.String(55), nullable=False)
     about = db.Column(db.String(255), nullable=False)
@@ -16,9 +16,9 @@ class Pin(db.Model):
     note = db.Column(db.String(255))
     image = db.Column(db.String(255), nullable=False)
 
-    user = db.relationship("User", back_populates="user_pins")
+    user = db.relationship("User", backPopulates="userPins")
 
-    boards = db.relationship("Board", secondary=boardPins, back_populates="pins")
+    boards = db.relationship("Board", secondary=boardPins, backPopulates="pins")
 
     def to_dict(self):
         return {
