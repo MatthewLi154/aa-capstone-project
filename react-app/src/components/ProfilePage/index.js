@@ -24,7 +24,7 @@ const ProfilePage = () => {
     dispatch(fetchAllProfiles());
     dispatch(fetchSingleProfile(profileId));
     dispatch(fetchUserBoards(profileId));
-  }, []);
+  }, [dispatch]);
 
   let yourPage = false;
   if (parseInt(profileId) === currentProfileId) {

@@ -1,12 +1,17 @@
 """create all table
 
 Revision ID: 0992b3285a6d
-Revises: 
+Revises:
 Create Date: 2022-11-27 20:05:42.338499
 
 """
 from alembic import op
 import sqlalchemy as sa
+
+
+import os
+environment = os.getenv("FLASK_ENV")
+SCHEMA = os.environ.get("SCHEMA")
 
 
 # revision identifiers, used by Alembic.
@@ -26,6 +31,8 @@ def upgrade():
     sa.Column('createdAt', sa.DateTime(timezone=True), server_default=sa.text('(CURRENT_TIMESTAMP)'), nullable=False),
     sa.PrimaryKeyConstraint('id')
     )
+    if environment == "production":
+        op.execute(f"ALTER TABLE boards SET SCHEMA {SCHEMA};")
     op.create_table('users',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('username', sa.String(length=40), nullable=False),
@@ -41,6 +48,8 @@ def upgrade():
     sa.UniqueConstraint('email'),
     sa.UniqueConstraint('username')
     )
+    if environment == "production":
+        op.execute(f"ALTER TABLE users SET SCHEMA {SCHEMA};")
     op.create_table('pins',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('profile_id', sa.Integer(), nullable=False),
@@ -53,6 +62,8 @@ def upgrade():
     sa.ForeignKeyConstraint(['profile_id'], ['users.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
+    if environment == "production":
+        op.execute(f"ALTER TABLE pins SET SCHEMA {SCHEMA};")
     op.create_table('board_pins',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('pins_id', sa.Integer(), nullable=True),
@@ -61,6 +72,8 @@ def upgrade():
     sa.ForeignKeyConstraint(['pins_id'], ['pins.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
+    if environment == "production":
+        op.execute(f"ALTER TABLE pins SET SCHEMA {SCHEMA};")
     # ### end Alembic commands ###
 
 

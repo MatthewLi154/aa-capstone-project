@@ -134,6 +134,10 @@ const boardReducer = (state = initialState, action) => {
       boardStateObj.allBoards[action.board.id] = action.board;
       boardStateObj.userBoards[action.board.id] = action.board;
       return boardStateObj;
+    case EDIT_BOARD:
+      boardStateObj.allBoards[action.id] = action.board;
+      boardStateObj.userBoards[action.id] = action.board;
+      return boardStateObj;
     default:
       return state;
   }

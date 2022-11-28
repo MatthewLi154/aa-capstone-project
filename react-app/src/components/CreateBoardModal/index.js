@@ -14,6 +14,14 @@ const CreateBoard = ({ open, onClose }) => {
   const dispatch = useDispatch();
   const history = useHistory();
 
+  useEffect(() => {
+    dispatch(fetchUserBoards(currentProfileId));
+  }, []);
+
+  useEffect(() => {
+    dispatch(fetchUserBoards(currentProfileId));
+  }, [dispatch]);
+
   const validate = () => {
     const errors = [];
 
@@ -45,7 +53,6 @@ const CreateBoard = ({ open, onClose }) => {
     await dispatch(createNewBoard(data, currentProfileId));
     await dispatch(fetchUserBoards(currentProfileId));
 
-    // history.push("/profile");
     onClose();
   };
 
@@ -65,7 +72,10 @@ const CreateBoard = ({ open, onClose }) => {
           <div>
             <input
               value={name}
-              onChange={(e) => setName(e.target.value)}
+              onChange={(e) => {
+                e.stopPropagation();
+                setName(e.target.value);
+              }}
               placeholder='Like "Places to go" or "Nature to see"'
             ></input>
           </div>
@@ -77,13 +87,21 @@ const CreateBoard = ({ open, onClose }) => {
         <div className="create-board-create-button-modal">
           {name.length > 0 ? (
             <button
+              type="button"
               style={{ backgroundColor: "red", color: "white" }}
               onClick={onCreateBoard}
             >
               Create
             </button>
           ) : (
-            <button onClick={onCreateBoard}>Create</button>
+            <button
+              onClick={onCreateBoard}
+              type="button"
+              class="close"
+              data-dismiss="modal"
+            >
+              Create
+            </button>
           )}
         </div>
       </div>
