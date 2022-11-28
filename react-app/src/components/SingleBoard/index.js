@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams, NavLink, useHistory } from "react-router-dom";
-import { fetchUserBoardPins, fetchUserBoards } from "../../store/board";
+import {
+  deleteBoardById,
+  fetchUserBoardPins,
+  fetchUserBoards,
+} from "../../store/board";
 import EditBoard from "../EditBoardModal";
 import "./SingleBoard.css";
 
@@ -50,6 +54,14 @@ const SingleBoard = () => {
   // Modal for edit and delete board
   const [openModal, setOpenModal] = useState(false);
 
+  const onDeleteBoard = async (e) => {
+    e.preventDefault();
+
+    await dispatch(deleteBoardById(boardId));
+
+    history.push(`/profile/${profileId}`);
+  };
+
   return (
     <>
       <div className="single-board-page-container">
@@ -80,7 +92,12 @@ const SingleBoard = () => {
                         onClose={() => setOpenModal(false)}
                         props={{ boardId, profileId }}
                       />
-                      <li className="board-option-buttons">Delete board</li>
+                      <li
+                        className="board-option-buttons"
+                        onClick={onDeleteBoard}
+                      >
+                        Delete board
+                      </li>
                     </ul>
                   </div>
                 )}

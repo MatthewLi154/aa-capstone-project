@@ -56,7 +56,7 @@ def create_board_for_profile(id):
     """
     data = request.get_json()
     new_board = Board(name=data["name"],
-                      profileId=data["profile_id"],
+                      profileId=data["profileId"],
                       description=data["description"],
                       createdAt=datetime.now())
     db.session.add(new_board)

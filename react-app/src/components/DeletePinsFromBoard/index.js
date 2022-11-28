@@ -7,14 +7,13 @@ import "./DeletePinsFromBoard.css";
 const DeletePinsFromBoard = () => {
   const dispatch = useDispatch();
   const { profileId, boardId } = useParams();
-  const boardPins = useSelector((state) => state.boards.boardPins[boardId]);
+  const boardPins = useSelector((state) => state.boards.boardPins);
 
-  const boardPinsArr = [];
-  for (const pin in boardPins) {
-    boardPinsArr.push(boardPins[pin]);
+  const userBoardPins = boardPins[boardId];
+  const pins = [];
+  for (const pin in userBoardPins) {
+    pins.push(userBoardPins[pin]);
   }
-
-  console.log(boardPinsArr);
 
   useEffect(() => {
     dispatch(fetchUserBoards(profileId));
@@ -23,8 +22,15 @@ const DeletePinsFromBoard = () => {
   return (
     <>
       <div className="delete-pins-from-board-main-container">
+        <h2>Select pins to delete</h2>
         <div className="delete-pins-from-board-header">
-          <h2>Select pins to delete</h2>
+          <div className="organize-pins-container">
+            {pins.map((pin) => (
+              <div className="pin-container organize-pins">
+                <img src={pin.image}></img>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </>
