@@ -43,7 +43,7 @@ def delete_board_by_id(id):
     board = Board.query.get(id)
     db.session.delete(board)
     db.session.commit()
-    return {"message": "Successfully deleted"}
+    return {"message": "Successfully deleted board"}
 
 
 @board_routes.route('/<id>', methods=['PUT'])

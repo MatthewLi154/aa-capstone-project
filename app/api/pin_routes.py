@@ -15,6 +15,7 @@ def pins():
         pins_dict[pin.id] = pin.to_dict()
     return pins_dict
 
+
 @pin_routes.route('/<id>')
 def get_single_pin(id):
     pin = Pin.query.get(id)
@@ -42,7 +43,8 @@ def delete_pin(id):
     pin = Pin.query.get(id)
     db.session.delete(pin)
     db.session.commit()
-    return {"message": "Successfully deleted"}
+    return {"message": "Successfully deleted pin"}
+
 
 @pin_routes.route("/<id>/edit", methods=['PUT'])
 def edit_pin(id):
