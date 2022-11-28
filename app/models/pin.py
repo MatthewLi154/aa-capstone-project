@@ -16,9 +16,9 @@ class Pin(db.Model):
     note = db.Column(db.String(255))
     image = db.Column(db.String(255), nullable=False)
 
-    user = db.relationship("User", backPopulates="userPins")
+    user = db.relationship("User", back_populates="userPins")
 
-    boards = db.relationship("Board", secondary=boardPins, backPopulates="pins")
+    boards = db.relationship("Board", secondary=boardPins, back_populates="pins")
 
     def to_dict(self):
         return {
