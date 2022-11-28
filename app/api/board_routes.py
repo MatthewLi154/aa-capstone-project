@@ -1,5 +1,6 @@
 from flask import Blueprint, request
 from app.models import Board, board_pins, Pin, db
+from datetime import datetime
 
 board_routes = Blueprint('boards', __name__)
 
@@ -43,3 +44,18 @@ def delete_board_by_id(id):
     db.session.delete(board)
     db.session.commit()
     return {"message": "Successfully deleted"}
+
+
+@board_routes.route('/<id>', methods=['PUT'])
+def edit_board_by_id(id):
+    """
+    Edit a board by board id
+    """
+    data = request.get_json()
+    board = Board.query.get(id)
+    board.name = data["name"]
+    board.description = data["description"]
+    board.createdAt = datetime.now()
+    db.session.commit()
+
+    return board.to_dict()

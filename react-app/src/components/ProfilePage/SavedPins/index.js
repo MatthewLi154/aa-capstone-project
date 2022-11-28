@@ -32,7 +32,7 @@ const SavedPins = (props) => {
   useEffect(() => {
     dispatch(fetchUserBoards(profileId));
     dispatch(fetchUserBoardPins(profileId));
-  }, []);
+  }, [dispatch]);
 
   const openMenu = () => {
     if (showMenu) return;
@@ -56,12 +56,6 @@ const SavedPins = (props) => {
 
   return (
     <>
-      {/* <div>
-        <button className="modalBtn" onClick={() => setOpenModal(true)}>
-          Modal
-        </button>
-        <CreateBoard open={openModal} onClose={() => setOpenModal(false)} />
-      </div> */}
       <div className="saved-pins-container">
         <div className="create-pin-board-container-button">
           <button onClick={openMenu}>

@@ -4,6 +4,7 @@ const LOAD_USER_BOARDS = "boards/loadUserBoards";
 const LOAD_BOARD_PINS = "boards/loadBoardPins";
 const ADD_BOARD = "boards/addBoard";
 const DELETE_BOARD = "boards/deleteBoard";
+const EDIT_BOARD = "boards/editBoard";
 
 // Actions
 export const getAllBoards = (data, boardId) => {
@@ -38,6 +39,14 @@ export const addBoard = (data) => {
 export const deleteBoard = (boardId) => {
   return {
     type: DELETE_BOARD,
+    id: boardId,
+  };
+};
+
+export const editBoard = (data, boardId) => {
+  return {
+    type: EDIT_BOARD,
+    board: data,
     id: boardId,
   };
 };
@@ -85,6 +94,19 @@ export const deleteBoardById = (boardId) => async (dispatch) => {
   if (response.ok) {
     const data = await response.json();
     dispatch(deleteBoard(boardId));
+  }
+};
+
+export const editBoardById = (data, boardId) => async (dispatch) => {
+  const response = await fetch(`/api/boards/${boardId}`, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data),
+  });
+
+  if (response.ok) {
+    const data = await response.json();
+    dispatch(editBoard(data, boardId));
   }
 };
 

@@ -1,18 +1,18 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
 import { createNewBoard } from "../../store/board";
+import { fetchUserBoards } from "../../store/board";
 
 const CreateBoard = ({ open, onClose }) => {
   if (!open) return null;
 
   const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
   const [errors, setErrors] = useState([]);
   const currentProfileId = useSelector((state) => state.session.user.id);
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    console.log(name);
-  }, [name]);
+  const history = useHistory();
 
   const validate = () => {
     const errors = [];
@@ -38,12 +38,15 @@ const CreateBoard = ({ open, onClose }) => {
 
     const data = {
       name: name,
+      description: description,
       profile_id: currentProfileId,
     };
 
     await dispatch(createNewBoard(data, currentProfileId));
+    await dispatch(fetchUserBoards(currentProfileId));
 
-    // history.push("/boards")
+    // history.push("/profile");
+    onClose();
   };
 
   return (

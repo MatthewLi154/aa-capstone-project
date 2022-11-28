@@ -29,7 +29,7 @@
   border-radius: 1rem;
   display: flex;
   justify-content: flex-start;
-  box-shadow: 2px 1px 1px 1px lightgray;
+  box-shadow: 2px 2px 6px 1px lightgray;
 }
 
 .create-pin-dropdown-saved-pins-container ul {
@@ -63,11 +63,18 @@
   cursor: pointer;
 }
 
+.user-board-main-container {
+  display: flex;
+  justify-content: center;
+}
+
 .user-board-container {
   display: flex;
   flex-direction: row;
-  justify-content: flex-start;
+  justify-content: center;
   width: 100%;
+  flex-wrap: wrap;
+  align-items: center;
 }
 
 .board-container {
@@ -180,6 +187,11 @@
   border-radius: 1rem;
   width: 28rem;
   border: 1px gray solid;
+  font-size: 14px;
+}
+
+.create-board-input-field-modal input:focus {
+  outline: lightblue 2px solid;
 }
 
 .create-board-create-button-modal {
@@ -207,4 +219,8 @@
   width: 100%;
   margin: 0;
   padding: 0;
+}
+
+.create-pin-dropdown-saved-pins-container {
+  background-color: white;
 }

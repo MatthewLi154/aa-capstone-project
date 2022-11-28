@@ -50,3 +50,47 @@
   height: 3rem;
   border-radius: 50%;
 }
+
+.single-board-page-dropdown {
+  position: absolute;
+  top: 10rem;
+  left: 50%;
+  width: 11.5rem;
+  height: 7rem;
+  border-radius: 1rem;
+  box-shadow: 2px 2px 6px 1px lightgray;
+  background-color: white;
+}
+
+.single-board-page-dropdown li {
+  list-style-type: none;
+  margin: 0.35rem 0rem;
+  display: flex;
+  justify-content: flex-start;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.single-board-page-dropdown ul {
+  margin: 0rem;
+  padding: 0rem 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.board-options-text {
+  font-weight: lighter;
+  font-size: 12px;
+}
+
+.board-option-buttons {
+  cursor: pointer;
+  /* border: 1px solid black; */
+  width: 100%;
+  padding: 0.2rem;
+  border-radius: 0.5rem;
+}
+
+.board-option-buttons:hover {
+  background-color: lightgray;
+}
