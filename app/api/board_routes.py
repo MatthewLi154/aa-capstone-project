@@ -83,7 +83,9 @@ def delete_pins_from_board(board_id, pin_id):
     delete_join = boardPins.delete().where(boardPins.c.boardsId == board_id, boardPins.c.pinsId == pin_id)
     db.session.execute(delete_join)
     db.session.commit()
-    return {"message": "I hope this works"}
+    return {"message": "Successfully Deleted",
+            "boardsId": board_id,
+            "pinsId": pin_id}
 
 
 

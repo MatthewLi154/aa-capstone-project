@@ -6,6 +6,7 @@ const ADD_BOARD = "boards/addBoard";
 const DELETE_BOARD = "boards/deleteBoard";
 const EDIT_BOARD = "boards/editBoard";
 const ADD_PIN_TO_BOARD = "boards/addPinToBoard";
+const DELETE_PIN_FROM_BOARD = "/boards/deletePinFromBoard";
 
 // Actions
 export const getAllBoards = (data, boardId) => {
@@ -58,6 +59,15 @@ export const addPinToBoard = (data) => {
     boardPin: data,
   };
 };
+
+export const removePinFromBoard = (data) => {
+  return {
+    type: DELETE_PIN_FROM_BOARD,
+    boardId: data.boardId,
+    pinId: data.pinId,
+  };
+};
+
 // Thunks
 
 export const fetchUserBoards = (profileId) => async (dispatch) => {
@@ -125,6 +135,18 @@ export const addPinToBoardPins = (pinId, boardName) => async (dispatch) => {
   });
 };
 
+export const deletePinFromBoard = (boardId, pinId) => async (dispatch) => {
+  const response = await fetch(`/api/boards/${boardId}/pins/${pinId}`, {
+    method: "DELETE",
+  });
+
+  if (response.ok) {
+    const data = await response.json();
+    dispatch(removePinFromBoard(data));
+    return data;
+  }
+};
+
 // Reducer
 const initialState = {
   allBoards: {},
@@ -159,6 +181,8 @@ const boardReducer = (state = initialState, action) => {
       delete boardStateObj.userBoards[action.id];
       delete boardStateObj.boardPins[action.id];
       return boardStateObj;
+    // case DELETE_PIN_FROM_BOARD:
+
     default:
       return state;
   }

@@ -1,11 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { NavLink, useParams, useHistory } from "react-router-dom";
-import { fetchUserBoardPins, fetchUserBoards } from "../../store/board";
+import {
+  fetchUserBoardPins,
+  fetchUserBoards,
+  deletePinFromBoard,
+} from "../../store/board";
 import "./DeletePinsFromBoard.css";
 
 const DeletePinsFromBoard = () => {
   const dispatch = useDispatch();
+  const history = useHistory();
   const { profileId, boardId } = useParams();
   const boardPins = useSelector((state) => state.boards.boardPins);
 
@@ -30,6 +35,19 @@ const DeletePinsFromBoard = () => {
     dispatch(fetchUserBoards(profileId));
     dispatch(fetchUserBoardPins(profileId));
   }, []);
+
+  const onDelete = async (e) => {
+    // e.preventDefault();
+    if (
+      window.confirm("Are you sure you want to remove these from the board?")
+    ) {
+      for (const pin in selected) {
+        await dispatch(deletePinFromBoard(boardId, pin));
+      }
+
+      history.push(`/profile/${profileId}/boards/${boardId}`);
+    }
+  };
 
   return (
     <>
@@ -83,7 +101,7 @@ const DeletePinsFromBoard = () => {
           </div>
         </div>
         <div className="trash-container-main">
-          <div className="trash-container">
+          <div className="trash-container" onClick={(e) => onDelete(e)}>
             <i class="fa-solid fa-trash"></i>
           </div>
         </div>

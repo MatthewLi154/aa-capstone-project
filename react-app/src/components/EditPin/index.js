@@ -152,9 +152,7 @@ const EditPin = () => {
             </div>
           </div>
           {errors.length > 0 &&
-            errors.map((error) => (
-              <div style={{ textDecorationColor: "red" }}>{error}</div>
-            ))}
+            errors.map((error) => <div style={{ color: "red" }}>{error}</div>)}
           <div className="edit-title-container">
             <input
               placeholder="Edit your title"
