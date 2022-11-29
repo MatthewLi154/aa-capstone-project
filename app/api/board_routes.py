@@ -80,8 +80,9 @@ def delete_pins_from_board(board_id, pin_id):
     """
     Delete pin from board using both id's
     """
-    selected = boardPins.query(pinsId=pin_id, boardsId=board_id).all()
-    print(selected)
+    pins = db.session.execute("SELECT * FROM board_pins")
+    # res = db.engine.execute(pins)
+    print(pins)
     return {"message": "I hope this works"}
 
 
