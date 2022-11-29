@@ -80,9 +80,9 @@ def delete_pins_from_board(board_id, pin_id):
     """
     Delete pin from board using both id's
     """
-    pins = db.session.execute("SELECT * FROM board_pins")
-    # res = db.engine.execute(pins)
-    print(pins)
+    delete_join = boardPins.delete().where(boardPins.c.boardsId == board_id, boardPins.c.pinsId == pin_id)
+    db.session.execute(delete_join)
+    db.session.commit()
     return {"message": "I hope this works"}
 
 
