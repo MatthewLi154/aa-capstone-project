@@ -75,6 +75,16 @@ def addPin_to_board(board_name, pin_id):
         "boardsId": board.id
     }
 
+@board_routes.route('/<board_id>/pins/<pin_id>', methods=['DELETE'])
+def delete_pins_from_board(board_id, pin_id):
+    """
+    Delete pin from board using both id's
+    """
+    selected = boardPins.query(pinsId=pin_id, boardsId=board_id).all()
+    print(selected)
+    return {"message": "I hope this works"}
+
+
 
 @board_routes.route('/<profile_id>/<board_name>')
 def get_board_by_name(board_name, profile_id):
