@@ -22,6 +22,8 @@ const PinBuilder = () => {
   const [about, setAbout] = useState("");
   const [altText, setAltText] = useState("");
   const [image, setImage] = useState("");
+  const [imageUrl, setImageUrl] = useState("");
+  const [imageLoading, setImageLoading] = useState(false);
   const [board, setBoard] = useState("Profile");
   const [boardExist, setBoardExist] = useState("");
   const [errors, setErrors] = useState([]);
@@ -36,12 +38,6 @@ const PinBuilder = () => {
     if (openAlt) return;
     setOpenAlt(true);
   };
-
-  // useEffect(() => {
-  //   console.log(board);
-  //   console.log(linkErrors);
-  //   console.log(titleErrors);
-  // }, [title, image, destinationLink, altText, about, board, linkErrors]);
 
   const validate = () => {
     let errors = [];
@@ -85,6 +81,12 @@ const PinBuilder = () => {
     return errors;
   };
 
+  const updateImage = async (e) => {
+    const file = e.target.files[0];
+    setImage(file);
+    // console.log(file);
+  };
+
   const onSubmit = async (e) => {
     e.preventDefault();
 
@@ -95,29 +97,47 @@ const PinBuilder = () => {
       return setErrors(errors);
     }
 
-    const newPin = {
-      profileId: currentProfileId,
-      destinationLink: destinationLink,
-      title: title,
-      about: about,
-      image: image,
-      altText: altText,
-    };
+    const formData = new FormData();
+    formData.append("image", image);
+    console.log(formData);
 
-    const newPinRes = await dispatch(addNewPin(newPin));
-    console.log(newPinRes);
-    if (board.length !== 0) {
-      if (board !== "Profile") {
-        await fetch(`/api/boards/${board}/pins/${newPinRes.id}`, {
-          method: "POST",
-        });
+    setImageLoading(true);
+
+    const res = await fetch("/api/pins/images", {
+      method: "POST",
+      body: formData,
+    });
+    if (res.ok) {
+      const data = await res.json();
+      setImageLoading(false);
+      console.log(data.url);
+
+      const newPin = {
+        profileId: currentProfileId,
+        destinationLink: destinationLink,
+        title: title,
+        about: about,
+        image: data.url,
+        altText: altText,
+      };
+
+      const newPinRes = await dispatch(addNewPin(newPin));
+
+      if (board.length !== 0) {
+        if (board !== "Profile") {
+          await fetch(`/api/boards/${board}/pins/${newPinRes.id}`, {
+            method: "POST",
+          });
+        }
       }
+
+      await dispatch(fetchAllPins());
+
+      history.push(`/pins/${newPinRes.id}`);
+    } else {
+      setImageLoading(false);
+      console.log("error");
     }
-
-    await dispatch(fetchAllPins());
-
-    console.log("hello");
-    history.push(`/pins/${newPinRes.id}`);
   };
 
   return (
@@ -155,14 +175,18 @@ const PinBuilder = () => {
             <div className="left-drag-and-drop-upload">
               <div className="drag-and-drop-upload-container">
                 <input
+                  type="file"
+                  accept="image/*"
                   placeholder="image url"
-                  value={image}
-                  onChange={(e) => setImage(e.target.value)}
+                  onChange={(e) => {
+                    updateImage(e);
+                  }}
                 ></input>
               </div>
               <div className="save-from-site-button">
                 <button>Save from site</button>
               </div>
+              {imageLoading && <p>Loading...</p>}
             </div>
             <div className="right-pin-detail-fields">
               <div className="add-your-title-container">
