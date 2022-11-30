@@ -137,6 +137,11 @@ export const addPinToBoardPins =
         body: JSON.stringify(pinId),
       }
     );
+
+    // if (response.ok) {
+    //   const data = await response.json();
+    //   dispatch()
+    // }
   };
 
 export const deletePinFromBoard = (boardId, pinId) => async (dispatch) => {

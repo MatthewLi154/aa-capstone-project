@@ -15,6 +15,9 @@ const SavedPins = (props) => {
     Object.values(state.boards.boardPins)
   );
 
+  // change userBoards to array as well
+  console.log(userBoards);
+
   const [showMenu, setShowMenu] = useState(false);
 
   let pinsArr = Object.values(boardPins);
@@ -129,7 +132,7 @@ const SavedPins = (props) => {
                         )}
                       </div>
                     </div>
-                    <div>{userBoards[index].name}</div>
+                    {userBoards[index] && <div>{userBoards[index].name}</div>}
                     <div style={{ fontSize: "12px" }}>{pin.length} Pins</div>
                   </div>
                 ))}
