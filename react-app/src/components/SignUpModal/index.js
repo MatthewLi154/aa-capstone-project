@@ -77,10 +77,14 @@ const SignUpModal = ({ open, onClose, props }) => {
     }
 
     if (password === repeatPassword) {
-      const data = await dispatch(signUp(username, email, password));
-      //   if (data) {
-      //     setErrors(data);
-      //   }
+      const data = await dispatch(
+        signUp(username, email, password, firstName, lastName)
+      );
+      if (data) {
+        setErrors(data);
+      } else {
+        onClose();
+      }
     }
   };
 

@@ -2,8 +2,13 @@ import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { NavLink, useParams, useHistory } from "react-router-dom";
 import { fetchAllPins, fetchSinglePin, deletePin } from "../../store/pin";
-import { fetchUserBoardPins, fetchUserBoards } from "../../store/board";
+import {
+  createNewBoard,
+  fetchUserBoardPins,
+  fetchUserBoards,
+} from "../../store/board";
 import "./SinglePin.css";
+import { fetchAllProfiles } from "../../store/profile";
 
 const SinglePin = () => {
   const dispatch = useDispatch();
@@ -11,9 +16,20 @@ const SinglePin = () => {
   const { pinId } = useParams();
   const currentPin = useSelector((state) => state.pins.singlePin);
   const currentProfileId = useSelector((state) => state.session.user.id);
+  // const currentProfile = useSelector((state) => state.session.user);
+  const profiles = useSelector((state) => state.profiles.allProfiles);
   const userBoards = useSelector((state) =>
     Object.values(state.boards.userBoards)
   );
+
+  let currentProfile;
+  let profileId = currentPin.profileId;
+  for (const profile in profiles) {
+    if (profileId == profile) {
+      currentProfile = profiles[profile];
+      console.log(currentProfile.profileImg);
+    }
+  }
 
   const [board, setBoard] = useState("Profile");
   const [openOptions, setOpenOptions] = useState(false);
@@ -24,6 +40,7 @@ const SinglePin = () => {
     dispatch(fetchSinglePin(pinId));
     dispatch(fetchUserBoards(currentProfileId));
     dispatch(fetchUserBoardPins(currentProfileId));
+    dispatch(fetchAllProfiles());
   }, []);
 
   const onOpenOptions = async (e) => {
@@ -60,6 +77,32 @@ const SinglePin = () => {
   const onSave = async (e) => {
     e.preventDefault();
 
+    let allPinsExists = false;
+    if (board === "Profile") {
+      for (const board of userBoards) {
+        if (board.name === "All Pins") {
+          await fetch(`/api/boards/${board.name}/pins/${pinId}`, {
+            method: "POST",
+          });
+          allPinsExists = true;
+        }
+      }
+
+      if (!allPinsExists) {
+        const data = {
+          name: "All Pins",
+          description: "All Pins",
+          profileId: profileId,
+        };
+        await dispatch(createNewBoard(data, profileId));
+        await fetch(`/api/boards/${"All Pins"}/pins/${pinId}`, {
+          method: "POST",
+        });
+        setSaved(true);
+        return data;
+      }
+    }
+
     await fetch(`/api/boards/${board}/pins/${pinId}`, {
       method: "POST",
     });
@@ -69,98 +112,109 @@ const SinglePin = () => {
 
   return (
     <>
-      <div className="main-single-pin-page">
-        <div className="main-single-pin-container">
-          <div className="single-pin-left-container">
-            <img src={currentPin.image}></img>
-          </div>
-          <div className="single-pin-right-container">
-            <div className="single-pin-right-header">
-              <div className="single-pin-header-left-icons">
-                <i class="fa-solid fa-ellipsis" onClick={onOpenOptions}></i>
-                {openOptions && (
-                  <div>
-                    <div className="option-dropdown-container">
-                      <button>
-                        <NavLink
-                          to={`/pins/${pinId}/edit`}
-                          style={{ textDecoration: "none", color: "black" }}
-                        >
-                          Edit Pin
-                        </NavLink>
-                      </button>
-                      <button onClick={onDelete}>Delete Pin</button>
-                    </div>
-                  </div>
-                )}
-              </div>
-              {/* <div className="single-pin-header-save-button">
-                <button>Save</button>
-              </div> */}
-              <div className="save-to-board-dropdown-button">
-                <div className="save-button-container-header">
-                  {/* <div className="select-container-pin-builder">Select</div>
-                <div className="select-container-angle-down">
-                  <i className="fa-solid fa-angle-down"></i>
-                </div> */}
-                  {!saved ? (
-                    <>
-                      {" "}
-                      <div>
-                        <select
-                          className="select-container-pin-builder"
-                          value={board}
-                          onChange={(e) => setBoard(e.target.value)}
-                        >
-                          <option>Profile</option>
-                          {userBoards &&
-                            userBoards.map((board) => (
-                              <option>{board.name}</option>
-                            ))}
-                        </select>
-                      </div>
-                      <div>
-                        <button
-                          onClick={(e) => {
-                            onSave(e);
-                          }}
-                        >
-                          Save
+      {currentProfile && (
+        <div className="main-single-pin-page">
+          <div className="main-single-pin-container">
+            <div className="single-pin-left-container">
+              <img src={currentPin.image}></img>
+            </div>
+            <div className="single-pin-right-container">
+              <div className="single-pin-right-header">
+                <div className="single-pin-header-left-icons">
+                  <i class="fa-solid fa-ellipsis" onClick={onOpenOptions}></i>
+                  {openOptions && (
+                    <div>
+                      <div className="option-dropdown-container">
+                        <button>
+                          <NavLink
+                            to={`/pins/${pinId}/edit`}
+                            style={{ textDecoration: "none", color: "black" }}
+                          >
+                            Edit Pin
+                          </NavLink>
                         </button>
-                      </div>
-                    </>
-                  ) : (
-                    <div className="single-pin-saved-button">
-                      <div>{board}</div>
-                      <div className="single-pin-header-save-button">
-                        <button>Saved</button>
+                        <button onClick={onDelete}>Delete Pin</button>
                       </div>
                     </div>
                   )}
                 </div>
+                {/* <div className="single-pin-header-save-button">
+                <button>Save</button>
+              </div> */}
+                <div className="save-to-board-dropdown-button">
+                  <div className="save-button-container-header">
+                    {/* <div className="select-container-pin-builder">Select</div>
+                <div className="select-container-angle-down">
+                  <i className="fa-solid fa-angle-down"></i>
+                </div> */}
+                    {!saved ? (
+                      <>
+                        {" "}
+                        <div>
+                          <select
+                            className="select-container-pin-builder"
+                            value={board}
+                            onChange={(e) => setBoard(e.target.value)}
+                          >
+                            <option>Profile</option>
+                            {userBoards &&
+                              userBoards.map((board) => (
+                                <option>{board.name}</option>
+                              ))}
+                          </select>
+                        </div>
+                        <div>
+                          <button
+                            onClick={(e) => {
+                              onSave(e);
+                            }}
+                          >
+                            Save
+                          </button>
+                        </div>
+                      </>
+                    ) : (
+                      <div className="single-pin-saved-button">
+                        <div>{board}</div>
+                        <div className="single-pin-header-save-button">
+                          <button>Saved</button>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                </div>
               </div>
-            </div>
-            <div className="single-pin-margin-left single-pin-destination-link">
-              <a href={currentPin.destinationLink} style={{ color: "black" }}>
-                {currentPin.destinationLink}
-              </a>
-            </div>
-            <div className="single-pin-margin-left single-pin-title">
-              {currentPin.title}
-            </div>
-            <div className="single-pin-margin-left">{currentPin.about}</div>
-            <div className="single-pin-margin-left single-pin-creator-details profile-pic-container-pin-builder main-creator-container">
-              <div className="single-pin-creator-details">
-                <img src="https://i.pinimg.com/564x/49/40/6b/49406b58f4a68552f26d0c6e4a14c0d2.jpg"></img>
-                <div>username</div>
+              <div className="single-pin-margin-left single-pin-destination-link">
+                <a href={currentPin.destinationLink} style={{ color: "black" }}>
+                  {currentPin.destinationLink}
+                </a>
               </div>
-              <div className="single-pin-creator-details">
-                <button>Follow</button>
+              <div className="single-pin-margin-left single-pin-title">
+                {currentPin.title}
+              </div>
+              <div className="single-pin-margin-left">{currentPin.about}</div>
+              <div className="single-pin-margin-left single-pin-creator-details profile-pic-container-pin-builder main-creator-container">
+                <div className="single-pin-creator-details">
+                  {/* {currentProfile.profileImg ? (
+                  <img src={currentProfile.profileImg}></img>
+                ) : (
+                  <img src="https://t4.ftcdn.net/jpg/02/15/84/43/360_F_215844325_ttX9YiIIyeaR7Ne6EaLLjMAmy4GvPC69.jpg"></img>
+                )} */}
+                  {currentProfile && currentProfile.profileImg === null ? (
+                    <img src="https://t4.ftcdn.net/jpg/02/15/84/43/360_F_215844325_ttX9YiIIyeaR7Ne6EaLLjMAmy4GvPC69.jpg"></img>
+                  ) : (
+                    <img src={currentProfile.profileImg}></img>
+                  )}
+                  <div>{currentProfile.username}</div>
+                </div>
+                <div className="single-pin-creator-details">
+                  <button>Follow</button>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
+      )}
     </>
   );
 };

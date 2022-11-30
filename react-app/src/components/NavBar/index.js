@@ -166,7 +166,11 @@ const NavBar = () => {
             <div>
               <div className="navbar-profile-picture">
                 <NavLink to={`/profile/${currentProfile.id}`}>
-                  <img src="https://i.pinimg.com/564x/08/13/5c/08135cd812b33ad4788956ac2980898f.jpg"></img>
+                  {currentProfile && currentProfile.profileImg ? (
+                    <img src={currentProfile.profileImg}></img>
+                  ) : (
+                    <img src="https://t4.ftcdn.net/jpg/02/15/84/43/360_F_215844325_ttX9YiIIyeaR7Ne6EaLLjMAmy4GvPC69.jpg"></img>
+                  )}
                 </NavLink>
               </div>
             </div>
@@ -181,7 +185,11 @@ const NavBar = () => {
                       style={{ textDecoration: "none", color: "black" }}
                       className="profile-detail-dropdown-container"
                     >
-                      <img src={currentProfile.profileImg}></img>
+                      {currentProfile && currentProfile.profileImg ? (
+                        <img src={currentProfile.profileImg}></img>
+                      ) : (
+                        <img src="https://t4.ftcdn.net/jpg/02/15/84/43/360_F_215844325_ttX9YiIIyeaR7Ne6EaLLjMAmy4GvPC69.jpg"></img>
+                      )}
                       {currentProfile.firstName}
                     </NavLink>
                   </div>

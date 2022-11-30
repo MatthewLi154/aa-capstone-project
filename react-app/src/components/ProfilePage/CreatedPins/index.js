@@ -40,6 +40,7 @@ const CreatedPins = () => {
               </NavLink>
             </div>
           ))}
+        {pins.length === 0 && <div>You have not created any pins</div>}
       </div>
     </>
   );

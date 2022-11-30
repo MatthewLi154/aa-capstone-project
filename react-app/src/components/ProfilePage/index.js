@@ -36,7 +36,11 @@ const ProfilePage = () => {
       {currentProfile && (
         <div className="main-profile-information-container">
           <div className="main-profile-information-sub-container">
-            <img src={currentProfile.profileImg}></img>
+            {currentProfile.profileImg ? (
+              <img src={currentProfile.profileImg}></img>
+            ) : (
+              <img src="https://t4.ftcdn.net/jpg/02/15/84/43/360_F_215844325_ttX9YiIIyeaR7Ne6EaLLjMAmy4GvPC69.jpg"></img>
+            )}
             <div className="main-profile-name-container">
               {currentProfile.firstName} {currentProfile.lastName}
             </div>
