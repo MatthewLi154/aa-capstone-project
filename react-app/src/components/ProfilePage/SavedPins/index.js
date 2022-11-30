@@ -129,7 +129,7 @@ const SavedPins = (props) => {
                         )}
                       </div>
                     </div>
-                    {userBoards && index && <div>{userBoards[index].name}</div>}
+                    <div>{userBoards[index].name}</div>
                     <div style={{ fontSize: "12px" }}>{pin.length} Pins</div>
                   </div>
                 ))}
