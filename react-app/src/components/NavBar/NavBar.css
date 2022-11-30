@@ -187,3 +187,31 @@
 .nav-button-container span {
   color: white;
 }
+
+.login-button-nav-bar {
+  width: 5rem;
+  height: 2.5rem;
+  background-color: red;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 2rem;
+  font-size: 18px;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.signup-bottom-nav-bar {
+  margin: 0rem 1rem;
+  width: 6rem;
+  height: 2.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #efefef;
+  border-radius: 2rem;
+  font-size: 18px;
+  font-weight: 500;
+  cursor: pointer;
+}

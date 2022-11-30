@@ -60,7 +60,12 @@ const NavBar = () => {
           <div>
             <a
               href="https://github.com/MatthewLi154/pinature-capstone-project"
-              style={{ textDecoration: "none", margin: "0rem 1rem" }}
+              style={{
+                textDecoration: "none",
+                margin: "0rem 1rem",
+                color: "black",
+                fontWeight: "500",
+              }}
             >
               About
             </a>
@@ -70,28 +75,22 @@ const NavBar = () => {
               setOpenLoginModal(true);
               e.stopPropagation();
             }}
+            className="login-button-nav-bar"
           >
-            Login
+            Log in
           </div>
           <LoginModal
             open={openLoginModal}
             onClose={() => setOpenLoginModal(false)}
           />
           <div
-            className="nav-button-container"
+            className="signup-bottom-nav-bar"
             onClick={(e) => {
               setOpenSignupModal(true);
               e.stopPropagation();
             }}
           >
-            {/* <NavLink
-              to="/sign-up"
-              style={{ textDecoration: "none" }}
-              exact={true}
-              activeClassName="active"
-            > */}
             Sign Up
-            {/* </NavLink> */}
           </div>
           <SignUpModal
             open={openSignupModal}
@@ -128,7 +127,7 @@ const NavBar = () => {
                 Home
               </NavLink>
             </div>
-            <div className="nav-button-container">
+            {/* <div className="nav-button-container">
               <NavLink
                 to="/"
                 exact={true}
@@ -137,7 +136,7 @@ const NavBar = () => {
               >
                 Today
               </NavLink>
-            </div>
+            </div> */}
             <div className="nav-button-container">
               <NavLink
                 to="/pin-builder"
@@ -148,7 +147,7 @@ const NavBar = () => {
                 Create
               </NavLink>
             </div>
-            <div className="create-angle-and-dropdown">
+            {/* <div className="create-angle-and-dropdown">
               <div onClick={openMenu}>
                 <i className="fa-solid fa-angle-down"></i>
               </div>
@@ -159,7 +158,7 @@ const NavBar = () => {
                   </ul>
                 </div>
               )}
-            </div>
+            </div> */}
             <div className="nav-button-container search-container">
               <i className="fa-solid fa-magnifying-glass"></i>
               <input placeholder="Search"></input>

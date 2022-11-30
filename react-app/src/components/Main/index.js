@@ -15,10 +15,6 @@ const Main = () => {
     dispatch(fetchAllProfiles());
   }, []);
 
-  const randomHeight = () => {
-    return 9 * Math.ceil(Math.random() * 3);
-  };
-
   return (
     <>
       <div className="all-pins-main-container">
@@ -27,10 +23,7 @@ const Main = () => {
             <div className="pin-container">
               <NavLink to={`/pins/${pin.id}`}>
                 <div>
-                  <img
-                    src={pin.image}
-                    style={{ height: `${randomHeight()}rem` }}
-                  ></img>
+                  <img src={pin.image}></img>
                 </div>
                 <div>{pin.title}</div>
               </NavLink>

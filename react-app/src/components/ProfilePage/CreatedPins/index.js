@@ -34,7 +34,7 @@ const CreatedPins = () => {
               <NavLink to={`/pins/${pin.id}`}>
                 <img
                   src={pin.image}
-                  style={{ height: `${randomHeight()}rem` }}
+                  // style={{ height: `${randomHeight()}rem` }}
                 ></img>
                 <div>{pin.title}</div>
               </NavLink>
