@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { NavLink, a } from "react-router-dom";
 import LogoutButton from "../auth/LogoutButton";
 import LoginModal from "../LoginModal";
+import SignUpModal from "../SignUpModal";
 import "./NavBar.css";
 
 const NavBar = () => {
@@ -11,6 +12,7 @@ const NavBar = () => {
   const currentProfile = useSelector((state) => state.session.user);
   // Modal for login
   const [openLoginModal, setOpenLoginModal] = useState(false);
+  const [openSignupModal, setOpenSignupModal] = useState(false);
 
   const openMenu = () => {
     if (showMenu) return;
@@ -57,7 +59,7 @@ const NavBar = () => {
         <div className="logged-out-right-side-container">
           <div>
             <a
-              href="https://github.com/MatthewLi154"
+              href="https://github.com/MatthewLi154/pinature-capstone-project"
               style={{ textDecoration: "none", margin: "0rem 1rem" }}
             >
               About
@@ -69,25 +71,32 @@ const NavBar = () => {
               e.stopPropagation();
             }}
           >
-            {/* <NavLink to="login" style={{ textDecoration: "none" }} exact={true}>
-              Login
-            </NavLink> */}
             Login
           </div>
           <LoginModal
             open={openLoginModal}
             onClose={() => setOpenLoginModal(false)}
           />
-          <div className="nav-button-container">
-            <NavLink
+          <div
+            className="nav-button-container"
+            onClick={(e) => {
+              setOpenSignupModal(true);
+              e.stopPropagation();
+            }}
+          >
+            {/* <NavLink
               to="/sign-up"
               style={{ textDecoration: "none" }}
               exact={true}
               activeClassName="active"
-            >
-              Sign Up
-            </NavLink>
+            > */}
+            Sign Up
+            {/* </NavLink> */}
           </div>
+          <SignUpModal
+            open={openSignupModal}
+            onClose={() => setOpenSignupModal(false)}
+          />
         </div>
       </div>
     </nav>

@@ -40,6 +40,21 @@ const LoginModal = ({ open, onClose, props }) => {
     }
   }, [errors]);
 
+  const onDemoLogin = async (e) => {
+    e.preventDefault();
+
+    const data = await dispatch(login("demo@aa.io", "password"));
+    if (data) {
+      setErrors(data);
+    }
+
+    if (!data) {
+      onClose();
+    }
+
+    history.push("/");
+  };
+
   const onLogin = async (e) => {
     e.preventDefault();
     setEmailErrors([]);
@@ -78,36 +93,38 @@ const LoginModal = ({ open, onClose, props }) => {
       >
         <div className="login-form-logo">Logo</div>
         <div className="welcome-header">Welcome to Pinature</div>
-        <div className="email-input-container">
-          <label>Email</label>
-          <input
-            placeholder="Email"
-            value={email}
-            onChange={updateEmail}
-          ></input>
-          {emailErrors &&
-            emailErrors.map((error) => (
-              <div style={{ color: "red" }}>{error}</div>
-            ))}
-        </div>
-        <div className="email-input-container">
-          <label>Password</label>
-          <input
-            placeholder="Password"
-            value={password}
-            onChange={updatePassword}
-            type="password"
-          ></input>
-          {passwordErrors &&
-            passwordErrors.map((error) => (
-              <div style={{ color: "red" }}>{error}</div>
-            ))}
-        </div>
-        <div className="login-button-container">
-          <button onClick={onLogin}>Log in</button>
-        </div>
-        <div className="login-button-container">
-          <button onClick={onLogin}>Demo User</button>
+        <div>
+          <div className="email-input-container">
+            <label>Email</label>
+            <input
+              placeholder="Email"
+              value={email}
+              onChange={updateEmail}
+            ></input>
+            {emailErrors &&
+              emailErrors.map((error) => (
+                <div style={{ color: "red" }}>{error}</div>
+              ))}
+          </div>
+          <div className="email-input-container">
+            <label>Password</label>
+            <input
+              placeholder="Password"
+              value={password}
+              onChange={updatePassword}
+              type="password"
+            ></input>
+            {passwordErrors &&
+              passwordErrors.map((error) => (
+                <div style={{ color: "red" }}>{error}</div>
+              ))}
+          </div>
+          <div className="login-button-container">
+            <button onClick={onLogin}>Log in</button>
+          </div>
+          <div className="login-button-container">
+            <button onClick={onDemoLogin}>Demo User</button>
+          </div>
         </div>
       </div>
     </div>

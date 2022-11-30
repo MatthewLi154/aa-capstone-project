@@ -1,0 +1,26 @@
+.find-new-ideas {
+  font-weight: 100;
+  font-size: 16px;
+  margin: 0rem 0rem;
+}
+
+.overlay {
+  overflow: auto;
+}
+
+.signup-main-modal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 1.5rem;
+  margin-left: 32%;
+  max-width: 29rem;
+  height: auto;
+  background-color: white;
+  padding: 1rem;
+  border-radius: 1rem;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-bottom: 4rem;
+  /* overflow: auto; */
+}
