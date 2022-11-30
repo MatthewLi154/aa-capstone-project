@@ -21,6 +21,7 @@ def pins():
 @pin_routes.route('/<id>')
 def get_single_pin(id):
     pin = Pin.query.get(id)
+    print(pin.to_dict())
     return pin.to_dict()
 
 

@@ -19,7 +19,7 @@ def seed_users():
         password='password',
         firstName="Marnie",
         lastName='McDonald',
-        profileImg='https://i.pinimg.com/564x/08/13/5c/08135cd812b33ad4788956ac2980898f.jpg',
+        profileImg='https://i.pinimg.com/236x/77/a8/6b/77a86bab23d21b3c657c754a0db6f30c.jpg',
         about="Marnie's description",
         website='google.com',
         pronouns='They/Them'
@@ -30,7 +30,7 @@ def seed_users():
         password='password',
         firstName="Bobbie",
         lastName='Ross',
-        profileImg='https://i.pinimg.com/564x/08/13/5c/08135cd812b33ad4788956ac2980898f.jpg',
+        profileImg='https://i.pinimg.com/736x/e0/fa/d5/e0fad54eca20bc0c9a5d5b2dd1f9f6df.jpg',
         about="Bobbie's description",
         website='google.com',
         pronouns='he/she'

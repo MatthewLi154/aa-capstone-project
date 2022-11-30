@@ -16,19 +16,27 @@ const SinglePin = () => {
   const { pinId } = useParams();
   const currentPin = useSelector((state) => state.pins.singlePin);
   const currentProfileId = useSelector((state) => state.session.user.id);
-  // const currentProfile = useSelector((state) => state.session.user);
+  const allPins = useSelector((state) => state.pins.allPins);
   const profiles = useSelector((state) => state.profiles.allProfiles);
   const userBoards = useSelector((state) =>
     Object.values(state.boards.userBoards)
   );
 
   let currentProfile;
-  let profileId = currentPin.profileId;
-  for (const profile in profiles) {
-    if (profileId == profile) {
-      currentProfile = profiles[profile];
-      console.log(currentProfile.profileImg);
+  let profileId;
+  if (allPins[pinId]) {
+    // console.log(allPins[pinId].profileId);
+    profileId = allPins[pinId].profileId;
+    for (const profile in profiles) {
+      if (profileId == profile) {
+        currentProfile = profiles[profileId];
+      }
     }
+  }
+
+  let isCreator = false;
+  if (currentProfile && currentProfile.id === currentProfileId) {
+    isCreator = true;
   }
 
   const [board, setBoard] = useState("Profile");
@@ -81,9 +89,12 @@ const SinglePin = () => {
     if (board === "Profile") {
       for (const board of userBoards) {
         if (board.name === "All Pins") {
-          await fetch(`/api/boards/${board.name}/pins/${pinId}`, {
-            method: "POST",
-          });
+          await fetch(
+            `/api/boards/${board.name}/pins/${pinId}/${currentProfileId}`,
+            {
+              method: "POST",
+            }
+          );
           allPinsExists = true;
         }
       }
@@ -95,7 +106,8 @@ const SinglePin = () => {
           profileId: profileId,
         };
         await dispatch(createNewBoard(data, profileId));
-        await fetch(`/api/boards/${"All Pins"}/pins/${pinId}`, {
+        let board = "All Pins";
+        await fetch(`/api/boards/${board}/pins/${pinId}/${currentProfileId}`, {
           method: "POST",
         });
         setSaved(true);
@@ -103,9 +115,11 @@ const SinglePin = () => {
       }
     }
 
-    await fetch(`/api/boards/${board}/pins/${pinId}`, {
-      method: "POST",
-    });
+    // await fetch(`/api/boards/${board}/pins/${pinId}`, {
+    //   method: "POST",
+    // });
+    await dispatch(fetchUserBoards(currentProfileId));
+    await dispatch(fetchUserBoardPins(currentProfileId));
 
     setSaved(true);
   };
@@ -120,27 +134,28 @@ const SinglePin = () => {
             </div>
             <div className="single-pin-right-container">
               <div className="single-pin-right-header">
-                <div className="single-pin-header-left-icons">
-                  <i class="fa-solid fa-ellipsis" onClick={onOpenOptions}></i>
-                  {openOptions && (
-                    <div>
-                      <div className="option-dropdown-container">
-                        <button>
-                          <NavLink
-                            to={`/pins/${pinId}/edit`}
-                            style={{ textDecoration: "none", color: "black" }}
-                          >
-                            Edit Pin
-                          </NavLink>
-                        </button>
-                        <button onClick={onDelete}>Delete Pin</button>
+                {isCreator ? (
+                  <div className="single-pin-header-left-icons">
+                    <i class="fa-solid fa-ellipsis" onClick={onOpenOptions}></i>
+                    {openOptions && (
+                      <div>
+                        <div className="option-dropdown-container">
+                          <button>
+                            <NavLink
+                              to={`/pins/${pinId}/edit`}
+                              style={{ textDecoration: "none", color: "black" }}
+                            >
+                              Edit Pin
+                            </NavLink>
+                          </button>
+                          <button onClick={onDelete}>Delete Pin</button>
+                        </div>
                       </div>
-                    </div>
-                  )}
-                </div>
-                {/* <div className="single-pin-header-save-button">
-                <button>Save</button>
-              </div> */}
+                    )}
+                  </div>
+                ) : (
+                  <div className="single-pin-header-left-icons"></div>
+                )}
                 <div className="save-to-board-dropdown-button">
                   <div className="save-button-container-header">
                     {/* <div className="select-container-pin-builder">Select</div>

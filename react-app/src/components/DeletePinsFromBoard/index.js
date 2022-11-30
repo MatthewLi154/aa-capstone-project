@@ -42,7 +42,9 @@ const DeletePinsFromBoard = () => {
       window.confirm("Are you sure you want to remove these from the board?")
     ) {
       for (const pin in selected) {
-        await dispatch(deletePinFromBoard(boardId, pin));
+        if (selected[pin]) {
+          await dispatch(deletePinFromBoard(boardId, pin));
+        }
       }
 
       history.push(`/profile/${profileId}/boards/${boardId}`);

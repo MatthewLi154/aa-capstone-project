@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { addNewPin, fetchAllPins } from "../../store/pin";
+import { createNewBoard } from "../../store/board";
 import { useHistory } from "react-router-dom";
 import "./PinBuilder.css";
 import { fetchUserBoards } from "../../store/board";
@@ -137,10 +138,42 @@ const PinBuilder = () => {
       const newPinRes = await dispatch(addNewPin(newPin));
 
       if (board.length !== 0) {
+        console.log(board);
         if (board !== "Profile") {
           await fetch(`/api/boards/${board}/pins/${newPinRes.id}`, {
             method: "POST",
           });
+        } else {
+          let allPinsExists = false;
+          for (const board of userBoards) {
+            if (board.name === "All Pins") {
+              await fetch(
+                `/api/boards/${board.name}/pins/${newPinRes.id}/${currentProfileId}`,
+                {
+                  method: "POST",
+                }
+              );
+              allPinsExists = true;
+            }
+          }
+
+          if (!allPinsExists) {
+            const data = {
+              name: "All Pins",
+              description: "All Pins",
+              profileId: currentProfileId,
+            };
+            await dispatch(createNewBoard(data, currentProfileId));
+            await fetch(
+              `/api/boards/${"All Pins"}/pins/${
+                newPinRes.id
+              }/${currentProfileId}`,
+              {
+                method: "POST",
+              }
+            );
+            return data;
+          }
         }
       }
 

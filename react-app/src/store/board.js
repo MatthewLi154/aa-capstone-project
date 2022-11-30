@@ -127,13 +127,17 @@ export const editBoardById = (data, boardId) => async (dispatch) => {
   }
 };
 
-export const addPinToBoardPins = (pinId, boardName) => async (dispatch) => {
-  const response = await fetch(`/api/boards/${boardName}/pins/${pinId}`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(pinId),
-  });
-};
+export const addPinToBoardPins =
+  (pinId, boardName, profileId) => async (dispatch) => {
+    const response = await fetch(
+      `/api/boards/${boardName}/pins/${pinId}/${profileId}`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(pinId),
+      }
+    );
+  };
 
 export const deletePinFromBoard = (boardId, pinId) => async (dispatch) => {
   const response = await fetch(`/api/boards/${boardId}/pins/${pinId}`, {
