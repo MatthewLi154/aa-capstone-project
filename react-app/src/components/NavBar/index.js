@@ -2,12 +2,15 @@ import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { NavLink, a } from "react-router-dom";
 import LogoutButton from "../auth/LogoutButton";
+import LoginModal from "../LoginModal";
 import "./NavBar.css";
 
 const NavBar = () => {
   const [showMenu, setShowMenu] = useState(false);
   const [profileDropDown, setProfileDropDown] = useState(false);
   const currentProfile = useSelector((state) => state.session.user);
+  // Modal for login
+  const [openLoginModal, setOpenLoginModal] = useState(false);
 
   const openMenu = () => {
     if (showMenu) return;
@@ -60,11 +63,21 @@ const NavBar = () => {
               About
             </a>
           </div>
-          <div>
-            <NavLink to="login" style={{ textDecoration: "none" }} exact={true}>
+          <div
+            onClick={(e) => {
+              setOpenLoginModal(true);
+              e.stopPropagation();
+            }}
+          >
+            {/* <NavLink to="login" style={{ textDecoration: "none" }} exact={true}>
               Login
-            </NavLink>
+            </NavLink> */}
+            Login
           </div>
+          <LoginModal
+            open={openLoginModal}
+            onClose={() => setOpenLoginModal(false)}
+          />
           <div className="nav-button-container">
             <NavLink
               to="/sign-up"
