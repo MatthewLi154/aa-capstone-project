@@ -126,7 +126,7 @@ const SinglePin = () => {
 
   return (
     <>
-      {currentProfile && (
+      {userBoards && (
         <div className="main-single-pin-page">
           <div className="main-single-pin-container">
             <div className="single-pin-left-container">
