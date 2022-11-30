@@ -175,7 +175,7 @@ const EditPin = () => {
               value={destinationLink}
               onChange={(e) => setDestinationLink(e.target.value)}
             ></input>
-            <label>Edit destination...</label>
+            <label>Edit optinal destination...</label>
           </div>
           <div className="edit-about-container">
             <input

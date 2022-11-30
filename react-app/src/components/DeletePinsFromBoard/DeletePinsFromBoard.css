@@ -11,6 +11,7 @@
   flex-direction: row;
   justify-content: center;
   gap: 2rem;
+  flex-wrap: wrap;
 }
 
 .organize-pins-container img {

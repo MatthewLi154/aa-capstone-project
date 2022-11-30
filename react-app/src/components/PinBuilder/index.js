@@ -31,6 +31,7 @@ const PinBuilder = () => {
   const [aboutErrors, setAboutErrors] = useState([]);
   const [altTextErrors, setAltTextErrors] = useState([]);
   const [linkErrors, setLinkErrors] = useState([]);
+  const [imageErrors, setImageErrors] = useState("");
 
   const [openAlt, setOpenAlt] = useState(false);
 
@@ -45,6 +46,7 @@ const PinBuilder = () => {
     let aboutErrors = [];
     let altTextErrors = [];
     let linkErrors = [];
+    let imageErrors = [];
 
     // validate title
     if (title.length === 0) {
@@ -73,18 +75,31 @@ const PinBuilder = () => {
       errors.push("Link can not exceed 255 characters");
     }
 
+    if (image.length === 0) {
+      imageErrors.push("Please upload a valid image");
+      errors.push("Please upload a valid image");
+    }
+
     setTitleErrors(titleErrors);
     setAboutErrors(aboutErrors);
     setAltText(altTextErrors);
     setLinkErrors(linkErrors);
+    setImageErrors(imageErrors);
 
     return errors;
   };
 
   const updateImage = async (e) => {
     const file = e.target.files[0];
+    // if (e.target.files[0].length === 0) {
+    //   return setImageErrors("Please upload a valid image");
+    // }
     setImage(file);
-    // console.log(file);
+    const src = URL.createObjectURL(e.target.files[0]);
+    const preview = document.getElementById("uploaded-image-preview");
+    preview.src = src;
+    preview.style.display = "block";
+    console.log(file);
   };
 
   const onSubmit = async (e) => {
@@ -99,7 +114,6 @@ const PinBuilder = () => {
 
     const formData = new FormData();
     formData.append("image", image);
-    console.log(formData);
 
     setImageLoading(true);
 
@@ -110,7 +124,6 @@ const PinBuilder = () => {
     if (res.ok) {
       const data = await res.json();
       setImageLoading(false);
-      console.log(data.url);
 
       const newPin = {
         profileId: currentProfileId,
@@ -137,6 +150,7 @@ const PinBuilder = () => {
     } else {
       setImageLoading(false);
       console.log("error");
+      setImageErrors("Invalid image file");
     }
   };
 
@@ -173,19 +187,28 @@ const PinBuilder = () => {
           </div>
           <div className="center-pin-builder-details">
             <div className="left-drag-and-drop-upload">
-              <div className="drag-and-drop-upload-container">
-                <input
-                  type="file"
-                  accept="image/*"
-                  placeholder="image url"
-                  onChange={(e) => {
-                    updateImage(e);
-                  }}
-                ></input>
-              </div>
-              <div className="save-from-site-button">
-                <button>Save from site</button>
-              </div>
+              <label>
+                <div className="drag-and-drop-upload-container">
+                  {!image && (
+                    <>
+                      <div>
+                        <i class="fa-solid fa-cloud-arrow-up"></i>
+                      </div>
+                      <div>Click to Upload</div>
+                    </>
+                  )}
+                  <img id="uploaded-image-preview"></img>
+                  <input
+                    type="file"
+                    accept="image/*"
+                    placeholder="image url"
+                    onChange={(e) => {
+                      updateImage(e);
+                    }}
+                  ></input>
+                </div>
+              </label>
+              {imageErrors && <div style={{ color: "red" }}>{imageErrors}</div>}
               {imageLoading && <p>Loading...</p>}
             </div>
             <div className="right-pin-detail-fields">
