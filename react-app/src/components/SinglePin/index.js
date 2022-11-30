@@ -110,8 +110,7 @@ const SinglePin = () => {
         await fetch(`/api/boards/${board}/pins/${pinId}/${currentProfileId}`, {
           method: "POST",
         });
-        setSaved(true);
-        return data;
+        // setSaved(true);
       }
     } else {
       await fetch(`/api/boards/${board}/pins/${pinId}/${currentProfileId}`, {
