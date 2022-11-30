@@ -113,11 +113,12 @@ const SinglePin = () => {
         setSaved(true);
         return data;
       }
+    } else {
+      await fetch(`/api/boards/${board}/pins/${pinId}/${currentProfileId}`, {
+        method: "POST",
+      });
     }
 
-    // await fetch(`/api/boards/${board}/pins/${pinId}`, {
-    //   method: "POST",
-    // });
     await dispatch(fetchUserBoards(currentProfileId));
     await dispatch(fetchUserBoardPins(currentProfileId));
 
