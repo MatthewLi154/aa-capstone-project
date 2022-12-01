@@ -16,8 +16,6 @@ const SavedPins = (props) => {
   );
 
   // change userBoards to array as well
-  console.log(userBoards);
-
   const [showMenu, setShowMenu] = useState(false);
 
   let pinsArr = Object.values(boardPins);
@@ -55,7 +53,7 @@ const SavedPins = (props) => {
       setShowMenu(false);
     };
 
-    document.addEventListener("click", closeMenu);
+    // document.addEventListener("click", closeMenu);
 
     return () => document.removeEventListener("click", closeMenu);
   }, [showMenu]);
@@ -93,7 +91,10 @@ const SavedPins = (props) => {
                     </li>
                     <CreateBoard
                       open={openModal}
-                      onClose={() => setOpenModal(false)}
+                      onClose={(e) => {
+                        setOpenModal(false);
+                        setShowMenu(false);
+                      }}
                     />
                   </ul>
                 </div>

@@ -3,6 +3,7 @@ const LOAD_ALL_PINS = "pins/loadAllPins";
 const ADD_PIN = "pins/addPin";
 const LOAD_PIN = "pins/loadPin";
 const DELETE_PIN = "pins/deletePin";
+const LOAD_SEARCH_PINS = "pins/searchPins";
 
 // Actions
 export const getAllPins = (data) => {
@@ -30,6 +31,13 @@ export const removePin = (data) => {
   return {
     type: DELETE_PIN,
     id: data,
+  };
+};
+
+export const loadSearches = (data) => {
+  return {
+    type: LOAD_SEARCH_PINS,
+    pins: data,
   };
 };
 
@@ -93,9 +101,19 @@ export const editSinglePin = (pinId, data) => async (dispatch) => {
   }
 };
 
+export const searchPins = (searchParams) => async (dispatch) => {
+  const response = await fetch(`/api/pins/search/${searchParams}`);
+
+  if (response.ok) {
+    const data = await response.json();
+    dispatch(loadSearches(data));
+    return data;
+  }
+};
+
 // Reducer
 
-const initialState = { allPins: {}, singlePin: {} };
+const initialState = { allPins: {}, singlePin: {}, searchPins: {} };
 
 const pinsReducer = (state = initialState, action) => {
   let pinsStateObj = { ...state };
@@ -113,6 +131,9 @@ const pinsReducer = (state = initialState, action) => {
     case DELETE_PIN:
       delete pinsStateObj.allPins[action.id];
       pinsStateObj.singlePin = {};
+      return pinsStateObj;
+    case LOAD_SEARCH_PINS:
+      pinsStateObj.searchPins = action.pins;
       return pinsStateObj;
     default:
       return state;

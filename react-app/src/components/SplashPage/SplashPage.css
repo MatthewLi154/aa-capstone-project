@@ -1,0 +1,88 @@
+html,
+body {
+  height: 100%;
+}
+
+.main-parent-splash-div {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  overflow: hidden;
+}
+
+.splash-main-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  width: 100%;
+  height: 100%;
+  /* position: relative; */
+  /* overflow: hidden; */
+}
+
+.splash-text-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  height: calc(30vh + 125px);
+  width: 100%;
+  position: relative;
+}
+
+.splash-text-container h1 {
+  font-size: 60px;
+  font-weight: 600;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  margin: 2px;
+}
+
+.splash-text-container p {
+  font-size: 60px;
+  font-weight: 600;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  margin: 2px;
+  color: green;
+}
+
+.splash-main-pin-images-container {
+  display: flex;
+  flex-direction: row;
+  height: auto;
+  position: absolute;
+  top: 15%;
+}
+
+.pin-column {
+  display: flex;
+  flex-direction: column;
+  margin: 0rem 0.5rem;
+}
+
+.pin-image img {
+  width: 14.75rem;
+  height: 21.875rem;
+  border-radius: 1rem;
+  object-fit: cover;
+  margin: 0.5rem 0.25rem;
+}
+
+.pin-column-center {
+  margin-top: 400px;
+}
+
+.pin-column-inner-inner {
+  margin-top: 300px;
+}
+
+.pin-column-outer-inner {
+  margin-top: 200px;
+}
+
+.pin-column-outer-outer {
+  margin-top: 100px;
+}

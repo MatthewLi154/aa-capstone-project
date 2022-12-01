@@ -6,6 +6,22 @@ from app.s3_helpers import (upload_file_to_s3, allowed_file, get_unique_filename
 pin_routes = Blueprint('pins', __name__)
 
 
+@pin_routes.route('/search/<search_param>')
+def get_pins_by_params(search_param):
+    """
+    Query for all pins that match param specification and returns
+    them in a list of pin dictionaries
+    """
+    pins_dict = {}
+
+    pins = Pin.query.filter(Pin.title.like(f"%{search_param}%")).all()
+
+    for pin in pins:
+        pins_dict[pin.id] = pin.to_dict()
+    return pins_dict
+
+
+
 @pin_routes.route('')
 def pins():
     """

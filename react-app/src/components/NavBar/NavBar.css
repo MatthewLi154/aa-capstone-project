@@ -21,6 +21,8 @@
 .search-container {
   width: 100%;
   max-width: 560rem;
+  font-size: 16px;
+  font-weight: 600;
 }
 
 .search-container i {
@@ -44,6 +46,8 @@
   border-top-right-radius: 2rem;
   border-bottom-right-radius: 2rem;
   background-color: #efefef;
+  font-size: 16px;
+  font-weight: 600;
 }
 
 .navbar-profile-picture img {
@@ -68,7 +72,7 @@
   border-radius: 1rem;
   box-shadow: 2px 2px 2px lightgray;
   display: flex;
-  justify-content: flex-start;
+  flex-direction: column;
 }
 
 .fa-angle-down {
@@ -76,20 +80,38 @@
   position: relative;
 }
 
+.fa-magnifying-glass {
+  cursor: pointer;
+}
+
 .create-angle-and-dropdown {
   position: relative;
   display: flex;
   flex-direction: column;
+  font-size: 16px;
 }
 
 .create-angle-and-dropdown li {
   list-style: none;
+  margin: 0;
+  padding: 0.35rem 0.35rem;
+  margin-left: 1rem;
+  width: 9rem;
+  cursor: pointer;
 }
 
-.create-angle-and-dropdown ul {
-  padding: 1rem;
-  display: flex;
-  align-items: center;
+.create-angle-and-dropdown li:hover {
+  background-color: #e9e9e9;
+  border-radius: 0.5rem;
+}
+
+.create-pin-drowpdown ul {
+  position: relative;
+  margin-top: 5rem;
+}
+
+.create-pin-dropdown ul {
+  padding: 0;
 }
 
 .profile-drop-down {

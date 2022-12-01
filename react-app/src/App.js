@@ -17,6 +17,7 @@ import { authenticate } from "./store/session";
 
 import Main from "./components/Main";
 import ProfilePage from "./components/ProfilePage";
+import SearchParams from "./components/SearchPins";
 
 function App() {
   const [loaded, setLoaded] = useState(false);
@@ -55,6 +56,9 @@ function App() {
           <Switch>
             <Route exact path="/profile/:profileId/board/:boardId/organize">
               <DeletePinsFromBoard />
+            </Route>
+            <Route exact path="/search/:searchParams">
+              <SearchParams />
             </Route>
             <ProtectedRoute exact path="/profile/:profileId/boards/:boardId">
               <SingleBoard />

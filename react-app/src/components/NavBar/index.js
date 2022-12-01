@@ -1,18 +1,40 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { NavLink, a } from "react-router-dom";
+import { NavLink, a, useHistory } from "react-router-dom";
 import LogoutButton from "../auth/LogoutButton";
 import LoginModal from "../LoginModal";
 import SignUpModal from "../SignUpModal";
+import CreateBoard from "../CreateBoardModal";
+import { searchPins } from "../../store/pin";
 import "./NavBar.css";
 
 const NavBar = () => {
+  const dispatch = useDispatch();
+  const history = useHistory();
+
   const [showMenu, setShowMenu] = useState(false);
   const [profileDropDown, setProfileDropDown] = useState(false);
   const currentProfile = useSelector((state) => state.session.user);
-  // Modal for login
+
+  // Modal for login Sign UP
   const [openLoginModal, setOpenLoginModal] = useState(false);
   const [openSignupModal, setOpenSignupModal] = useState(false);
+
+  // Modal for Create Board
+  const [openModal, setOpenModal] = useState(false);
+
+  // state for search
+  const [search, setSearch] = useState("");
+
+  const onSearch = async (e) => {
+    e.preventDefault();
+
+    if (search.length === 0) return setSearch("");
+
+    await dispatch(searchPins(search));
+
+    history.push(`/search/${search}`);
+  };
 
   const openMenu = () => {
     if (showMenu) return;
@@ -127,16 +149,6 @@ const NavBar = () => {
                 Home
               </NavLink>
             </div>
-            {/* <div className="nav-button-container">
-              <NavLink
-                to="/"
-                exact={true}
-                style={{ textDecoration: "none", color: "black" }}
-                activeClassName="active"
-              >
-                Today
-              </NavLink>
-            </div> */}
             <div className="nav-button-container">
               <NavLink
                 to="/pin-builder"
@@ -147,22 +159,60 @@ const NavBar = () => {
                 Create
               </NavLink>
             </div>
-            {/* <div className="create-angle-and-dropdown">
+            <div className="create-angle-and-dropdown">
               <div onClick={openMenu}>
                 <i className="fa-solid fa-angle-down"></i>
               </div>
               {showMenu && (
                 <div className="create-pin-dropdown">
                   <ul>
-                    <li>Create Pin</li>
+                    <li>
+                      <NavLink
+                        to="/pin-builder"
+                        exact={true}
+                        style={{ textDecoration: "none", color: "black" }}
+                        activeClassName="active"
+                      >
+                        Create Pin
+                      </NavLink>
+                    </li>
+                    <li
+                      onClick={(e) => {
+                        setOpenModal(true);
+                        e.stopPropagation();
+                      }}
+                    >
+                      Create Board
+                    </li>
+                    {
+                      <CreateBoard
+                        open={openModal}
+                        onClose={() => {
+                          setOpenModal(false);
+                          setShowMenu(false);
+                        }}
+                      />
+                    }
                   </ul>
                 </div>
               )}
-            </div> */}
-            <div className="nav-button-container search-container">
-              <i className="fa-solid fa-magnifying-glass"></i>
-              <input placeholder="Search"></input>
             </div>
+
+            <form
+              onSubmit={onSearch}
+              className="nav-button-container search-container"
+            >
+              <i
+                className="fa-solid fa-magnifying-glass"
+                onClick={onSearch}
+              ></i>
+              <input
+                placeholder="Search"
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+              ></input>
+            </form>
+
             <div>
               <div className="navbar-profile-picture">
                 <NavLink to={`/profile/${currentProfile.id}`}>

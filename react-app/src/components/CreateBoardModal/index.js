@@ -11,6 +11,9 @@ const CreateBoard = ({ open, onClose }) => {
   const [description, setDescription] = useState("");
   const [errors, setErrors] = useState([]);
   const currentProfileId = useSelector((state) => state.session.user.id);
+  const userBoards = useSelector((state) =>
+    Object.values(state.boards.userBoards)
+  );
   const dispatch = useDispatch();
   const history = useHistory();
 
@@ -31,6 +34,13 @@ const CreateBoard = ({ open, onClose }) => {
       errors.push("Name must be less than 55 characters!");
     } else if (name.length < 4) {
       errors.push("Name must be longer than 3 characters");
+    }
+
+    // can not create board if it already exists
+    for (const board of userBoards) {
+      if (board.name === name) {
+        errors.push("Board already exists, please use a different name");
+      }
     }
 
     return errors;
@@ -54,6 +64,7 @@ const CreateBoard = ({ open, onClose }) => {
     await dispatch(fetchUserBoards(currentProfileId));
 
     onClose();
+    history.push(`/profile/${currentProfileId}`);
   };
 
   return (
@@ -66,7 +77,7 @@ const CreateBoard = ({ open, onClose }) => {
       >
         <div className="header-edit-board-modal">
           <span onClick={onClose}>
-            <i class="fa-solid fa-x"></i>
+            <i class="fa-solid fa-xmark"></i>
           </span>
         </div>
         <div className="create-board-modal-header">
@@ -93,7 +104,7 @@ const CreateBoard = ({ open, onClose }) => {
           {name.length > 0 ? (
             <button
               type="button"
-              style={{ backgroundColor: "red", color: "white" }}
+              style={{ backgroundColor: "red", color: "white", border: "none" }}
               onClick={onCreateBoard}
             >
               Create
