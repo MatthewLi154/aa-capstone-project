@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { editBoardById, fetchUserBoards } from "../../store/board";
+import {
+  editBoardById,
+  fetchUserBoards,
+  deleteBoardById,
+} from "../../store/board";
 import "./EditBoardModal.css";
 
 const EditBoard = ({ open, onClose, props }) => {
@@ -56,6 +60,22 @@ const EditBoard = ({ open, onClose, props }) => {
     onClose();
   };
 
+  const onDeleteBoard = async (e) => {
+    e.preventDefault();
+
+    const response = window.confirm(
+      "Are you sure you want to delete this board?"
+    );
+
+    if (response) {
+      await dispatch(deleteBoardById(boardId));
+
+      onClose();
+
+      return history.push(`/profile/${profileId}`);
+    }
+  };
+
   return (
     <div onClick={onClose} className="overlay">
       <div
@@ -97,7 +117,10 @@ const EditBoard = ({ open, onClose, props }) => {
                 onChange={(e) => setDescription(e.target.value)}
               ></textarea>
             </div>
-            <div className="delete-board-container-modal">
+            <div
+              className="delete-board-container-modal"
+              onClick={onDeleteBoard}
+            >
               <p>Action</p>
               <p className="delete-board-text">Delete board</p>
               <p className="delete-board-subtext">

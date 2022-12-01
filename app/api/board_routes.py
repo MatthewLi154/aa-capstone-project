@@ -68,7 +68,8 @@ def addPin_to_board(board_name, pin_id,profile_id):
     """
     Adds a pin to a board using both id's
     """
-    board = Board.query.filter_by(name=board_name, profileId=profile_id).first()
+    board = Board.query.filter_by(name=board_name, profileId=profile_id).one()
+    # print(board.to_dict()["id"])
     new_boardPin = boardPins.insert().values(pinsId=pin_id, boardsId=board.id)
     db.session.execute(new_boardPin)
     db.session.commit()

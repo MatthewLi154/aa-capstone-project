@@ -111,6 +111,7 @@ export const deleteBoardById = (boardId) => async (dispatch) => {
   if (response.ok) {
     const data = await response.json();
     dispatch(deleteBoard(boardId));
+    return data;
   }
 };
 

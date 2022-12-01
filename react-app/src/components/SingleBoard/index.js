@@ -61,7 +61,10 @@ const SingleBoard = () => {
   const onDeleteBoard = async (e) => {
     e.preventDefault();
 
+    console.log(boardId);
+
     await dispatch(deleteBoardById(boardId));
+    await dispatch(fetchUserBoards(profileId));
 
     return history.push(`/profile/${profileId}`);
   };

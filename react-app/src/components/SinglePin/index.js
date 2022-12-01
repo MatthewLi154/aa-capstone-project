@@ -21,6 +21,7 @@ const SinglePin = () => {
   const userBoards = useSelector((state) =>
     Object.values(state.boards.userBoards)
   );
+  const boardPins = useSelector((state) => state.boards.boardPins);
 
   let currentProfile;
   let profileId;
@@ -82,37 +83,61 @@ const SinglePin = () => {
     history.push(`/`);
   };
 
+  const allPinsBoardExist = (boardName) => {
+    for (const board of userBoards) {
+      if (board.name === boardName) {
+        return board;
+      }
+    }
+    return false;
+  };
+
   const onSave = async (e) => {
     e.preventDefault();
 
-    let allPinsExists = false;
     if (board === "Profile") {
-      for (const board of userBoards) {
-        if (board.name === "All Pins") {
-          await fetch(
-            `/api/boards/${board.name}/pins/${pinId}/${currentProfileId}`,
-            {
-              method: "POST",
+      // Check if already saved in board, if it is, show saved and do nothing
+      // If saved to profile, check if all pins board exists
+      const allPinsBoard = allPinsBoardExist("All Pins");
+      // If all pins board exists, check if pin is already in it through boardPins, returns true or false
+      const pinExists = () => {
+        if (allPinsBoard) {
+          console.log(allPinsBoard);
+          let allPinsBoardPins = boardPins[allPinsBoard.id];
+          console.log(allPinsBoardPins);
+          for (const pin in allPinsBoardPins) {
+            console.log(pin);
+            if (pinId === pin) {
+              console.log(true);
+              return true;
             }
-          );
-          allPinsExists = true;
-
-          await dispatch(fetchUserBoards(currentProfileId));
-          await dispatch(fetchUserBoardPins(currentProfileId));
-
-          return setSaved(true);
+          }
         }
-      }
+        console.log(false);
+        return false;
+      };
 
-      if (!allPinsExists) {
+      const pinExist = pinExists();
+
+      // if pin exists, set saved
+      if (pinExist) {
+        console.log(pinExist);
+        return setSaved(true);
+      } else if (allPinsBoard && !pinExist) {
+        // if board exists but pin does not exist, save pin to board
+        await fetch(`/api/boards/All Pins/pins/${pinId}/${currentProfileId}`, {
+          method: "POST",
+        });
+        return setSaved(true);
+      } else if (!allPinsBoard) {
+        // if board does not exist, create board, then save pin to board
         const data = {
           name: "All Pins",
           description: "All Pins",
           profileId: currentProfileId,
         };
-        await dispatch(createNewBoard(data, profileId));
-        let board = "All Pins";
-        await fetch(`/api/boards/${board}/pins/${pinId}/${currentProfileId}`, {
+        await dispatch(createNewBoard(data, currentProfileId));
+        await fetch(`/api/boards/All Pins/pins/${pinId}/${currentProfileId}`, {
           method: "POST",
         });
         await dispatch(fetchUserBoards(currentProfileId));
@@ -121,13 +146,38 @@ const SinglePin = () => {
         return setSaved(true);
       }
     } else {
-      await fetch(`/api/boards/${board}/pins/${pinId}/${currentProfileId}`, {
-        method: "POST",
-      });
-      await dispatch(fetchUserBoards(currentProfileId));
-      await dispatch(fetchUserBoardPins(currentProfileId));
+      // For all other boards
+      // Get board id of board from name
+      let currentBoardId;
+      for (const boardEl of userBoards) {
+        if (boardEl.name === board) {
+          currentBoardId = boardEl.id;
+        }
+      }
 
-      return setSaved(true);
+      // key into boardpins using the board id and iterate to find if pin exists
+      const pins = boardPins[currentBoardId];
+      let pinExist = false;
+      console.log(pins);
+      for (const pin in pins) {
+        if (pin === pinId) {
+          pinExist = true;
+          console.log(pinExist);
+        }
+      }
+
+      if (pinExist) {
+        return setSaved(true);
+      } else {
+        // Save pin to the board
+        await fetch(`/api/boards/${board}/pins/${pinId}/${currentProfileId}`, {
+          method: "POST",
+        });
+        await dispatch(fetchUserBoards(currentProfileId));
+        await dispatch(fetchUserBoardPins(currentProfileId));
+
+        return setSaved(true);
+      }
     }
   };
 
