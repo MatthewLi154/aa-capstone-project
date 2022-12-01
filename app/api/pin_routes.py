@@ -57,7 +57,7 @@ def add_pin():
     """
     data = request.get_json()
     new_pin = Pin(**data)
-
+    print(data)
     db.session.add(new_pin)
     db.session.commit()
     return new_pin.to_dict()

@@ -41,9 +41,11 @@ def delete_board_by_id(id):
     Delete a board by board id
     """
     board = Board.query.get(id)
+    print(board.to_dict)
     db.session.delete(board)
     db.session.commit()
-    return {"message": "Successfully deleted board"}
+    # return {"message": "Successfully deleted board"}
+    return board.to_dict()
 
 
 @board_routes.route('/<id>', methods=['PUT'])

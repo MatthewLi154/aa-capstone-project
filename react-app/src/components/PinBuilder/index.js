@@ -30,7 +30,7 @@ const PinBuilder = () => {
   const [errors, setErrors] = useState([]);
   const [titleErrors, setTitleErrors] = useState([]);
   const [aboutErrors, setAboutErrors] = useState([]);
-  const [altTextErrors, setAltTextErrors] = useState([]);
+  const [altTextErrors, setAltTextErrors] = useState("");
   const [linkErrors, setLinkErrors] = useState([]);
   const [imageErrors, setImageErrors] = useState("");
 
@@ -136,13 +136,17 @@ const PinBuilder = () => {
       };
 
       const newPinRes = await dispatch(addNewPin(newPin));
+      console.log(newPinRes);
 
       if (board.length !== 0) {
         console.log(board);
         if (board !== "Profile") {
-          await fetch(`/api/boards/${board}/pins/${newPinRes.id}`, {
-            method: "POST",
-          });
+          await fetch(
+            `/api/boards/${board}/pins/${newPinRes.id}/${currentProfileId}`,
+            {
+              method: "POST",
+            }
+          );
         } else {
           let allPinsExists = false;
           for (const board of userBoards) {
@@ -154,6 +158,9 @@ const PinBuilder = () => {
                 }
               );
               allPinsExists = true;
+              await dispatch(fetchAllPins());
+
+              return history.push(`/pins/${newPinRes.id}`);
             }
           }
 
@@ -172,14 +179,14 @@ const PinBuilder = () => {
                 method: "POST",
               }
             );
-            return data;
+            // return data;
           }
         }
+
+        await dispatch(fetchAllPins());
+
+        history.push(`/pins/${newPinRes.id}`);
       }
-
-      await dispatch(fetchAllPins());
-
-      history.push(`/pins/${newPinRes.id}`);
     } else {
       setImageLoading(false);
       console.log("error");

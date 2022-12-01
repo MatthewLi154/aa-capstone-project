@@ -47,7 +47,7 @@ const DeletePinsFromBoard = () => {
         }
       }
 
-      history.push(`/profile/${profileId}/boards/${boardId}`);
+      return history.push(`/profile/${profileId}/boards/${boardId}`);
     }
   };
 

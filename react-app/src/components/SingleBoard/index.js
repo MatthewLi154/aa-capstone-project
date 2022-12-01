@@ -63,7 +63,7 @@ const SingleBoard = () => {
 
     await dispatch(deleteBoardById(boardId));
 
-    history.push(`/profile/${profileId}`);
+    return history.push(`/profile/${profileId}`);
   };
 
   return (

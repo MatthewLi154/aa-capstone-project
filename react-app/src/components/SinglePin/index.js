@@ -96,6 +96,11 @@ const SinglePin = () => {
             }
           );
           allPinsExists = true;
+
+          await dispatch(fetchUserBoards(currentProfileId));
+          await dispatch(fetchUserBoardPins(currentProfileId));
+
+          return setSaved(true);
         }
       }
 
@@ -103,25 +108,27 @@ const SinglePin = () => {
         const data = {
           name: "All Pins",
           description: "All Pins",
-          profileId: profileId,
+          profileId: currentProfileId,
         };
         await dispatch(createNewBoard(data, profileId));
         let board = "All Pins";
         await fetch(`/api/boards/${board}/pins/${pinId}/${currentProfileId}`, {
           method: "POST",
         });
-        // setSaved(true);
+        await dispatch(fetchUserBoards(currentProfileId));
+        await dispatch(fetchUserBoardPins(currentProfileId));
+
+        return setSaved(true);
       }
     } else {
       await fetch(`/api/boards/${board}/pins/${pinId}/${currentProfileId}`, {
         method: "POST",
       });
+      await dispatch(fetchUserBoards(currentProfileId));
+      await dispatch(fetchUserBoardPins(currentProfileId));
+
+      return setSaved(true);
     }
-
-    await dispatch(fetchUserBoards(currentProfileId));
-    await dispatch(fetchUserBoardPins(currentProfileId));
-
-    setSaved(true);
   };
 
   return (
