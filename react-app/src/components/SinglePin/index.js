@@ -102,18 +102,13 @@ const SinglePin = () => {
       // If all pins board exists, check if pin is already in it through boardPins, returns true or false
       const pinExists = () => {
         if (allPinsBoard) {
-          console.log(allPinsBoard);
           let allPinsBoardPins = boardPins[allPinsBoard.id];
-          console.log(allPinsBoardPins);
           for (const pin in allPinsBoardPins) {
-            console.log(pin);
             if (pinId === pin) {
-              console.log(true);
               return true;
             }
           }
         }
-        console.log(false);
         return false;
       };
 
@@ -121,7 +116,6 @@ const SinglePin = () => {
 
       // if pin exists, set saved
       if (pinExist) {
-        console.log(pinExist);
         return setSaved(true);
       } else if (allPinsBoard && !pinExist) {
         // if board exists but pin does not exist, save pin to board
@@ -158,11 +152,9 @@ const SinglePin = () => {
       // key into boardpins using the board id and iterate to find if pin exists
       const pins = boardPins[currentBoardId];
       let pinExist = false;
-      console.log(pins);
       for (const pin in pins) {
         if (pin === pinId) {
           pinExist = true;
-          console.log(pinExist);
         }
       }
 
