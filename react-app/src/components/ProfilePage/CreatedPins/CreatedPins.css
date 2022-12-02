@@ -8,6 +8,11 @@
   column-gap: 1rem;
 } */
 
+.single-board-main-container-pins {
+  display: flex;
+  gap: 1rem;
+}
+
 .created-pins-container {
   display: flex;
   flex-direction: row;
@@ -26,4 +31,11 @@
 .created-saved-toggle-container h3 {
   margin-inline: 1rem;
   cursor: pointer;
+}
+
+.pin-container-board img {
+  width: 14.75rem;
+  height: auto;
+  object-fit: cover;
+  border-radius: 2rem;
 }

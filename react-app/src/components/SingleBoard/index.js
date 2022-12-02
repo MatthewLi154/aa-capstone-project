@@ -97,7 +97,7 @@ const SingleBoard = () => {
                       <EditBoard
                         open={openModal}
                         onClose={() => setOpenModal(false)}
-                        props={{ boardId, profileId }}
+                        props={{ boardId, profileId, boards }}
                       />
                       <li
                         className="board-option-buttons"
@@ -130,11 +130,14 @@ const SingleBoard = () => {
           )}
         </div>
         <div style={{ marginLeft: "2rem" }}>{pinsArr.length} Pins</div>
-        <div className="all-pins-main-container single-board-main-container-pins">
+        <div className="single-board-main-container-pins">
           {pinsArr.length > 0 &&
             pinsArr.map((pin) => (
-              <div className="pin-container">
-                <NavLink to={`/pins/${pin.id}`}>
+              <div className="pin-container-board">
+                <NavLink
+                  to={`/pins/${pin.id}`}
+                  style={{ textDecoration: "none", color: "black" }}
+                >
                   <div>
                     <img
                       src={pin.image}

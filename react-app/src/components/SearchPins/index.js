@@ -25,8 +25,11 @@ const SearchParams = () => {
       <div className="all-pins-main-container">
         {searchedPins.length > 0 ? (
           searchedPins.map((pin) => (
-            <div className="pin-container">
-              <NavLink to={`/pins/${pin.id}`}>
+            <div className="pin-container-board">
+              <NavLink
+                to={`/pins/${pin.id}`}
+                style={{ textDecoration: "none", color: "black" }}
+              >
                 <div>
                   <img src={pin.image}></img>
                 </div>

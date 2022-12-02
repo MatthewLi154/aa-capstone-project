@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { NavLink, useParams, useHistory } from "react-router-dom";
+import { NavLink, useParams, useHistory, useLocation } from "react-router-dom";
 import {
   editSinglePin,
   fetchAllPins,
@@ -12,21 +12,24 @@ import "./EditPin.css";
 const EditPin = () => {
   const { pinId } = useParams();
   const dispatch = useDispatch();
+  const location = useLocation();
   const history = useHistory();
-  const pin = useSelector((state) => state.pins.singlePin);
+  // const pin = useSelector((state) => state.pins.singlePin);
   const currentProfileId = useSelector((state) => state.session.user.id);
-
-  const [title, setTitle] = useState("");
-  const [about, setAbout] = useState("");
-  const [destinationLink, setDestinationLink] = useState("");
-  const [note, setNote] = useState("");
-  const [altText, setAltText] = useState("");
-  const [openOptions, setOpenOptions] = useState(false);
-  const [errors, setErrors] = useState([]);
+  const pin = location.state;
+  console.log(pin);
 
   useEffect(() => {
     dispatch(fetchSinglePin(pinId));
   }, []);
+
+  const [title, setTitle] = useState(pin.title);
+  const [about, setAbout] = useState(pin.about);
+  const [destinationLink, setDestinationLink] = useState(pin.destinationLink);
+  const [note, setNote] = useState(pin.note);
+  const [altText, setAltText] = useState(pin.altText);
+  const [openOptions, setOpenOptions] = useState(false);
+  const [errors, setErrors] = useState([]);
 
   const onOpenOptions = async (e) => {
     if (openOptions) return;
@@ -83,6 +86,17 @@ const EditPin = () => {
     // validations for alt text
     if (altText.length > 255) {
       errors.push("Alt text can not exceed 255 characters");
+    }
+
+    if (destinationLink.length > 255) {
+      errors.push("Link can not exceed 255 characters");
+    } else if (
+      destinationLink.length &&
+      !destinationLink.startsWith("http://")
+    ) {
+      if (!destinationLink.startsWith("https://")) {
+        errors.push("Link must start with http:// or https://");
+      }
     }
 
     return errors;
@@ -175,7 +189,7 @@ const EditPin = () => {
               value={destinationLink}
               onChange={(e) => setDestinationLink(e.target.value)}
             ></input>
-            <label>Edit optinal destination...</label>
+            <label>Edit optional destination...</label>
           </div>
           <div className="edit-about-container">
             <input

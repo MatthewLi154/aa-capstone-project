@@ -10,6 +10,7 @@ const PinBuilder = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const currentProfileId = useSelector((state) => state.session.user.id);
+  const currentProfile = useSelector((state) => state.session.user);
   const userBoards = useSelector((state) =>
     Object.values(state.boards.userBoards)
   );
@@ -72,8 +73,16 @@ const PinBuilder = () => {
     }
 
     if (destinationLink.length > 255) {
-      linkErrors.push("Link can not exceed 255 characters");
       errors.push("Link can not exceed 255 characters");
+      linkErrors.push("Link can not exceed 255 characters");
+    } else if (
+      destinationLink.length &&
+      !destinationLink.startsWith("http://")
+    ) {
+      if (!destinationLink.startsWith("https://")) {
+        errors.push("Link must start with http:// or https://");
+        linkErrors.push("Link must start with http:// or https://");
+      }
     }
 
     if (image.length === 0) {
@@ -265,10 +274,16 @@ const PinBuilder = () => {
                 ))}
               <div className="profile-pic-username-container">
                 <div className="profile-pic-container-pin-builder">
-                  <img src="https://i.pinimg.com/564x/49/40/6b/49406b58f4a68552f26d0c6e4a14c0d2.jpg"></img>
+                  <img
+                    src={currentProfile.profileImg}
+                    onError={(e) => {
+                      e.currentTarget.src =
+                        "https://t3.ftcdn.net/jpg/03/46/83/96/360_F_346839683_6nAPzbhpSkIpb8pmAwufkC7c5eD7wYws.jpg";
+                    }}
+                  ></img>
                 </div>
                 <div>
-                  <span>Username</span>
+                  <span>{currentProfile.username}</span>
                 </div>
               </div>
               <div className="pin-about-container-pin-builder">

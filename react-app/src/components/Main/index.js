@@ -8,27 +8,53 @@ import "./mainpage.css";
 const Main = () => {
   const dispatch = useDispatch();
   const allPins = useSelector((state) => Object.values(state.pins.allPins));
+  const allProfiles = useSelector((state) => state.profiles.allProfiles);
   const [showMenu, setShowMenu] = useState(false);
 
-  useEffect(() => {
+  useEffect(async () => {
     dispatch(fetchAllPins());
     dispatch(fetchAllProfiles());
   }, []);
 
+  const getProfilePic = (profileId) => {
+    for (const profile in allProfiles) {
+      console.log(allProfiles[profile]);
+      if (profileId == profile) {
+        return allProfiles[profile].profileImg;
+      }
+    }
+  };
+
   return (
     <>
-      <div className="all-pins-main-container">
-        {allPins &&
-          allPins.map((pin) => (
-            <div className="pin-container">
-              <NavLink to={`/pins/${pin.id}`}>
-                <div>
-                  <img src={pin.image}></img>
-                </div>
-                <div>{pin.title}</div>
-              </NavLink>
-            </div>
-          ))}
+      <div>
+        <div className="all-pins-main-container">
+          {allPins &&
+            allProfiles &&
+            allPins.map((pin) => (
+              <div className="pin-container">
+                <NavLink
+                  to={`/pins/${pin.id}`}
+                  style={{ textDecoration: "none" }}
+                >
+                  <div>
+                    <img
+                      src={pin.image}
+                      className="pin-container-main-img"
+                    ></img>
+                  </div>
+                  <div className="pin-creator-details-container">
+                    <img
+                      src={getProfilePic(pin.profileId)}
+                      alt="pin"
+                      className="pin-container-profile-img"
+                    ></img>
+                    {pin.title}
+                  </div>
+                </NavLink>
+              </div>
+            ))}
+        </div>
       </div>
     </>
   );

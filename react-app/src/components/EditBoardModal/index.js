@@ -11,14 +11,14 @@ import "./EditBoardModal.css";
 const EditBoard = ({ open, onClose, props }) => {
   if (!open) return null;
 
-  const [name, setName] = useState("");
-  const [description, setDescription] = useState("");
+  const { boardId, profileId, boards } = props;
+
+  const [name, setName] = useState(boards.name);
+  const [description, setDescription] = useState(boards.description);
   const [errors, setErrors] = useState([]);
   const currentProfileId = useSelector((state) => state.session.user.id);
   const dispatch = useDispatch();
   const history = useHistory();
-
-  const { boardId, profileId } = props;
 
   const validate = () => {
     const errors = [];

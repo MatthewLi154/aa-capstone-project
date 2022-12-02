@@ -60,7 +60,7 @@ const DeletePinsFromBoard = () => {
             {pins.map((pin) => (
               <>
                 {!selected[pin.id] ? (
-                  <div className="pin-container organize-pins">
+                  <div className="pin-container-board organize-pins">
                     <img
                       src={pin.image}
                       className="unselected-pin"
@@ -79,7 +79,7 @@ const DeletePinsFromBoard = () => {
                     ></img>
                   </div>
                 ) : (
-                  <div className="pin-container organize-pins">
+                  <div className="pin-container-board organize-pins">
                     <img
                       src={pin.image}
                       className="selected-pin"

@@ -30,8 +30,15 @@ const CreatedPins = () => {
       <div className="created-pins-container">
         {pins &&
           pins.map((pin) => (
-            <div className="pin-container">
-              <NavLink to={`/pins/${pin.id}`}>
+            <div className="pin-container-board">
+              <NavLink
+                to={`/pins/${pin.id}`}
+                style={{
+                  textDecoration: "none",
+                  color: "black",
+                  fontWeight: 100,
+                }}
+              >
                 <img
                   src={pin.image}
                   // style={{ height: `${randomHeight()}rem` }}

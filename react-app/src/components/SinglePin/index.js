@@ -173,6 +173,26 @@ const SinglePin = () => {
     }
   };
 
+  const onEdit = () => {
+    const pin = {
+      title: currentPin.title,
+      about: currentPin.about,
+      destinationLink: currentPin.destinationLink,
+      image: currentPin.image,
+      note: currentPin.note,
+      altText: currentPin.altText,
+    };
+
+    return history.push({ pathname: `/pins/${pinId}/edit`, state: pin });
+
+    //   <NavLink
+    //   to={`/pins/${pinId}/edit`}
+    //   style={{ textDecoration: "none", color: "black" }}
+    // >
+    //   Edit Pin
+    // </NavLink>
+  };
+
   return (
     <>
       {userBoards && currentProfile && (
@@ -189,14 +209,7 @@ const SinglePin = () => {
                     {openOptions && (
                       <div>
                         <div className="option-dropdown-container">
-                          <button>
-                            <NavLink
-                              to={`/pins/${pinId}/edit`}
-                              style={{ textDecoration: "none", color: "black" }}
-                            >
-                              Edit Pin
-                            </NavLink>
-                          </button>
+                          <button onClick={onEdit}>Edit</button>
                           <button onClick={onDelete}>Delete Pin</button>
                         </div>
                       </div>
@@ -271,9 +284,9 @@ const SinglePin = () => {
                   )}
                   <div>{currentProfile.username}</div>
                 </div>
-                <div className="single-pin-creator-details">
+                {/* <div className="single-pin-creator-details">
                   <button>Follow</button>
-                </div>
+                </div> */}
               </div>
             </div>
           </div>
