@@ -82,6 +82,7 @@
   font-weight: none;
   text-decoration: underline;
   cursor: pointer;
+  padding: 1rem 0rem;
 }
 
 .single-pin-title {

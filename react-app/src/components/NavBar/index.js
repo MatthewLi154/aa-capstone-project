@@ -48,10 +48,12 @@ const NavBar = () => {
       setShowMenu(false);
     };
 
+    // if (openModal && showMenu) setShowMenu(false);
+
     document.addEventListener("click", closeMenu);
 
     return () => document.removeEventListener("click", closeMenu);
-  }, [showMenu]);
+  }, [showMenu, openModal]);
 
   const openProfileDropDown = () => {
     if (profileDropDown) return;
@@ -82,6 +84,7 @@ const NavBar = () => {
           <div>
             <a
               href="https://github.com/MatthewLi154/pinature-capstone-project"
+              target="_blank"
               style={{
                 textDecoration: "none",
                 margin: "0rem 1rem",
@@ -179,7 +182,10 @@ const NavBar = () => {
                     <li
                       onClick={(e) => {
                         setOpenModal(true);
-                        e.stopPropagation();
+                        e.preventDefault();
+                        e.stopPropagation(() => {
+                          setShowMenu(false);
+                        });
                       }}
                     >
                       Create Board

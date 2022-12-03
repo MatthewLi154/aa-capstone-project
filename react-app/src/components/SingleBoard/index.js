@@ -97,7 +97,7 @@ const SingleBoard = () => {
                       <EditBoard
                         open={openModal}
                         onClose={() => setOpenModal(false)}
-                        props={{ boardId, profileId, boards }}
+                        props={{ boardId, profileId, boards, setShowMenu }}
                       />
                       <li
                         className="board-option-buttons"
@@ -109,9 +109,11 @@ const SingleBoard = () => {
                   </div>
                 )}
               </div>
-              <div>
-                <img src={user.profileImg} />
-              </div>
+              {user && user.profileImg === null ? (
+                <img src="https://t4.ftcdn.net/jpg/02/15/84/43/360_F_215844325_ttX9YiIIyeaR7Ne6EaLLjMAmy4GvPC69.jpg"></img>
+              ) : (
+                <img src={user.profileImg}></img>
+              )}
               <div>{boards.description}</div>
               <div
                 className="organize-container-main"

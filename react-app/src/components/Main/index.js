@@ -9,6 +9,7 @@ const Main = () => {
   const dispatch = useDispatch();
   const allPins = useSelector((state) => Object.values(state.pins.allPins));
   const allProfiles = useSelector((state) => state.profiles.allProfiles);
+  const user = useSelector((state) => state.session.user);
   const [showMenu, setShowMenu] = useState(false);
 
   useEffect(async () => {
@@ -20,6 +21,9 @@ const Main = () => {
     for (const profile in allProfiles) {
       console.log(allProfiles[profile]);
       if (profileId == profile) {
+        if (!allProfiles[profile].profileImg) {
+          return "https://t4.ftcdn.net/jpg/02/15/84/43/360_F_215844325_ttX9YiIIyeaR7Ne6EaLLjMAmy4GvPC69.jpg";
+        }
         return allProfiles[profile].profileImg;
       }
     }
@@ -27,7 +31,7 @@ const Main = () => {
 
   return (
     <>
-      <div>
+      <div className="main-container-parent">
         <div className="all-pins-main-container">
           {allPins &&
             allProfiles &&
@@ -48,7 +52,11 @@ const Main = () => {
                       src={getProfilePic(pin.profileId)}
                       alt="pin"
                       className="pin-container-profile-img"
-                    ></img>
+                      onError={(e) => {
+                        e.currentTarget.src =
+                          "https://t4.ftcdn.net/jpg/02/15/84/43/360_F_215844325_ttX9YiIIyeaR7Ne6EaLLjMAmy4GvPC69.jpg";
+                      }}
+                    />
                     {pin.title}
                   </div>
                 </NavLink>

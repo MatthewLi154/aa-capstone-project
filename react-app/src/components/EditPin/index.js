@@ -79,16 +79,16 @@ const EditPin = () => {
     // }
 
     // validations for note
-    if (note.length > 255) {
+    if (note && note.length > 255) {
       errors.push("Notes can not exceed 255 characters");
     }
 
     // validations for alt text
-    if (altText.length > 255) {
+    if (altText && altText.length > 255) {
       errors.push("Alt text can not exceed 255 characters");
     }
 
-    if (destinationLink.length > 255) {
+    if (destinationLink && destinationLink.length > 255) {
       errors.push("Link can not exceed 255 characters");
     } else if (
       destinationLink.length &&

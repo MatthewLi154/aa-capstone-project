@@ -13,6 +13,7 @@ import EditPin from "./components/EditPin";
 import SplashPage from "./components/SplashPage";
 import SingleBoard from "./components/SingleBoard";
 import DeletePinsFromBoard from "./components/DeletePinsFromBoard";
+import AboutFooter from "./components/AboutFooter";
 import { authenticate } from "./store/session";
 
 import Main from "./components/Main";
@@ -49,6 +50,7 @@ function App() {
               <SignUpForm />
             </Route>
           </Switch>
+          <AboutFooter />
         </>
       ) : (
         <>
@@ -69,7 +71,7 @@ function App() {
             <ProtectedRoute path="/users/:userId" exact={true}>
               <User />
             </ProtectedRoute>
-            <Route path="/profile/:profileId">
+            <Route exact path="/profile/:profileId">
               <ProfilePage />
             </Route>
             <Route path="/pins/:pinId/edit">

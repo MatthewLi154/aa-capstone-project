@@ -81,7 +81,7 @@ const CreateBoard = ({ open, onClose }) => {
           </span>
         </div>
         <div className="create-board-modal-header">
-          <span>Create Board</span>
+          <span>Create board and start saving pins</span>
         </div>
         <div className="create-board-input-field-modal">
           <div>Name</div>

@@ -90,9 +90,19 @@ const PinBuilder = () => {
       errors.push("Please upload a valid image");
     }
 
+    if (image && !image.name.endsWith(".jpg")) {
+      if (!image.name.endsWith(".png")) {
+        if (!image.name.endsWith(".jpeg")) {
+          errors.push("Image does not end in jpg, jpeg, png");
+          imageErrors.push("Image does not end in jpg, jpeg, png");
+          setImageErrors(errors);
+        }
+      }
+    }
+
     setTitleErrors(titleErrors);
     setAboutErrors(aboutErrors);
-    setAltText(altTextErrors);
+    setAltTextErrors(altTextErrors);
     setLinkErrors(linkErrors);
     setImageErrors(imageErrors);
 
@@ -104,12 +114,30 @@ const PinBuilder = () => {
     // if (e.target.files[0].length === 0) {
     //   return setImageErrors("Please upload a valid image");
     // }
+    const errors = [];
     setImage(file);
     const src = URL.createObjectURL(e.target.files[0]);
+    console.log(file.name);
+    if (file.name) {
+      if (!file.name.endsWith(".jpg")) {
+        if (!file.name.endsWith(".png")) {
+          if (!file.name.endsWith(".jpeg")) {
+            errors.push("Image does not end in jpg, jpeg, png");
+            setImageErrors(errors);
+            const preview = document.getElementById("uploaded-image-preview");
+            preview.src =
+              "https://i.pinimg.com/564x/07/54/a1/0754a15bf17f495cd3de87ecddb0312f.jpg";
+            preview.style.display = "block";
+            return;
+          }
+        }
+      }
+    }
+    setImageErrors(errors);
     const preview = document.getElementById("uploaded-image-preview");
     preview.src = src;
     preview.style.display = "block";
-    console.log(file);
+    return src;
   };
 
   const onSubmit = async (e) => {
@@ -145,7 +173,7 @@ const PinBuilder = () => {
       };
 
       const newPinRes = await dispatch(addNewPin(newPin));
-      console.log(newPinRes);
+      // console.log(newPinRes);
 
       if (board.length !== 0) {
         console.log(board);
@@ -199,7 +227,7 @@ const PinBuilder = () => {
     } else {
       setImageLoading(false);
       console.log("error");
-      setImageErrors("Invalid image file");
+      return setImageErrors("Invalid image file");
     }
   };
 
@@ -274,13 +302,11 @@ const PinBuilder = () => {
                 ))}
               <div className="profile-pic-username-container">
                 <div className="profile-pic-container-pin-builder">
-                  <img
-                    src={currentProfile.profileImg}
-                    onError={(e) => {
-                      e.currentTarget.src =
-                        "https://t3.ftcdn.net/jpg/03/46/83/96/360_F_346839683_6nAPzbhpSkIpb8pmAwufkC7c5eD7wYws.jpg";
-                    }}
-                  ></img>
+                  {currentProfile && currentProfile.profileImg === null ? (
+                    <img src="https://t4.ftcdn.net/jpg/02/15/84/43/360_F_215844325_ttX9YiIIyeaR7Ne6EaLLjMAmy4GvPC69.jpg"></img>
+                  ) : (
+                    <img src={currentProfile.profileImg}></img>
+                  )}
                 </div>
                 <div>
                   <span>{currentProfile.username}</span>

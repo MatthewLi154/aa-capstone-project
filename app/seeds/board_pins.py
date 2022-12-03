@@ -13,6 +13,10 @@ def seed_boardPins():
     boardPins_7 = boardPins.insert().values(pinsId=7, boardsId=3)
     boardPins_8 = boardPins.insert().values(pinsId=8, boardsId=3)
 
+    boardPins_9 = boardPins.insert().values(pinsId=9, boardsId=4)
+    boardPins_10 = boardPins.insert().values(pinsId=10, boardsId=4)
+    boardPins_11 = boardPins.insert().values(pinsId=17, boardsId=4)
+
     db.session.execute(boardPins_1)
     db.session.execute(boardPins_2)
     db.session.execute(boardPins_3)
@@ -21,6 +25,9 @@ def seed_boardPins():
     db.session.execute(boardPins_6)
     db.session.execute(boardPins_7)
     db.session.execute(boardPins_8)
+    db.session.execute(boardPins_9)
+    db.session.execute(boardPins_10)
+    db.session.execute(boardPins_11)
     db.session.commit()
 
 def undo_boardPins():

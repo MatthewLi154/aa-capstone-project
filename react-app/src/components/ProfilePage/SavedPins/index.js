@@ -17,6 +17,7 @@ const SavedPins = (props) => {
 
   // change userBoards to array as well
   const [showMenu, setShowMenu] = useState(false);
+  const [click, setClick] = useState(0);
 
   let pinsArr = Object.values(boardPins);
 
@@ -47,6 +48,10 @@ const SavedPins = (props) => {
   };
 
   useEffect(() => {
+    setShowMenu(false);
+  }, [click]);
+
+  useEffect(() => {
     if (!showMenu) return;
 
     const closeMenu = () => {
@@ -63,7 +68,7 @@ const SavedPins = (props) => {
 
   return (
     <>
-      {userBoards && (
+      {userBoards.length > 0 ? (
         <div className="saved-pins-container">
           <div className="create-pin-board-container-button">
             <button onClick={openMenu}>
@@ -138,6 +143,51 @@ const SavedPins = (props) => {
                   </div>
                 ))}
             </div>
+          </div>
+        </div>
+      ) : (
+        <div className="no-boards-available-container">
+          <div className="create-pin-board-container-button">
+            <button onClick={openMenu}>
+              <i class="fa-solid fa-plus"></i>
+              {showMenu && (
+                <div className="create-pin-dropdown-saved-pins-container">
+                  <ul>
+                    <li>Create</li>
+                    <li
+                      className="dropdown-list-button"
+                      onClick={(e) => {
+                        history.push("/pin-builder");
+                      }}
+                    >
+                      Pin
+                    </li>
+                    <li
+                      className="dropdown-list-button"
+                      onClick={(e) => {
+                        setOpenModal(true);
+                        e.stopPropagation();
+                      }}
+                    >
+                      Board
+                    </li>
+                    <CreateBoard
+                      open={openModal}
+                      onClose={(e) => {
+                        setOpenModal(false);
+                        setShowMenu(false);
+                      }}
+                    />
+                  </ul>
+                </div>
+              )}
+            </button>
+          </div>
+          <div className="no-boards-text">
+            <h2>
+              No boards available... Please create a board or save pins to
+              populate this page
+            </h2>
           </div>
         </div>
       )}

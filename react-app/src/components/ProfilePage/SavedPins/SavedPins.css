@@ -225,3 +225,13 @@
 .create-pin-dropdown-saved-pins-container {
   background-color: white;
 }
+
+.no-boards-available-container {
+  width: calc(99vw);
+  height: calc(47vh);
+}
+
+.no-boards-available-container h2 {
+  text-align: center;
+  width: 100%;
+}

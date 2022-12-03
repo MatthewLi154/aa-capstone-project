@@ -11,7 +11,7 @@ import "./EditBoardModal.css";
 const EditBoard = ({ open, onClose, props }) => {
   if (!open) return null;
 
-  const { boardId, profileId, boards } = props;
+  const { boardId, profileId, boards, setShowMenu } = props;
 
   const [name, setName] = useState(boards.name);
   const [description, setDescription] = useState(boards.description);
@@ -58,6 +58,7 @@ const EditBoard = ({ open, onClose, props }) => {
     await dispatch(fetchUserBoards(profileId));
 
     onClose();
+    setShowMenu(false);
   };
 
   const onDeleteBoard = async (e) => {
