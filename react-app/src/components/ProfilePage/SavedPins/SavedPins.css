@@ -98,6 +98,7 @@
 .right-images-board img {
   margin: 0px 0px;
   padding: 0px;
+  object-fit: cover;
 }
 
 .left-images-board img {
@@ -105,14 +106,17 @@
   height: 9.8rem;
   border-top-left-radius: 1rem;
   border-bottom-left-radius: 1rem;
+  object-fit: cover;
 }
 
 .top-right-img {
   border-top-right-radius: 1rem;
+  object-fit: cover;
 }
 
 .bottom-right-img {
   border-bottom-right-radius: 1rem;
+  object-fit: cover;
 }
 
 .main-board-container {
