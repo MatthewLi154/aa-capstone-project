@@ -47,7 +47,15 @@ const ProfilePage = () => {
             <div className="handle-and-pronouns-container">
               @{currentProfile.username} · {currentProfile.pronouns}
             </div>
-            <div>{currentProfile.website}</div>
+            <div>
+              <a
+                href={currentProfile.website}
+                target="_blank"
+                style={{ textDecoration: "none", color: "black" }}
+              >
+                {currentProfile.website}
+              </a>
+            </div>
             {/* <div>
               <button>Edit Profile</button>
             </div> */}

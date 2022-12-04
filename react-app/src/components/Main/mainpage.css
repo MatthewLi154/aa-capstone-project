@@ -1,6 +1,6 @@
 html,
 body {
-  background-color: #efefef;
+  /* background-color: #efefef; */
   margin: 0;
   padding: 0;
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
@@ -26,6 +26,7 @@ body {
   display: flex;
   justify-content: center;
   width: 100%;
+  padding-bottom: 3rem;
 }
 
 .all-pins-main-container {

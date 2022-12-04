@@ -3,6 +3,7 @@
   flex-direction: column;
   width: calc(99vw);
   height: 100%;
+  padding-bottom: 3rem;
   /* border: 1px solid black; */
 }
 

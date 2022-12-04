@@ -16,10 +16,12 @@
 .created-pins-container {
   display: flex;
   flex-direction: row;
-  justify-content: flex-start;
+  justify-content: center;
   width: 100%;
   gap: 1rem;
+  margin: 0rem 1rem;
   margin-bottom: 3rem;
+  flex-wrap: wrap;
 }
 
 .created-saved-toggle-container {

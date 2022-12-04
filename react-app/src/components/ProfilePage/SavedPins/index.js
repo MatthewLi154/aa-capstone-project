@@ -18,6 +18,8 @@ const SavedPins = (props) => {
   // change userBoards to array as well
   const [showMenu, setShowMenu] = useState(false);
   const [click, setClick] = useState(0);
+  // Modal for create board
+  const [openModal, setOpenModal] = useState(false);
 
   let pinsArr = Object.values(boardPins);
 
@@ -58,13 +60,17 @@ const SavedPins = (props) => {
       setShowMenu(false);
     };
 
-    // document.addEventListener("click", closeMenu);
+    document.addEventListener("click", closeMenu);
 
     return () => document.removeEventListener("click", closeMenu);
   }, [showMenu]);
 
-  // Modal for create board
-  const [openModal, setOpenModal] = useState(false);
+  useEffect(() => {
+    if (openModal) {
+      setShowMenu(false);
+      setOpenModal(true);
+    }
+  }, [openModal]);
 
   return (
     <>
@@ -94,18 +100,17 @@ const SavedPins = (props) => {
                     >
                       Board
                     </li>
-                    <CreateBoard
-                      open={openModal}
-                      onClose={(e) => {
-                        setOpenModal(false);
-                        setShowMenu(false);
-                      }}
-                    />
                   </ul>
                 </div>
               )}
             </button>
           </div>
+          <CreateBoard
+            open={openModal}
+            onClose={() => {
+              setOpenModal(false);
+            }}
+          />
           <div className="user-board-main-container">
             <div className="user-board-container">
               {userBoards &&
@@ -171,18 +176,18 @@ const SavedPins = (props) => {
                     >
                       Board
                     </li>
-                    <CreateBoard
-                      open={openModal}
-                      onClose={(e) => {
-                        setOpenModal(false);
-                        setShowMenu(false);
-                      }}
-                    />
                   </ul>
                 </div>
               )}
             </button>
           </div>
+          <CreateBoard
+            open={openModal}
+            onClose={(e) => {
+              setOpenModal(false);
+              setShowMenu(false);
+            }}
+          />
           <div className="no-boards-text">
             <h2>
               No boards available... Please create a board or save pins to

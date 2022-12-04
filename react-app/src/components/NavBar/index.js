@@ -48,12 +48,10 @@ const NavBar = () => {
       setShowMenu(false);
     };
 
-    // if (openModal && showMenu) setShowMenu(false);
-
     document.addEventListener("click", closeMenu);
 
     return () => document.removeEventListener("click", closeMenu);
-  }, [showMenu, openModal]);
+  }, [showMenu]);
 
   const openProfileDropDown = () => {
     if (profileDropDown) return;
@@ -72,12 +70,19 @@ const NavBar = () => {
     return () => document.removeEventListener("click", closeProfileDropDown);
   }, [profileDropDown]);
 
+  useEffect(() => {
+    if (openModal) {
+      setShowMenu(false);
+      setOpenModal(true);
+    }
+  }, [openModal]);
+
   const loggedOut = (
     <nav>
       <div className="navbar-main-container logged-out-main-container">
         <div className="nav-button-container logo-button">
           <NavLink to="/" exact={true} style={{ textDecoration: "none" }}>
-            <span>N</span>
+            <img src="https://i.postimg.cc/7ZXVLnRs/Pinature-1-2.png"></img>
           </NavLink>
         </div>
         <div className="logged-out-right-side-container">
@@ -139,7 +144,8 @@ const NavBar = () => {
                 exact={true}
                 style={{ textDecoration: "none", color: "black" }}
               >
-                <span>N</span>
+                {/* <span>N</span> */}
+                <img src="https://i.postimg.cc/7ZXVLnRs/Pinature-1-2.png"></img>
               </NavLink>
             </div>
             <div className="nav-button-container">
@@ -190,20 +196,17 @@ const NavBar = () => {
                     >
                       Create Board
                     </li>
-                    {
-                      <CreateBoard
-                        open={openModal}
-                        onClose={() => {
-                          setOpenModal(false);
-                          setShowMenu(false);
-                        }}
-                      />
-                    }
                   </ul>
                 </div>
               )}
             </div>
-
+            <CreateBoard
+              open={openModal}
+              onClose={() => {
+                setOpenModal(false);
+                setShowMenu(false);
+              }}
+            />
             <form
               onSubmit={onSearch}
               className="nav-button-container search-container"
@@ -235,7 +238,7 @@ const NavBar = () => {
               {profileDropDown && (
                 <div className="profile-drop-down">
                   <div className="currently-in-container">Currently in</div>
-                  <div className="profile-detail-dropdown-container">
+                  <div className="profile-detail-dropdown-container-parent">
                     <NavLink
                       to={`/profile/${currentProfile.id}`}
                       style={{ textDecoration: "none", color: "black" }}
@@ -246,12 +249,26 @@ const NavBar = () => {
                       ) : (
                         <img src="https://t4.ftcdn.net/jpg/02/15/84/43/360_F_215844325_ttX9YiIIyeaR7Ne6EaLLjMAmy4GvPC69.jpg"></img>
                       )}
-                      {currentProfile.firstName}
+                      <div
+                        style={{ fontFamily: "Arial, Helvetica, sans-serif" }}
+                      >
+                        <div>
+                          {currentProfile.firstName} {currentProfile.lastName}
+                        </div>
+                        <div style={{ fontWeight: "light", fontSize: "14px" }}>
+                          {currentProfile.email}
+                        </div>
+                      </div>
                     </NavLink>
                   </div>
-                  <div className="logout-button-nav-container">
+                  <button
+                    style={{
+                      display: "flex",
+                      justifyContent: "flex-start",
+                    }}
+                  >
                     <LogoutButton>Log out</LogoutButton>
-                  </div>
+                  </button>
                 </div>
               )}
             </div>

@@ -82,8 +82,6 @@ const SignUpModal = ({ open, onClose, props }) => {
       );
       if (data) {
         setErrors(data);
-      } else {
-        onClose();
       }
     }
   };
@@ -100,7 +98,9 @@ const SignUpModal = ({ open, onClose, props }) => {
           e.stopPropagation();
         }}
       >
-        <div className="login-form-logo">Logo</div>
+        <div className="login-form-logo">
+          <img src="https://i.postimg.cc/7ZXVLnRs/Pinature-1-2.png"></img>
+        </div>
         <div className="welcome-header">Welcome to Pinature</div>
         <div className="find-new-ideas">Find new ideas to try</div>
         {errors &&

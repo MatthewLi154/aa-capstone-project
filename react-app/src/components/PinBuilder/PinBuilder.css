@@ -2,6 +2,8 @@
   width: 100%;
   display: flex;
   justify-content: center;
+  background-color: #efefef;
+  height: calc(100vh - 5rem);
 }
 
 .main-pin-builder-container {

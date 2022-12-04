@@ -15,7 +15,14 @@
 }
 
 .login-form-logo {
-  padding: 1.5rem;
+  border-radius: 20%;
+}
+
+.login-form-logo img {
+  margin: 1.2rem;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 20%;
 }
 
 .welcome-header {
