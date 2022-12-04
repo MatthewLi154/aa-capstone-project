@@ -32,12 +32,24 @@ const AboutFooter = () => {
           target="_blank"
           style={{
             textDecoration: "none",
-            margin: "0rem 1rem",
+            margin: "0rem 10rem",
             color: "black",
             fontWeight: "300",
           }}
         >
           <i class="fa-brands fa-github"></i> Matthew Li
+        </a>
+        <a
+          href="https://www.linkedin.com/in/matthew-li-76b174161/"
+          target="_blank"
+          style={{
+            textDecoration: "none",
+            margin: "0rem 10rem",
+            color: "black",
+            fontWeight: "300",
+          }}
+        >
+          <i class="fa-brands fa-linkedin-in"></i> Matthew Li
         </a>
       </div>
       <div style={blurStyles}>
