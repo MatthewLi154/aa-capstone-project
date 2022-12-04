@@ -88,6 +88,28 @@ npm start
 
 Landing page for a non-signed in user. 
 
-![image](https://i.imgur.com/rktlaw2.png)
+![image](https://i.imgur.com/KnAMZZJ.jpeg)
 
 Landing page for a signed-in user. Once signed-in, you are able to browse through all the users in the database. 
+
+![image](https://i.imgur.com/xgKPjc0.jpeg)
+
+When logged in, you can create a pin by uploading a photo and entering text in the required input fields.
+
+![image](https://i.imgur.com/zXFuORV.png)
+
+To create a board, click on the drop down menu to access the create board modal.
+
+![image](https://i.imgur.com/70L8lB1.png)
+
+When a board is created, it can start saving pins that the user wishes to organize. Pins can be saved to multiple boards if the user so wishes.
+
+![image](https://i.imgur.com/Irdjxf7.png)
+
+Users can see all the pins they've saved to a board by navigating to their profile page
+
+![image](https://i.imgur.com/V8veFwN.png)
+
+Users can also delete a pin or pins that they've saved if they feel like it doesn't fit the theme of the board anymore
+
+![image](https://i.imgur.com/pe9R58j.png)
