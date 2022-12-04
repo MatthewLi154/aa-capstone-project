@@ -12,7 +12,7 @@ const AboutFooter = () => {
     height: "2rem",
     alignItems: "center",
     fontSize: "16px",
-    padding: "0.25rem",
+    padding: "0.25rem 0rem",
   };
 
   const blurStyles = {
