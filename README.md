@@ -1,10 +1,8 @@
 # Pinature ![image](https://i.imgur.com/xgKPjc0.jpeg)
 
----
 
 Pinature is a full stack application clone, inspired by [Pinterest](https://www.pinterest.com/). Pinature allows users to create "pins" or more commonly known as posts, and "boards", which are a collection of saved pins so that users can organize their ideas in a folder and build full sets of inspirations.
 
----
 
 # Wiki Links
 
@@ -31,6 +29,7 @@ Frameworks, Platforms and Libraries
 ![NodeJS](https://img.shields.io/badge/node.js-6DA55F?style=for-the-badge&logo=node.js&logoColor=white)
 ![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
 ![Redux](https://img.shields.io/badge/redux-%23593d88.svg?style=for-the-badge&logo=redux&logoColor=white)
+
 
 Database:
 
