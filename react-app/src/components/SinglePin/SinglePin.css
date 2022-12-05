@@ -1,7 +1,7 @@
 .main-single-pin-page {
   display: flex;
   justify-content: center;
-  background-color: #efefef;
+  background-color: white;
   min-height: calc(100vh - 5rem);
 }
 
