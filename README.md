@@ -1,7 +1,7 @@
 # Pinature ![image](https://i.imgur.com/xgKPjc0.jpeg)
 
 
-[Pinature](https://aa-pinature.onrender.com/) is a full stack application clone, inspired by [Pinterest](https://www.pinterest.com/). Pinature allows users to create "pins" or more commonly known as posts, and "boards", which are a collection of saved pins so that users can organize their ideas in a folder and build full sets of inspirations.
+[Pinature](https://aa-pinature.onrender.com/) is a full stack application clone, inspired by [Pinterest](https://www.pinterest.com/). Pinature allows users to create "pins" or more commonly known as posts, and "boards", which are a collection of saved pins so that users can organize their ideas in a folder and build full sets of inspirations from other users.
 
 
 # Wiki Links
