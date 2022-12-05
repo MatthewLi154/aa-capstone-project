@@ -126,7 +126,7 @@ const PinBuilder = () => {
             setImageErrors(errors);
             const preview = document.getElementById("uploaded-image-preview");
             preview.src =
-              "https://i.pinimg.com/564x/07/54/a1/0754a15bf17f495cd3de87ecddb0312f.jpg";
+              "https://cdn3.iconfinder.com/data/icons/flat-actions-icons-9/792/Close_Icon_Dark-512.png";
             preview.style.display = "block";
             return;
           }
