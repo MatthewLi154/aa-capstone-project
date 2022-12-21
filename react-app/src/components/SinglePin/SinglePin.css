@@ -15,7 +15,7 @@
   display: flex;
   flex-direction: row;
   height: fit-content;
-  z-index: 5;
+  z-index: 1;
 }
 
 .fa-ellipsis {
@@ -148,4 +148,52 @@
 
 .option-dropdown-container button:hover {
   background-color: #efefef;
+}
+
+.comments-main-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.comments-angle-down {
+  padding: 0rem 0.5rem;
+}
+
+.comment-card {
+  display: flex;
+  align-items: center;
+}
+
+.comment-card div {
+  margin: 0rem 0.25rem;
+}
+
+.comments-container-section {
+  margin: 1rem 0rem;
+  display: inline-flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.comments-container-section input {
+  margin-left: 1rem;
+  width: 100%;
+  height: 1.75rem;
+  border-radius: 1rem;
+  padding-left: 0.5rem;
+}
+
+.comments-container-section img {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  object-fit: contain;
+}
+
+.select-container-pin-builder {
+  background-color: white;
+  width: auto;
+  font-weight: 600;
+  padding: 0;
 }

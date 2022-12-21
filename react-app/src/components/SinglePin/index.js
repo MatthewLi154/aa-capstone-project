@@ -43,6 +43,7 @@ const SinglePin = () => {
   const [board, setBoard] = useState("Profile");
   const [openOptions, setOpenOptions] = useState(false);
   const [saved, setSaved] = useState(false);
+  const [comments, setComments] = useState([]);
 
   useEffect(() => {
     dispatch(fetchAllPins());
@@ -50,6 +51,11 @@ const SinglePin = () => {
     dispatch(fetchUserBoards(currentProfileId));
     dispatch(fetchUserBoardPins(currentProfileId));
     dispatch(fetchAllProfiles());
+  }, []);
+
+  useEffect(async () => {
+    const data = await fetchComments();
+    setComments(data);
   }, []);
 
   const onOpenOptions = async (e) => {
@@ -184,13 +190,26 @@ const SinglePin = () => {
     };
 
     return history.push({ pathname: `/pins/${pinId}/edit`, state: pin });
+  };
 
-    //   <NavLink
-    //   to={`/pins/${pinId}/edit`}
-    //   style={{ textDecoration: "none", color: "black" }}
-    // >
-    //   Edit Pin
-    // </NavLink>
+  const fetchComments = async () => {
+    const fetchComments = fetch("/api/comments")
+      .then((res) => res.json())
+      .then((result) => {
+        return result;
+      });
+    const comments = async () => {
+      const data = await fetchComments;
+      return data;
+    };
+
+    const commentsData = await comments();
+    // Normalize comments after fetching...
+    let commentsArr = [];
+    for (const comment in commentsData) {
+      commentsArr.push(commentsData[comment]);
+    }
+    return commentsArr;
   };
 
   return (
@@ -220,10 +239,6 @@ const SinglePin = () => {
                 )}
                 <div className="save-to-board-dropdown-button">
                   <div className="save-button-container-header">
-                    {/* <div className="select-container-pin-builder">Select</div>
-                <div className="select-container-angle-down">
-                  <i className="fa-solid fa-angle-down"></i>
-                </div> */}
                     {!saved ? (
                       <>
                         {" "}
@@ -272,11 +287,6 @@ const SinglePin = () => {
               <div className="single-pin-margin-left">{currentPin.about}</div>
               <div className="single-pin-margin-left single-pin-creator-details profile-pic-container-pin-builder main-creator-container">
                 <div className="single-pin-creator-details">
-                  {/* {currentProfile.profileImg ? (
-                  <img src={currentProfile.profileImg}></img>
-                ) : (
-                  <img src="https://t4.ftcdn.net/jpg/02/15/84/43/360_F_215844325_ttX9YiIIyeaR7Ne6EaLLjMAmy4GvPC69.jpg"></img>
-                )} */}
                   {currentProfile && currentProfile.profileImg === null ? (
                     <img src="https://t4.ftcdn.net/jpg/02/15/84/43/360_F_215844325_ttX9YiIIyeaR7Ne6EaLLjMAmy4GvPC69.jpg"></img>
                   ) : (
@@ -284,9 +294,42 @@ const SinglePin = () => {
                   )}
                   <div>{currentProfile.username}</div>
                 </div>
-                {/* <div className="single-pin-creator-details">
-                  <button>Follow</button>
-                </div> */}
+              </div>
+              <div className="single-pin-margin-left comments-main-container">
+                <h4>Comments</h4>
+                <div>
+                  <i class="fa-solid fa-angle-down comments-angle-down"></i>
+                </div>
+                {/* <button onClick={fetchComments}>console</button> */}
+              </div>
+              {comments &&
+                comments.map((comment) => (
+                  <div className="single-pin-margin-left comment-card">
+                    <div>
+                      <img
+                        className="pin-container-profile-img"
+                        src={profiles[comment.profileId].profileImg}
+                      ></img>
+                    </div>
+                    <div> {profiles[comment.profileId].firstName}</div>
+                    <div style={{ fontWeight: "100", fontSize: "14px" }}>
+                      {" "}
+                      {comment.body}
+                    </div>
+                  </div>
+                ))}
+              <div className="single-pin-margin-left">
+                {currentProfile && currentProfile.profileImg === null ? (
+                  <div className="comments-container-section">
+                    <img src="https://t4.ftcdn.net/jpg/02/15/84/43/360_F_215844325_ttX9YiIIyeaR7Ne6EaLLjMAmy4GvPC69.jpg"></img>
+                    <input type="text" placeholder="Add a comment" />
+                  </div>
+                ) : (
+                  <div className="comments-container-section">
+                    <img src={currentProfile.profileImg}></img>
+                    <input type="text" placeholder="Add a comment" />
+                  </div>
+                )}
               </div>
             </div>
           </div>

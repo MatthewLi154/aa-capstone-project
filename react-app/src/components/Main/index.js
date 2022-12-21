@@ -19,7 +19,6 @@ const Main = () => {
 
   const getProfilePic = (profileId) => {
     for (const profile in allProfiles) {
-      console.log(allProfiles[profile]);
       if (profileId == profile) {
         if (!allProfiles[profile].profileImg) {
           return "https://t4.ftcdn.net/jpg/02/15/84/43/360_F_215844325_ttX9YiIIyeaR7Ne6EaLLjMAmy4GvPC69.jpg";
