@@ -44,6 +44,7 @@ const SinglePin = () => {
   const [openOptions, setOpenOptions] = useState(false);
   const [saved, setSaved] = useState(false);
   const [comments, setComments] = useState([]);
+  const [newComment, setNewComment] = useState("");
 
   useEffect(() => {
     dispatch(fetchAllPins());
@@ -57,6 +58,11 @@ const SinglePin = () => {
     const data = await fetchComments();
     setComments(data);
   }, []);
+
+  useEffect(async () => {
+    const data = await fetchComments();
+    setComments(data);
+  }, [newComment]);
 
   const onOpenOptions = async (e) => {
     if (openOptions) return;
@@ -193,7 +199,7 @@ const SinglePin = () => {
   };
 
   const fetchComments = async () => {
-    const fetchComments = fetch("/api/comments")
+    const fetchComments = fetch(`/api/comments/pin/${pinId}`)
       .then((res) => res.json())
       .then((result) => {
         return result;
@@ -210,6 +216,21 @@ const SinglePin = () => {
       commentsArr.push(commentsData[comment]);
     }
     return commentsArr;
+  };
+
+  const addComment = async () => {
+    const newCommentData = {
+      profileId: currentProfileId,
+      pinId: pinId,
+      body: newComment,
+    };
+    const addNewComment = fetch(`/api/comments/profile/${currentProfileId}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(newCommentData),
+    });
   };
 
   return (
@@ -313,7 +334,6 @@ const SinglePin = () => {
                     </div>
                     <div> {profiles[comment.profileId].firstName}</div>
                     <div style={{ fontWeight: "100", fontSize: "14px" }}>
-                      {" "}
                       {comment.body}
                     </div>
                   </div>
@@ -327,7 +347,13 @@ const SinglePin = () => {
                 ) : (
                   <div className="comments-container-section">
                     <img src={currentProfile.profileImg}></img>
-                    <input type="text" placeholder="Add a comment" />
+                    <input
+                      type="text"
+                      placeholder="Add a comment"
+                      value={newComment}
+                      onChange={(e) => setNewComment(e.target.value)}
+                    />
+                    <button onClick={addComment}>submit</button>
                   </div>
                 )}
               </div>
