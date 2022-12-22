@@ -45,6 +45,7 @@ const SinglePin = () => {
   const [saved, setSaved] = useState(false);
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState("");
+  const [addComm, setAddComm] = useState(0);
 
   useEffect(() => {
     dispatch(fetchAllPins());
@@ -57,12 +58,7 @@ const SinglePin = () => {
   useEffect(async () => {
     const data = await fetchComments();
     setComments(data);
-  }, []);
-
-  useEffect(async () => {
-    const data = await fetchComments();
-    setComments(data);
-  }, [newComment]);
+  }, [comments]);
 
   const onOpenOptions = async (e) => {
     if (openOptions) return;
@@ -353,7 +349,15 @@ const SinglePin = () => {
                       value={newComment}
                       onChange={(e) => setNewComment(e.target.value)}
                     />
-                    <button onClick={addComment}>submit</button>
+                    <button
+                      onClick={async () => {
+                        addComment();
+                        const data = await fetchComments();
+                        setComments(data);
+                      }}
+                    >
+                      submit
+                    </button>
                   </div>
                 )}
               </div>
