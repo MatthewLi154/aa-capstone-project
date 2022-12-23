@@ -16,6 +16,7 @@ const SinglePin = () => {
   const { pinId } = useParams();
   const currentPin = useSelector((state) => state.pins.singlePin);
   const currentProfileId = useSelector((state) => state.session.user.id);
+  const currentUserProfile = useSelector((state) => state.session.user);
   const allPins = useSelector((state) => state.pins.allPins);
   const profiles = useSelector((state) => state.profiles.allProfiles);
   const userBoards = useSelector((state) =>
@@ -45,7 +46,8 @@ const SinglePin = () => {
   const [saved, setSaved] = useState(false);
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState("");
-  const [addComm, setAddComm] = useState(0);
+  const [openComments, setOpenComments] = useState(false);
+  const [openCommentOptions, setCommentOptions] = useState(false);
 
   useEffect(() => {
     dispatch(fetchAllPins());
@@ -58,7 +60,7 @@ const SinglePin = () => {
   useEffect(async () => {
     const data = await fetchComments();
     setComments(data);
-  }, [comments]);
+  }, [newComment]);
 
   const onOpenOptions = async (e) => {
     if (openOptions) return;
@@ -76,6 +78,17 @@ const SinglePin = () => {
 
     return () => document.removeEventListener("click", closeOptions);
   }, [openOptions]);
+
+  const onOpenComments = async (e) => {
+    if (openComments) return;
+    setOpenComments(true);
+  };
+
+  const onCloseComments = async (e) => {
+    if (openComments) {
+      setOpenComments(false);
+    }
+  };
 
   const onDelete = async (e) => {
     e.preventDefault();
@@ -229,6 +242,21 @@ const SinglePin = () => {
     });
   };
 
+  const getTime = (date) => {
+    const dateData = new Date(date);
+    const dateNow = Date.now();
+    const seconds = Math.floor((dateNow - dateData) / 1000);
+    if (seconds < 60) {
+      return `${seconds}s`;
+    } else if (seconds > 60 && seconds < 3600) {
+      return `${Math.floor(seconds / 60)}m`;
+    } else if (seconds > 3600 && seconds < 84400) {
+      return `${Math.floor(seconds / 3600)}h`;
+    } else {
+      return `${Math.floor(seconds / 84400)}d`;
+    }
+  };
+
   return (
     <>
       {userBoards && currentProfile && (
@@ -294,7 +322,11 @@ const SinglePin = () => {
                 </div>
               </div>
               <div className="single-pin-margin-left single-pin-destination-link">
-                <a href={currentPin.destinationLink} style={{ color: "black" }}>
+                <a
+                  href={currentPin.destinationLink}
+                  style={{ color: "black" }}
+                  target="_blank"
+                >
                   {currentPin.destinationLink}
                 </a>
               </div>
@@ -314,12 +346,21 @@ const SinglePin = () => {
               </div>
               <div className="single-pin-margin-left comments-main-container">
                 <h4>Comments</h4>
-                <div>
+                <div
+                  onClick={(e) => {
+                    if (openComments) {
+                      onCloseComments();
+                    } else {
+                      onOpenComments();
+                    }
+                  }}
+                >
                   <i class="fa-solid fa-angle-down comments-angle-down"></i>
                 </div>
                 {/* <button onClick={fetchComments}>console</button> */}
               </div>
               {comments &&
+                openComments &&
                 comments.map((comment) => (
                   <div className="single-pin-margin-left comment-card">
                     <div>
@@ -328,9 +369,23 @@ const SinglePin = () => {
                         src={profiles[comment.profileId].profileImg}
                       ></img>
                     </div>
-                    <div> {profiles[comment.profileId].firstName}</div>
-                    <div style={{ fontWeight: "100", fontSize: "14px" }}>
-                      {comment.body}
+                    <div className="picture-name-detail">
+                      <div className="name-comment-container">
+                        <div>{profiles[comment.profileId].firstName}</div>
+                        <div style={{ fontWeight: "100", fontSize: "14px" }}>
+                          {comment.body}
+                        </div>
+                      </div>
+                      <div className="time-options-container">
+                        <div>{getTime(comment.createdAt)}</div>
+                        <div>
+                          {comment.profileId === currentUserProfile.id && (
+                            <div>
+                              <i class="fa-solid fa-ellipsis comment-ellipsis"></i>
+                            </div>
+                          )}
+                        </div>
+                      </div>
                     </div>
                   </div>
                 ))}
@@ -342,7 +397,7 @@ const SinglePin = () => {
                   </div>
                 ) : (
                   <div className="comments-container-section">
-                    <img src={currentProfile.profileImg}></img>
+                    <img src={currentUserProfile.profileImg}></img>
                     <input
                       type="text"
                       placeholder="Add a comment"
@@ -353,10 +408,12 @@ const SinglePin = () => {
                       onClick={async () => {
                         addComment();
                         const data = await fetchComments();
+                        setNewComment("");
                         setComments(data);
+                        onOpenComments();
                       }}
                     >
-                      submit
+                      Submit
                     </button>
                   </div>
                 )}

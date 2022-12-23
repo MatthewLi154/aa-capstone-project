@@ -54,7 +54,7 @@
 }
 
 .single-pin-margin-left {
-  margin: 0rem 2rem;
+  margin: 0.25rem 2rem;
 }
 
 .single-pin-header-save-button {
@@ -91,12 +91,10 @@
 }
 
 .single-pin-title {
-  margin-top: 1rem;
   font-size: 36px;
 }
 
 .single-pin-creator-details {
-  margin-top: 0.75rem;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -154,6 +152,7 @@
   display: flex;
   flex-direction: row;
   align-items: center;
+  height: 2rem;
 }
 
 .comments-angle-down {
@@ -166,7 +165,7 @@
 }
 
 .comment-card div {
-  margin: 0rem 0.25rem;
+  margin: 0 0.25rem;
 }
 
 .comments-container-section {
@@ -185,10 +184,10 @@
 }
 
 .comments-container-section img {
-  width: 3rem;
+  width: 5rem;
   height: 3rem;
   border-radius: 50%;
-  object-fit: contain;
+  object-fit: cover;
 }
 
 .select-container-pin-builder {
@@ -196,4 +195,28 @@
   width: auto;
   font-weight: 600;
   padding: 0;
+}
+
+.comment-ellipsis {
+  font-size: 12px;
+}
+
+.picture-name-detail {
+  display: flex;
+  flex-direction: column;
+  /* align-items: flex-start; */
+  /* height: 1rem; */
+}
+
+.name-comment-container {
+  display: flex;
+  flex-direction: row;
+}
+
+.time-options-container {
+  display: flex;
+  flex-direction: row;
+  font-size: 10px;
+  font-weight: 100;
+  color: gray;
 }
