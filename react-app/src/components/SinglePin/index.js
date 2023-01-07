@@ -355,9 +355,15 @@ const SinglePin = () => {
                     }
                   }}
                 >
-                  <i class="fa-solid fa-angle-down comments-angle-down"></i>
+                  {openComments ? (
+                    <i
+                      class="fa-solid fa-angle-right comments-angle-down"
+                      style={{ cursor: "pointer" }}
+                    ></i>
+                  ) : (
+                    <i class="fa-solid fa-angle-down comments-angle-down"></i>
+                  )}
                 </div>
-                {/* <button onClick={fetchComments}>console</button> */}
               </div>
               {comments &&
                 openComments &&
@@ -404,17 +410,22 @@ const SinglePin = () => {
                       value={newComment}
                       onChange={(e) => setNewComment(e.target.value)}
                     />
-                    <button
-                      onClick={async () => {
-                        addComment();
-                        const data = await fetchComments();
-                        setNewComment("");
-                        setComments(data);
-                        onOpenComments();
-                      }}
-                    >
-                      Submit
-                    </button>
+                    {newComment.length > 0 ? (
+                      <button
+                        onClick={async () => {
+                          addComment();
+                          const data = await fetchComments();
+                          setNewComment("");
+                          setComments(data);
+                          onOpenComments();
+                        }}
+                        style={{ backgroundColor: "red", color: "white" }}
+                      >
+                        Done
+                      </button>
+                    ) : (
+                      <button>Done</button>
+                    )}
                   </div>
                 )}
               </div>

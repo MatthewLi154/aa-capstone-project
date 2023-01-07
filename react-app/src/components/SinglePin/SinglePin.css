@@ -220,3 +220,15 @@
   font-weight: 100;
   color: gray;
 }
+
+.comments-container-section button {
+  background-color: #efefef;
+  border: none;
+  margin: 0rem 0.5rem;
+  width: 4rem;
+  height: 2rem;
+  border-radius: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  color: gray;
+}
