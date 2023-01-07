@@ -57,10 +57,10 @@ const SinglePin = () => {
     dispatch(fetchAllProfiles());
   }, []);
 
-  useEffect(async () => {
-    const data = await fetchComments();
-    setComments(data);
-  }, [newComment]);
+  // useEffect(async () => {
+  //   const data = await fetchComments();
+  //   setComments(data);
+  // }, []);
 
   const onOpenOptions = async (e) => {
     if (openOptions) return;
@@ -80,6 +80,9 @@ const SinglePin = () => {
   }, [openOptions]);
 
   const onOpenComments = async (e) => {
+    const data = await fetchComments();
+    setComments(data);
+
     if (openComments) return;
     setOpenComments(true);
   };
@@ -233,13 +236,19 @@ const SinglePin = () => {
       pinId: pinId,
       body: newComment,
     };
-    const addNewComment = fetch(`/api/comments/profile/${currentProfileId}`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(newCommentData),
-    });
+    const addNewComment = await fetch(
+      `/api/comments/profile/${currentProfileId}`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(newCommentData),
+      }
+    );
+
+    const data = await fetchComments();
+    setComments(data);
   };
 
   const getTime = (date) => {
@@ -413,11 +422,11 @@ const SinglePin = () => {
                     {newComment.length > 0 ? (
                       <button
                         onClick={async () => {
+                          onOpenComments();
                           addComment();
                           const data = await fetchComments();
                           setNewComment("");
                           setComments(data);
-                          onOpenComments();
                         }}
                         style={{ backgroundColor: "red", color: "white" }}
                       >
