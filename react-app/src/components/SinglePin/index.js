@@ -47,7 +47,7 @@ const SinglePin = () => {
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState("");
   const [openComments, setOpenComments] = useState(false);
-  const [openCommentOptions, setCommentOptions] = useState(false);
+  const [commentOptions, setCommentOptions] = useState(false);
 
   useEffect(() => {
     dispatch(fetchAllPins());
@@ -56,11 +56,6 @@ const SinglePin = () => {
     dispatch(fetchUserBoardPins(currentProfileId));
     dispatch(fetchAllProfiles());
   }, []);
-
-  // useEffect(async () => {
-  //   const data = await fetchComments();
-  //   setComments(data);
-  // }, []);
 
   const onOpenOptions = async (e) => {
     if (openOptions) return;
@@ -90,6 +85,17 @@ const SinglePin = () => {
   const onCloseComments = async (e) => {
     if (openComments) {
       setOpenComments(false);
+    }
+  };
+
+  const onOpenCommentOptions = (e) => {
+    if (commentOptions) return;
+    setCommentOptions(true);
+  };
+
+  const onCloseCommentOptions = (e) => {
+    if (commentOptions) {
+      setCommentOptions(false);
     }
   };
 
@@ -295,7 +301,6 @@ const SinglePin = () => {
                   <div className="save-button-container-header">
                     {!saved ? (
                       <>
-                        {" "}
                         <div>
                           <select
                             className="select-container-pin-builder"
@@ -376,7 +381,7 @@ const SinglePin = () => {
               </div>
               {comments &&
                 openComments &&
-                comments.map((comment) => (
+                comments.map((comment, commentIdx) => (
                   <div className="single-pin-margin-left comment-card">
                     <div>
                       <img
@@ -395,13 +400,26 @@ const SinglePin = () => {
                         <div>{getTime(comment.createdAt)}</div>
                         <div>
                           {comment.profileId === currentUserProfile.id && (
-                            <div>
+                            <div onClick={onOpenCommentOptions}>
                               <i class="fa-solid fa-ellipsis comment-ellipsis"></i>
+                              {commentOptions && comment.id === commentIdx && (
+                                <div>
+                                  <div className="option-dropdown-container">
+                                    <button onClick={onEdit}>Edit</button>
+                                    <button onClick={onDelete}>
+                                      Delete Pin
+                                    </button>
+                                  </div>
+                                </div>
+                              )}
                             </div>
                           )}
                         </div>
                       </div>
                     </div>
+                    {/* {commentOptions && (
+                      <div className="comment-options-container">COMMENT</div>
+                    )} */}
                   </div>
                 ))}
               <div className="single-pin-margin-left">
