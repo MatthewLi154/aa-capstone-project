@@ -382,7 +382,10 @@ const SinglePin = () => {
               {comments &&
                 openComments &&
                 comments.map((comment, commentIdx) => (
-                  <div className="single-pin-margin-left comment-card">
+                  <div
+                    className="single-pin-margin-left comment-card"
+                    key={commentIdx}
+                  >
                     <div>
                       <img
                         className="pin-container-profile-img"
@@ -400,26 +403,28 @@ const SinglePin = () => {
                         <div>{getTime(comment.createdAt)}</div>
                         <div>
                           {comment.profileId === currentUserProfile.id && (
-                            <div onClick={onOpenCommentOptions}>
-                              <i class="fa-solid fa-ellipsis comment-ellipsis"></i>
-                              {commentOptions && comment.id === commentIdx && (
-                                <div>
-                                  <div className="option-dropdown-container">
-                                    <button onClick={onEdit}>Edit</button>
-                                    <button onClick={onDelete}>
-                                      Delete Pin
-                                    </button>
+                            <div>
+                              <i
+                                class="fa-solid fa-ellipsis comment-ellipsis"
+                                onClick={onOpenCommentOptions}
+                                key={commentIdx}
+                              >
+                                {commentOptions && (
+                                  <div>
+                                    <div className="option-dropdown-container">
+                                      <button onClick={onEdit}>Edit</button>
+                                      <button onClick={onDelete}>
+                                        Delete Pin
+                                      </button>
+                                    </div>
                                   </div>
-                                </div>
-                              )}
+                                )}
+                              </i>
                             </div>
                           )}
                         </div>
                       </div>
                     </div>
-                    {/* {commentOptions && (
-                      <div className="comment-options-container">COMMENT</div>
-                    )} */}
                   </div>
                 ))}
               <div className="single-pin-margin-left">
