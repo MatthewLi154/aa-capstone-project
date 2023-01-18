@@ -402,7 +402,7 @@ const SinglePin = () => {
                       <div className="time-options-container">
                         <div>{getTime(comment.createdAt)}</div>
                         <div>
-                          {comment.profileId === currentUserProfile.id && (
+                          {/* {comment.profileId === currentUserProfile.id && (
                             <div>
                               <i
                                 class="fa-solid fa-ellipsis comment-ellipsis"
@@ -421,7 +421,7 @@ const SinglePin = () => {
                                 )}
                               </i>
                             </div>
-                          )}
+                          )} */}
                         </div>
                       </div>
                     </div>
