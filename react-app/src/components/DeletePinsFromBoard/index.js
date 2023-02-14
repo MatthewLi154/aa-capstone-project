@@ -23,13 +23,8 @@ const DeletePinsFromBoard = () => {
     initialSelected[pin] = false;
   }
 
-  console.log(initialSelected);
   const [selected, setSelected] = useState({});
   const [click, setClick] = useState(0);
-
-  useEffect(() => {
-    console.log(selected);
-  }, [click]);
 
   useEffect(() => {
     dispatch(fetchUserBoards(profileId));
@@ -37,7 +32,6 @@ const DeletePinsFromBoard = () => {
   }, []);
 
   const onDelete = async (e) => {
-    // e.preventDefault();
     if (
       window.confirm("Are you sure you want to remove these from the board?")
     ) {
