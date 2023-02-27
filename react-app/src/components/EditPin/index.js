@@ -17,7 +17,7 @@ const EditPin = () => {
   // const pin = useSelector((state) => state.pins.singlePin);
   const currentProfileId = useSelector((state) => state.session.user.id);
   const pin = location.state;
-  console.log(pin);
+  // console.log(pin);
 
   useEffect(() => {
     dispatch(fetchSinglePin(pinId));
